@@ -1,20 +1,20 @@
 package tineo.models;
 
-public class Domicilio {
+public class DomicilioModel {
     private Integer domicilioID;
     private final String calle;
     private final Integer numero;
     private final String localidad;
     private final String provincia;
 
-    public Domicilio(String localidad, String provincia, Integer numero, String calle) {
+    public DomicilioModel(String localidad, String provincia, Integer numero, String calle) {
         this.localidad = localidad;
         this.provincia = provincia;
         this.numero = numero;
         this.calle = calle;
     }
 
-    public Domicilio(Integer domicilioID, String calle, Integer numero, String localidad, String provincia) {
+    public DomicilioModel(Integer domicilioID, String calle, Integer numero, String localidad, String provincia) {
         this.domicilioID = domicilioID;
         this.calle = calle;
         this.numero = numero;

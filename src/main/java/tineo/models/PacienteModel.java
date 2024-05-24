@@ -1,31 +1,31 @@
 package tineo.models;
 
-public class Paciente {
+public class PacienteModel {
     private Integer pacienteID;
     private final String nombre;
     private final String apellido;
     private final String fechaNacimiento;
     private final String telefono;
     private final String email;
-    private final Domicilio domicilio;
+    private final DomicilioModel domicilioModel;
 
-    public Paciente(String email, Domicilio domicilio, String telefono, String fechaNacimiento, String apellido, String nombre) {
+    public PacienteModel(String email, DomicilioModel domicilioModel, String telefono, String fechaNacimiento, String apellido, String nombre) {
         this.email = email;
-        this.domicilio = domicilio;
+        this.domicilioModel = domicilioModel;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.apellido = apellido;
         this.nombre = nombre;
     }
 
-    public Paciente(Integer pacienteID, String nombre, String apellido, String fechaNacimiento, String telefono, String email, Domicilio domicilio) {
+    public PacienteModel(Integer pacienteID, String nombre, String apellido, String fechaNacimiento, String telefono, String email, DomicilioModel domicilioModel) {
         this.pacienteID = pacienteID;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.email = email;
-        this.domicilio = domicilio;
+        this.domicilioModel = domicilioModel;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Paciente {
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", email='" + email + '\'' +
-                ", domicilio=" + domicilio.getDomicilioID() +
+                ", domicilio=" + domicilioModel.getDomicilioID() +
                 ']';
     }
 
@@ -65,7 +65,7 @@ public class Paciente {
         return email;
     }
 
-    public Domicilio getDomicilio() {
-        return domicilio;
+    public DomicilioModel getDomicilio() {
+        return domicilioModel;
     }
 }
