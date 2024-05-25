@@ -36,4 +36,13 @@ public class DomicilioDAOTest {
         DomicilioModel domicilio = new DomicilioModel(1, "DOMICILIO", 000, "DEMO", "DEMO");
         Assert.assertNotNull(domicilioDAO.create(domicilio));
     }
+
+    @Test
+    public void createTest2() {
+        String messageReturn = "Domicilio [domicilioID=1, calle='DOMICILIO', numero=0, localidad='DEMO', provincia='DEMO']";
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilio = new DomicilioModel(1, "DOMICILIO", 000, "DEMO", "DEMO");
+        DomicilioModel domicilioCreated = domicilioDAO.create(domicilio);
+        Assert.assertEquals(domicilio, domicilioCreated);
+    }
 }
