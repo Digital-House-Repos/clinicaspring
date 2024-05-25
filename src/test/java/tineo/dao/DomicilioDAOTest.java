@@ -14,4 +14,11 @@ public class DomicilioDAOTest {
         ArrayList<DomicilioModel> listaDomicilio = domicilioDAO.findAll();
         Assert.assertNotNull(domicilioDAO.findAll());
     }
+
+    @Test
+    public void findByIdTest() {
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilio = domicilioDAO.findById(1);
+        Assert.assertNotNull(domicilioDAO.findById(1));
+    }
 }
