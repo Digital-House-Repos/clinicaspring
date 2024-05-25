@@ -89,7 +89,7 @@ public class DBInitializer {
                 "    DNI VARCHAR(255) UNIQUE," +
                 "    FECHAINGRESO DATE," +
                 "    DOMICILIOID INT NOT NULL," +
-                "    FOREIGN KEY (DOMICILIOID) REFERENCES DOMICILIO(DOMICILIOID)" +
+                "    FOREIGN KEY (DOMICILIOID) REFERENCES DOMICILIO(DOMICILIOID) ON UPDATE CASCADE ON DELETE CASCADE" +
                 ");";
 
         try {
