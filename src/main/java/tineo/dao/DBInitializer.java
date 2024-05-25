@@ -112,10 +112,7 @@ public class DBInitializer {
         }
     }
 
-    public static String insertDataPaciente() {
-        DomicilioModel domicilio = new DomicilioModel("Calle Falsa", 123, "Springfield", "Springfield");
-        PacienteModel paciente = new PacienteModel("Homero", "Simpson", "12345678", "2021-01-01", domicilio);
-
+    public static String insertDataPaciente(DomicilioModel domicilio, PacienteModel paciente) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
         String queryDomilicio = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
