@@ -61,4 +61,12 @@ public class DomicilioDAOTest {
         DomicilioModel domicilioUpdated = domicilioDAO.update(domicilio, 7);
         Assert.assertEquals(domicilio, domicilioUpdated);
     }
+
+    @Test
+    public void deleteTest() {
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilio = new DomicilioModel(99, "DELETE", 000, "DEMO", "DEMO");
+        domicilioDAO.createId(domicilio);
+        Assert.assertTrue(domicilioDAO.delete(99));
+    }
 }

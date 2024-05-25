@@ -127,6 +127,55 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        DomicilioModel result = this.findById(id);
+
+        if (result == null) {
+            logger.error("DELETE - Domicilio con ID " + id + " no encontrado");
+            return false;
+        }
+
+        String query = "DELETE FROM DOMICILIO WHERE DOMICILIOID = ? LIMIT 1;";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0) {
+                logger.info("DELETE - Domicilio con ID " + id + " eliminado correctamente");
+                return true;
+            } else {
+                logger.error("DELETE - Error al eliminar el domicilio con ID " + id);
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.error("DELETE - Error al eliminar el domicilio con ID " + id + ": " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void createId(DomicilioModel domicilioModel) {
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String query = "INSERT INTO DOMICILIO (DOMICILIOID, CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setInt(1, domicilioModel.getDomicilioID());
+            preparedStatement.setString(2, domicilioModel.getCalle());
+            preparedStatement.setInt(3, domicilioModel.getNumero());
+            preparedStatement.setString(4, domicilioModel.getLocalidad());
+            preparedStatement.setString(5, domicilioModel.getProvincia());
+
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet result = preparedStatement.getGeneratedKeys();
+                result.next();
+                logger.info("POST - Domicilio creado correctamente con ID " + result.getInt(1));
+            } else {
+                logger.error("POST - Error al crear el domicilio");
+            }
+        } catch (SQLException e) {
+            logger.error("POST - Error al crear el domicilio: " + e.getMessage());
+        }
     }
 }
