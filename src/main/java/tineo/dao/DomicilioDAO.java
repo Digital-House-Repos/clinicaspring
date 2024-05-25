@@ -3,10 +3,7 @@ package tineo.dao;
 import org.apache.log4j.Logger;
 import tineo.models.DomicilioModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import java.util.ArrayList;
 
@@ -15,7 +12,30 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
 
     @Override
     public DomicilioModel create(DomicilioModel domicilioModel) {
-        return null;
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String query = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, domicilioModel.getCalle());
+            preparedStatement.setInt(2, domicilioModel.getNumero());
+            preparedStatement.setString(3, domicilioModel.getLocalidad());
+            preparedStatement.setString(4, domicilioModel.getProvincia());
+
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet result = preparedStatement.getGeneratedKeys();
+                result.next();
+                logger.info("POST - Domicilio creado correctamente con ID " + result.getInt(1));
+                return domicilioModel;
+            } else {
+                logger.error("POST - Error al crear el domicilio");
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("POST - Error al crear el domicilio: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override

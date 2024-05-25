@@ -29,4 +29,11 @@ public class DomicilioDAOTest {
         DomicilioModel domicilio = domicilioDAO.findById(1);
         Assert.assertEquals(messageReturn, domicilio.toString());
     }
+
+    @Test
+    public void createTest() {
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilio = new DomicilioModel(1, "DOMICILIO", 000, "DEMO", "DEMO");
+        Assert.assertNotNull(domicilioDAO.create(domicilio));
+    }
 }
