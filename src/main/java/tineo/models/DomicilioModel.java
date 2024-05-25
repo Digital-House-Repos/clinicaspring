@@ -7,11 +7,11 @@ public class DomicilioModel {
     private final String localidad;
     private final String provincia;
 
-    public DomicilioModel(String localidad, String provincia, Integer numero, String calle) {
+    public DomicilioModel(String calle, Integer numero, String localidad, String provincia) {
+        this.calle = calle;
+        this.numero = numero;
         this.localidad = localidad;
         this.provincia = provincia;
-        this.numero = numero;
-        this.calle = calle;
     }
 
     public DomicilioModel(Integer domicilioID, String calle, Integer numero, String localidad, String provincia) {
@@ -31,6 +31,10 @@ public class DomicilioModel {
                 ", localidad='" + localidad + '\'' +
                 ", provincia='" + provincia + '\'' +
                 ']';
+    }
+
+    public void setDomicilioID(Integer domicilioID) {
+        this.domicilioID = domicilioID;
     }
 
     public Integer getDomicilioID() {

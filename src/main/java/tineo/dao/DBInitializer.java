@@ -1,8 +1,10 @@
 package tineo.dao;
 
 import org.apache.log4j.Logger;
+import tineo.models.DomicilioModel;
+import tineo.models.PacienteModel;
 
-import java.sql.Connection;
+import java.sql.*;
 
 public class DBInitializer {
     private static final Logger logger = Logger.getLogger(DBInitializer.class);
@@ -104,6 +106,62 @@ public class DBInitializer {
             }
         } catch (Exception e) {
             logger.error("Error al crear la tabla PACIENTE - " + e.getMessage());
+            return "500";
+        } finally {
+            connector.closeConnection();
+        }
+    }
+
+    public static String insertDataPaciente() {
+        DomicilioModel domicilio = new DomicilioModel("Calle Falsa", 123, "Springfield", "Springfield");
+        PacienteModel paciente = new PacienteModel("Homero", "Simpson", "12345678", "2021-01-01", domicilio);
+
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String queryDomilicio = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
+        String queryPaciente = "INSERT INTO PACIENTE (NOMBRE, APELLIDO, DNI, FECHAINGRESO, DOMICILIOID) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            connection.setAutoCommit(false);
+            connection.commit();
+
+            PreparedStatement psDomicilio = connection.prepareStatement(queryDomilicio, Statement.RETURN_GENERATED_KEYS);
+            psDomicilio.setString(1, domicilio.getCalle());
+            psDomicilio.setInt(2, domicilio.getNumero());
+            psDomicilio.setString(3, domicilio.getLocalidad());
+            psDomicilio.setString(4, domicilio.getProvincia());
+
+            int rowsDomicilio = psDomicilio.executeUpdate();
+            if (rowsDomicilio > 0) {
+                ResultSet rs = psDomicilio.getGeneratedKeys();
+                rs.next();
+                domicilio.setDomicilioID(rs.getInt(1));
+                logger.info(rowsDomicilio + " Dato insertados en la tabla DOMICILIO");
+            } else {
+                logger.error("No se ha creado el registro en la tabla DOMICILIO");
+                connection.rollback();
+                return "500";
+            }
+
+            PreparedStatement psPaciente = connection.prepareStatement(queryPaciente);
+            psPaciente.setString(1, paciente.getNombre());
+            psPaciente.setString(2, paciente.getApellido());
+            psPaciente.setString(3, paciente.getDni());
+            psPaciente.setString(4, paciente.getFechaIngreso());
+            psPaciente.setInt(5, domicilio.getDomicilioID());
+
+            int rowsPaciente = psPaciente.executeUpdate();
+            if (rowsPaciente > 0) {
+                logger.info(rowsPaciente + " Dato insertados en la tabla PACIENTE");
+                connection.setAutoCommit(true);
+                return "200";
+            } else {
+                logger.error("No se ha creado el registro en la tabla PACIENTE");
+                connection.rollback();
+                return "500";
+            }
+        } catch (SQLException e) {
+            logger.error("Error al insertar datos en la tabla PACIENTE - " + e.getMessage());
             return "500";
         } finally {
             connector.closeConnection();

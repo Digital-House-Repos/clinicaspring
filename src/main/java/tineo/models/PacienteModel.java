@@ -4,28 +4,25 @@ public class PacienteModel {
     private Integer pacienteID;
     private final String nombre;
     private final String apellido;
-    private final String fechaNacimiento;
-    private final String telefono;
-    private final String email;
-    private final DomicilioModel domicilioModel;
+    private final String dni;
+    private final String fechaIngreso;
+    private final DomicilioModel domicilioID;
 
-    public PacienteModel(String email, DomicilioModel domicilioModel, String telefono, String fechaNacimiento, String apellido, String nombre) {
-        this.email = email;
-        this.domicilioModel = domicilioModel;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.apellido = apellido;
+    public PacienteModel(String nombre, String apellido, String dni, String fechaIngreso, DomicilioModel domicilioID) {
         this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fechaIngreso = fechaIngreso;
+        this.domicilioID = domicilioID;
     }
 
-    public PacienteModel(Integer pacienteID, String nombre, String apellido, String fechaNacimiento, String telefono, String email, DomicilioModel domicilioModel) {
-        this.pacienteID = pacienteID;
-        this.nombre = nombre;
+    public PacienteModel(String fechaIngreso, DomicilioModel domicilioID, String dni, String apellido, String nombre, Integer pacienteID) {
+        this.fechaIngreso = fechaIngreso;
+        this.domicilioID = domicilioID;
+        this.dni = dni;
         this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.email = email;
-        this.domicilioModel = domicilioModel;
+        this.nombre = nombre;
+        this.pacienteID = pacienteID;
     }
 
     @Override
@@ -34,11 +31,14 @@ public class PacienteModel {
                 "pacienteID=" + pacienteID +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", email='" + email + '\'' +
-                ", domicilio=" + domicilioModel.getDomicilioID() +
+                ", dni='" + dni + '\'' +
+                ", fechaIngreso='" + fechaIngreso + '\'' +
+                ", domicilioID=" + domicilioID +
                 ']';
+    }
+
+    public void setPacienteID(Integer pacienteID) {
+        this.pacienteID = pacienteID;
     }
 
     public Integer getPacienteID() {
@@ -53,19 +53,15 @@ public class PacienteModel {
         return apellido;
     }
 
-    public String getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getDni() {
+        return dni;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getFechaIngreso() {
+        return fechaIngreso;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public DomicilioModel getDomicilio() {
-        return domicilioModel;
+    public DomicilioModel getDomicilioID() {
+        return domicilioID;
     }
 }
