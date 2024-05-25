@@ -9,7 +9,7 @@ public interface IDAO<T> {
 
     ArrayList<T> findAll();
 
-    T update(T t);
+    T update(T t, Integer id);
 
     boolean delete(int id);
 }

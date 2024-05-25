@@ -45,4 +45,20 @@ public class DomicilioDAOTest {
         DomicilioModel domicilioCreated = domicilioDAO.create(domicilio);
         Assert.assertEquals(domicilio, domicilioCreated);
     }
+
+    @Test
+    public void updateTest() {
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilio = new DomicilioModel(1, "UPDATE 1", 000, "DEMO", "DEMO");
+        Assert.assertNotNull(domicilioDAO.update(domicilio, 6));
+    }
+
+    @Test
+    public void updateTest2() {
+        String messageReturn = "Domicilio [domicilioID=1, calle='UPDATE 2', numero=0, localidad='DEMO', provincia='DEMO']";
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilio = new DomicilioModel(1, "UPDATE 2", 000, "DEMO", "DEMO");
+        DomicilioModel domicilioUpdated = domicilioDAO.update(domicilio, 7);
+        Assert.assertEquals(domicilio, domicilioUpdated);
+    }
 }

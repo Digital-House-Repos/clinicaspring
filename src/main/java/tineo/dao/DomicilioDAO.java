@@ -93,8 +93,36 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
     }
 
     @Override
-    public DomicilioModel update(DomicilioModel domicilioModel) {
-        return null;
+    public DomicilioModel update(DomicilioModel domicilioModel, Integer id) {
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        DomicilioModel result = this.findById(id);
+
+        if (result == null) {
+            logger.error("PUT - Domicilio con ID " + id + " no encontrado");
+            return null;
+        }
+
+        String query = "UPDATE DOMICILIO SET CALLE = ?, NUMERO = ?, LOCALIDAD = ?, PROVINCIA = ? WHERE DOMICILIOID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, domicilioModel.getCalle());
+            preparedStatement.setInt(2, domicilioModel.getNumero());
+            preparedStatement.setString(3, domicilioModel.getLocalidad());
+            preparedStatement.setString(4, domicilioModel.getProvincia());
+            preparedStatement.setInt(5, id);
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0) {
+                logger.info("PUT - Domicilio con ID " + id + " actualizado correctamente");
+                return domicilioModel;
+            } else {
+                logger.error("PUT - Error al actualizar el domicilio con ID " + id);
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("PUT - Error al actualizar el domicilio con ID " + id + ": " + e.getMessage());
+            return null;
+        }
     }
 
     @Override

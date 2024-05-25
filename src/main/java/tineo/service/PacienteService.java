@@ -30,7 +30,7 @@ public class PacienteService implements IDAO<PacienteModel> {
     }
 
     @Override
-    public PacienteModel update(PacienteModel pacienteModel) {
+    public PacienteModel update(PacienteModel pacienteModel, Integer id) {
         return null;
     }
 
