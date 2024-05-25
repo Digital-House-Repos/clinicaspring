@@ -1,11 +1,13 @@
 package tineo.dao;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnector {
-
+    private final static Logger logger = Logger.getLogger(DBConnector.class);
     private static DBConnector instance = null;
     private Connection connection = null;
 
@@ -27,10 +29,9 @@ public class DBConnector {
 
         connection = DriverManager.getConnection(databaseURL, databaseUser, databasePassword);
 
-        System.out.println("Successful connection");
         String databaseName = connection.getMetaData().getDatabaseProductName();
         String databaseVersion = connection.getMetaData().getDatabaseProductVersion();
-        System.out.println(databaseName + " " + databaseVersion);
+        logger.info("Connected to " + databaseName + " " + databaseVersion);
     }
 
     public Connection getConnection() {
@@ -40,7 +41,7 @@ public class DBConnector {
             }
             return connection;
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Error DB: " + e.getMessage());
+            logger.error("Error DB: " + e.getMessage());
             return null;
         }
     }
@@ -49,10 +50,10 @@ public class DBConnector {
         try {
             if (connection != null) {
                 connection.close();
-                System.out.println("Connection closed");
+                logger.info("Connection closed");
             }
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
+            logger.error("SQLException: " + e.getMessage());
         }
     }
 }
