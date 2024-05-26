@@ -17,26 +17,11 @@ public class PacienteDAO implements IDAO<PacienteModel> {
     public PacienteModel create(PacienteModel pacienteModel) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
-        String queryDomicilio = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
         String queryPaciente = "INSERT INTO PACIENTE (NOMBRE, APELLIDO, DNI, FECHAINGRESO, DOMICILIOID) VALUES (?, ?, ?, ?, ?)";
 
         try {
-            PreparedStatement psDomicilio = connection.prepareStatement(queryDomicilio, PreparedStatement.RETURN_GENERATED_KEYS);
-            psDomicilio.setString(1, pacienteModel.getDomicilioID().getCalle());
-            psDomicilio.setInt(2, pacienteModel.getDomicilioID().getNumero());
-            psDomicilio.setString(3, pacienteModel.getDomicilioID().getLocalidad());
-            psDomicilio.setString(4, pacienteModel.getDomicilioID().getProvincia());
-
-            int rowsDomicilio = psDomicilio.executeUpdate();
-            if (rowsDomicilio > 0) {
-                ResultSet rs = psDomicilio.getGeneratedKeys();
-                rs.next();
-                pacienteModel.getDomicilioID().setDomicilioID(rs.getInt(1));
-                logger.info(rowsDomicilio + " Dato insertados en la tabla DOMICILIO");
-            } else {
-                logger.error("No se ha creado el registro en la tabla DOMICILIO");
-                return null;
-            }
+            DomicilioDAO domicilioDAO = new DomicilioDAO();
+            DomicilioModel domicilioModel = domicilioDAO.create(pacienteModel.getDomicilioID());
 
             PreparedStatement psPaciente = connection.prepareStatement(queryPaciente, PreparedStatement.RETURN_GENERATED_KEYS);
             psPaciente.setString(1, pacienteModel.getNombre());
@@ -115,8 +100,6 @@ public class PacienteDAO implements IDAO<PacienteModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los pacientes " + e.getMessage());
             return null;
-        } finally {
-            connector.closeConnection();
         }
     }
 

@@ -27,6 +27,7 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
                 ResultSet result = preparedStatement.getGeneratedKeys();
                 result.next();
                 logger.info("POST - Domicilio creado correctamente con ID " + result.getInt(1));
+                domicilioModel.setDomicilioID(result.getInt(1));
                 return domicilioModel;
             } else {
                 logger.error("POST - Error al crear el domicilio");
@@ -35,8 +36,6 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("POST - Error al crear el domicilio: " + e.getMessage());
             return null;
-        } finally {
-            connector.closeConnection();
         }
     }
 
@@ -91,8 +90,6 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los domicilios " + e.getMessage());
             return null;
-        } finally {
-            connector.closeConnection();
         }
     }
 
@@ -126,8 +123,6 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("PUT - Error al actualizar el domicilio con ID " + id + ": " + e.getMessage());
             return null;
-        } finally {
-            connector.closeConnection();
         }
     }
 
@@ -157,8 +152,6 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("DELETE - Error al eliminar el domicilio con ID " + id + ": " + e.getMessage());
             return false;
-        } finally {
-            connector.closeConnection();
         }
     }
 
@@ -184,8 +177,6 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
             }
         } catch (SQLException e) {
             logger.error("POST - Error al crear el domicilio: " + e.getMessage());
-        } finally {
-            connector.closeConnection();
         }
     }
 }
