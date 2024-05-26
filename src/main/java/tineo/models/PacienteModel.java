@@ -1,14 +1,16 @@
 package tineo.models;
 
+import java.time.LocalDate;
+
 public class PacienteModel {
     private Integer pacienteID;
     private final String nombre;
     private final String apellido;
     private final String dni;
-    private final String fechaIngreso;
+    private final LocalDate fechaIngreso;
     private final DomicilioModel domicilioID;
 
-    public PacienteModel(String nombre, String apellido, String dni, String fechaIngreso, DomicilioModel domicilioID) {
+    public PacienteModel(String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilioID) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -16,12 +18,12 @@ public class PacienteModel {
         this.domicilioID = domicilioID;
     }
 
-    public PacienteModel(String fechaIngreso, DomicilioModel domicilioID, String dni, String apellido, String nombre, Integer pacienteID) {
+    public PacienteModel(Integer pacienteID, String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilioID) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
         this.fechaIngreso = fechaIngreso;
         this.domicilioID = domicilioID;
-        this.dni = dni;
-        this.apellido = apellido;
-        this.nombre = nombre;
         this.pacienteID = pacienteID;
     }
 
@@ -57,7 +59,7 @@ public class PacienteModel {
         return dni;
     }
 
-    public String getFechaIngreso() {
+    public LocalDate getFechaIngreso() {
         return fechaIngreso;
     }
 

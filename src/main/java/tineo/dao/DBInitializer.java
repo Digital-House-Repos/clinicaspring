@@ -144,7 +144,7 @@ public class DBInitializer {
             psPaciente.setString(1, paciente.getNombre());
             psPaciente.setString(2, paciente.getApellido());
             psPaciente.setString(3, paciente.getDni());
-            psPaciente.setString(4, paciente.getFechaIngreso());
+            psPaciente.setDate(4, Date.valueOf(paciente.getFechaIngreso()));
             psPaciente.setInt(5, domicilio.getDomicilioID());
 
             int rowsPaciente = psPaciente.executeUpdate();
