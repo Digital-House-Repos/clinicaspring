@@ -16,7 +16,7 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         Connection connection = connector.getConnection();
         String query = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, domicilioModel.getCalle());
             preparedStatement.setInt(2, domicilioModel.getNumero());
             preparedStatement.setString(3, domicilioModel.getLocalidad());
@@ -35,6 +35,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("POST - Error al crear el domicilio: " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -63,6 +65,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener el domicilio con ID " + id + ": " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -89,6 +93,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los domicilios " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -122,6 +128,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("PUT - Error al actualizar el domicilio con ID " + id + ": " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -151,6 +159,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("DELETE - Error al eliminar el domicilio con ID " + id + ": " + e.getMessage());
             return false;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -159,7 +169,7 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         Connection connection = connector.getConnection();
         String query = "INSERT INTO DOMICILIO (DOMICILIOID, CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, domicilioModel.getDomicilioID());
             preparedStatement.setString(2, domicilioModel.getCalle());
             preparedStatement.setInt(3, domicilioModel.getNumero());
@@ -176,6 +186,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
             }
         } catch (SQLException e) {
             logger.error("POST - Error al crear el domicilio: " + e.getMessage());
+        } finally {
+            connector.closeConnection();
         }
     }
 }

@@ -47,6 +47,8 @@ public class PacienteDAO implements IDAO<PacienteModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los pacientes " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
