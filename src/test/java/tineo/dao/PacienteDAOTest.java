@@ -2,8 +2,11 @@ package tineo.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
+import tineo.models.DomicilioModel;
 import tineo.models.PacienteModel;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PacienteDAOTest {
@@ -21,5 +24,18 @@ public class PacienteDAOTest {
         PacienteDAO pacienteDAO = new PacienteDAO();
         PacienteModel paciente = pacienteDAO.findById(1);
         Assert.assertEquals(queryResult, paciente.toString());
+    }
+
+    @Test
+    public void createTest() {
+        String fecha = "2024-04-04";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(fecha, formatter);
+
+        DomicilioModel domicilio = new DomicilioModel(1, "DOMICILIO", 1111, "DEMO", "DEMO");
+        PacienteModel paciente = new PacienteModel(1, "PACIENTE", "DEMO", "DEMO", date, domicilio);
+        PacienteDAO pacienteDAO = new PacienteDAO();
+        PacienteModel pacienteCreado = pacienteDAO.create(paciente);
+        Assert.assertNotNull(pacienteCreado);
     }
 }
