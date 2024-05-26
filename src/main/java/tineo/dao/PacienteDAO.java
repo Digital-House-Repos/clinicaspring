@@ -6,6 +6,8 @@ import tineo.models.PacienteModel;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
 import java.util.ArrayList;
 
 public class PacienteDAO implements IDAO<PacienteModel> {
@@ -13,12 +15,78 @@ public class PacienteDAO implements IDAO<PacienteModel> {
 
     @Override
     public PacienteModel create(PacienteModel pacienteModel) {
-        return null;
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String queryDomicilio = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
+        String queryPaciente = "INSERT INTO PACIENTE (NOMBRE, APELLIDO, DNI, FECHAINGRESO, DOMICILIOID) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement psDomicilio = connection.prepareStatement(queryDomicilio, PreparedStatement.RETURN_GENERATED_KEYS);
+            psDomicilio.setString(1, pacienteModel.getDomicilioID().getCalle());
+            psDomicilio.setInt(2, pacienteModel.getDomicilioID().getNumero());
+            psDomicilio.setString(3, pacienteModel.getDomicilioID().getLocalidad());
+            psDomicilio.setString(4, pacienteModel.getDomicilioID().getProvincia());
+
+            int rowsDomicilio = psDomicilio.executeUpdate();
+            if (rowsDomicilio > 0) {
+                ResultSet rs = psDomicilio.getGeneratedKeys();
+                rs.next();
+                pacienteModel.getDomicilioID().setDomicilioID(rs.getInt(1));
+                logger.info(rowsDomicilio + " Dato insertados en la tabla DOMICILIO");
+            } else {
+                logger.error("No se ha creado el registro en la tabla DOMICILIO");
+                return null;
+            }
+
+            PreparedStatement psPaciente = connection.prepareStatement(queryPaciente, PreparedStatement.RETURN_GENERATED_KEYS);
+            psPaciente.setString(1, pacienteModel.getNombre());
+            psPaciente.setString(2, pacienteModel.getApellido());
+            psPaciente.setString(3, pacienteModel.getDni());
+            psPaciente.setDate(4, java.sql.Date.valueOf(pacienteModel.getFechaIngreso()));
+            psPaciente.setInt(5, pacienteModel.getDomicilioID().getDomicilioID());
+
+            int rowsPaciente = psPaciente.executeUpdate();
+            if (rowsPaciente > 0) {
+                ResultSet rs = psPaciente.getGeneratedKeys();
+                rs.next();
+                pacienteModel.setPacienteID(rs.getInt(1));
+                logger.info(rowsPaciente + " Dato insertados en la tabla PACIENTE");
+                return pacienteModel;
+            } else {
+                logger.error("No se ha creado el registro en la tabla PACIENTE");
+                return null;
+            }
+        } catch (SQLException e) {
+            logger.error("POST - ERROR " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public PacienteModel findById(int id) {
-        return null;
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String query = "SELECT * FROM PACIENTE WHERE PACIENTEID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                DomicilioModel domicilioPaciente = new DomicilioDAO().findById(result.getInt("DOMICILIOID"));
+                return new PacienteModel(
+                        result.getInt("PACIENTEID"),
+                        result.getString("NOMBRE"),
+                        result.getString("APELLIDO"),
+                        result.getString("DNI"),
+                        result.getDate("FECHAINGRESO").toLocalDate(),
+                        domicilioPaciente);
+            }
+            return null;
+        } catch (SQLException e) {
+            System.out.println("GET error: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override

@@ -65,8 +65,6 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener el domicilio con ID " + id + ": " + e.getMessage());
             return null;
-        } finally {
-            connector.closeConnection();
         }
     }
 
