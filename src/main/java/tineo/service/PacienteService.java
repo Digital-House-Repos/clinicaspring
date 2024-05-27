@@ -16,12 +16,12 @@ public class PacienteService implements IDAO<PacienteModel> {
 
     @Override
     public PacienteModel create(PacienteModel pacienteModel) {
-        return null;
+        return interfaceDAO.create(pacienteModel);
     }
 
     @Override
     public PacienteModel findById(int id) {
-        return null;
+        return interfaceDAO.findById(id);
     }
 
     @Override
@@ -31,11 +31,11 @@ public class PacienteService implements IDAO<PacienteModel> {
 
     @Override
     public PacienteModel update(PacienteModel pacienteModel, Integer id) {
-        return null;
+        return interfaceDAO.update(pacienteModel, id);
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return interfaceDAO.delete(id);
     }
 }
