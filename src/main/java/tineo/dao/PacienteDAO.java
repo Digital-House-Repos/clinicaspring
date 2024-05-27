@@ -28,7 +28,7 @@ public class PacienteDAO implements IDAO<PacienteModel> {
             psPaciente.setString(2, pacienteModel.getApellido());
             psPaciente.setString(3, pacienteModel.getDni());
             psPaciente.setDate(4, java.sql.Date.valueOf(pacienteModel.getFechaIngreso()));
-            psPaciente.setInt(5, pacienteModel.getDomicilioID().getDomicilioID());
+            psPaciente.setInt(5, domicilioModel.getDomicilioID());
 
             int rowsPaciente = psPaciente.executeUpdate();
             if (rowsPaciente > 0) {

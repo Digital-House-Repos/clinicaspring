@@ -26,7 +26,7 @@ public class PacienteService implements IDAO<PacienteModel> {
 
     @Override
     public ArrayList<PacienteModel> findAll() {
-        return null;
+        return interfaceDAO.findAll();
     }
 
     @Override

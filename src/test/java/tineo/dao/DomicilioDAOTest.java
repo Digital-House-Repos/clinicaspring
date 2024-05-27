@@ -50,7 +50,7 @@ public class DomicilioDAOTest {
     public void updateTest() {
         DomicilioDAO domicilioDAO = new DomicilioDAO();
         DomicilioModel domicilio = new DomicilioModel(1, "UPDATE 1", 000, "DEMO", "DEMO");
-        Assert.assertNotNull(domicilioDAO.update(domicilio, 6));
+        Assert.assertNotNull(domicilioDAO.update(domicilio, 3));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class DomicilioDAOTest {
         String messageReturn = "Domicilio [domicilioID=1, calle='UPDATE 2', numero=0, localidad='DEMO', provincia='DEMO']";
         DomicilioDAO domicilioDAO = new DomicilioDAO();
         DomicilioModel domicilio = new DomicilioModel(1, "UPDATE 2", 000, "DEMO", "DEMO");
-        DomicilioModel domicilioUpdated = domicilioDAO.update(domicilio, 7);
+        DomicilioModel domicilioUpdated = domicilioDAO.update(domicilio, 4);
         Assert.assertEquals(domicilio, domicilioUpdated);
     }
 
