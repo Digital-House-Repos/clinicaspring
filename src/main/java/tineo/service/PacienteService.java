@@ -1,5 +1,6 @@
 package tineo.service;
 
+import tineo.dao.DBInitializer;
 import tineo.dao.IDAO;
 import tineo.dao.PacienteDAO;
 import tineo.models.PacienteModel;
@@ -12,6 +13,10 @@ public class PacienteService implements IService<PacienteModel> {
 
     public PacienteService() {
         this.interfaceDAO = new PacienteDAO();
+        DBInitializer.deleteTableDomicilio();
+        DBInitializer.createTableDomicilio();
+        DBInitializer.deleteTablePaciente();
+        DBInitializer.createTablePaciente();
     }
 
     @Override

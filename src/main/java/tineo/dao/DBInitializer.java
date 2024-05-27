@@ -59,6 +59,55 @@ public class DBInitializer {
         }
     }
 
+    public static String deleteTableOdontologo() {
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String query = "DROP TABLE IF EXISTS ODONTOLOGO";
+
+        try {
+            int result = connection.createStatement().executeUpdate(query);
+            if (result == 0) {
+                logger.info("Tabla ODONTOLOGO borrada");
+                return "200";
+            } else {
+                logger.error("No existe la tabla ODONTOLOGO");
+                return "404";
+            }
+        } catch (Exception e) {
+            logger.error("Error al borrar la tabla ODONTOLOGO - " + e.getMessage());
+            return "500";
+        } finally {
+            connector.closeConnection();
+        }
+    }
+
+    public static String createTableOdontologo() {
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String query = "CREATE TABLE IF NOT EXISTS ODONTOLOGO (" +
+                "    ODONTOLOGOID INT PRIMARY KEY AUTO_INCREMENT," +
+                "    NUMEROMATRICULA VARCHAR(255) UNIQUE," +
+                "    NOMBRE VARCHAR(255)," +
+                "    APELLIDO VARCHAR(255)" +
+                ");";
+
+        try {
+            int result = connection.createStatement().executeUpdate(query);
+            if (result == 0) {
+                logger.info("Tabla ODONTOLOGO creada");
+                return "200";
+            } else {
+                logger.error("Error al crear la tabla ODONTOLOGO");
+                return "500";
+            }
+        } catch (Exception e) {
+            logger.error("Error al crear la tabla ODONTOLOGO - " + e.getMessage());
+            return "500";
+        } finally {
+            connector.closeConnection();
+        }
+    }
+
     public static String deleteTablePaciente() {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
@@ -159,6 +208,35 @@ public class DBInitializer {
             }
         } catch (SQLException e) {
             logger.error("Error al insertar datos en la tabla PACIENTE - " + e.getMessage());
+            return "500";
+        } finally {
+            connector.closeConnection();
+        }
+    }
+
+    public static String insertDataOdontologo(String numeroMatricula, String nombre, String apellido) {
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+        String query = "INSERT INTO ODONTOLOGO (NUMEROMATRICULA, NOMBRE, APELLIDO) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, numeroMatricula);
+            preparedStatement.setString(2, nombre);
+            preparedStatement.setString(3, apellido);
+
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet result = preparedStatement.getGeneratedKeys();
+                result.next();
+                logger.info("POST - ODONTOLOGO creado correctamente con ID " + result.getInt(1));
+                return "200";
+            } else {
+                logger.error("POST - Error al crear el ODONTOLOGO");
+                return "500";
+            }
+        } catch (SQLException e) {
+            logger.error("POST - Error al crear el ODONTOLOGO: " + e.getMessage());
             return "500";
         } finally {
             connector.closeConnection();
