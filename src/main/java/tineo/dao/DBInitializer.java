@@ -2,6 +2,7 @@ package tineo.dao;
 
 import org.apache.log4j.Logger;
 import tineo.models.DomicilioModel;
+import tineo.models.OdontologoModel;
 import tineo.models.PacienteModel;
 
 import java.sql.*;
@@ -214,16 +215,16 @@ public class DBInitializer {
         }
     }
 
-    public static String insertDataOdontologo(String numeroMatricula, String nombre, String apellido) {
+    public static String insertDataOdontologo(OdontologoModel odontologo) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
         String query = "INSERT INTO ODONTOLOGO (NUMEROMATRICULA, NOMBRE, APELLIDO) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, numeroMatricula);
-            preparedStatement.setString(2, nombre);
-            preparedStatement.setString(3, apellido);
+            preparedStatement.setString(1, odontologo.getNumeroMatricula());
+            preparedStatement.setString(2, odontologo.getNombre());
+            preparedStatement.setString(3, odontologo.getApellido());
 
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
