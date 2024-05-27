@@ -6,7 +6,7 @@ import tineo.models.PacienteModel;
 
 import java.util.ArrayList;
 
-public class PacienteService implements IDAO<PacienteModel> {
+public class PacienteService implements IService<PacienteModel> {
 
     private final IDAO<PacienteModel> interfaceDAO;
 
