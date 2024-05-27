@@ -1,8 +1,8 @@
-package tineo.dao;
+package clinica.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
-import tineo.models.DomicilioModel;
+import clinica.models.DomicilioModel;
 
 import java.util.ArrayList;
 

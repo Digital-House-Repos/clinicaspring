@@ -1,4 +1,4 @@
-package tineo.models;
+package clinica.models;
 
 import java.time.LocalDate;
 

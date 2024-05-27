@@ -1,10 +1,10 @@
-package tineo.service;
+package clinica.service;
 
-import tineo.dao.DBInitializer;
-import tineo.dao.IDAO;
-import tineo.dao.PacienteDAO;
-import tineo.models.DomicilioModel;
-import tineo.models.PacienteModel;
+import clinica.dao.DBInitializer;
+import clinica.dao.IDAO;
+import clinica.dao.PacienteDAO;
+import clinica.models.DomicilioModel;
+import clinica.models.PacienteModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

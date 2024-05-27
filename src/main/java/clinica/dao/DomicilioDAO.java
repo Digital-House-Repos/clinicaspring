@@ -1,7 +1,7 @@
-package tineo.dao;
+package clinica.dao;
 
 import org.apache.log4j.Logger;
-import tineo.models.DomicilioModel;
+import clinica.models.DomicilioModel;
 
 import java.sql.*;
 

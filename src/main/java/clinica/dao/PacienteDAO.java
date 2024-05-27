@@ -1,7 +1,7 @@
-package tineo.dao;
+package clinica.dao;
 
-import tineo.models.DomicilioModel;
-import tineo.models.PacienteModel;
+import clinica.models.DomicilioModel;
+import clinica.models.PacienteModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

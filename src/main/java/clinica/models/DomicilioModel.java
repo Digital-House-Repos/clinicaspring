@@ -1,4 +1,4 @@
-package tineo.models;
+package clinica.models;
 
 public class DomicilioModel {
     private Integer domicilioID;

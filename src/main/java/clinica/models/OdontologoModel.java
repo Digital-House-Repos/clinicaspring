@@ -1,4 +1,4 @@
-package tineo.models;
+package clinica.models;
 
 public class OdontologoModel {
     private Integer odontologoID;

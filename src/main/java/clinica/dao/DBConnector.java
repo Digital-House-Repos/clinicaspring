@@ -1,4 +1,4 @@
-package tineo.dao;
+package clinica.dao;
 
 import org.apache.log4j.Logger;
 

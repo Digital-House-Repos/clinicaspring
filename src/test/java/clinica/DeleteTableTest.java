@@ -1,8 +1,8 @@
-package tineo;
+package clinica;
 
 import org.junit.Assert;
 import org.junit.Test;
-import tineo.dao.DBInitializer;
+import clinica.dao.DBInitializer;
 
 public class DeleteTableTest {
     @Test

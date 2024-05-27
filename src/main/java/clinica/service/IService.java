@@ -1,4 +1,4 @@
-package tineo.service;
+package clinica.service;
 
 import java.util.ArrayList;
 

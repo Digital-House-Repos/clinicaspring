@@ -1,9 +1,9 @@
-package tineo.service;
+package clinica.service;
 
-import tineo.dao.DBInitializer;
-import tineo.dao.IDAO;
-import tineo.dao.OdontologoDAO;
-import tineo.models.OdontologoModel;
+import clinica.dao.DBInitializer;
+import clinica.dao.IDAO;
+import clinica.dao.OdontologoDAO;
+import clinica.models.OdontologoModel;
 
 import java.util.ArrayList;
 

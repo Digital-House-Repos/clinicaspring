@@ -1,10 +1,10 @@
-package tineo;
+package clinica;
 
 import org.junit.Assert;
 import org.junit.Test;
-import tineo.dao.DBInitializer;
-import tineo.models.DomicilioModel;
-import tineo.models.PacienteModel;
+import clinica.dao.DBInitializer;
+import clinica.models.DomicilioModel;
+import clinica.models.PacienteModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

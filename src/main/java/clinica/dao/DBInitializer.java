@@ -1,9 +1,9 @@
-package tineo.dao;
+package clinica.dao;
 
 import org.apache.log4j.Logger;
-import tineo.models.DomicilioModel;
-import tineo.models.OdontologoModel;
-import tineo.models.PacienteModel;
+import clinica.models.DomicilioModel;
+import clinica.models.OdontologoModel;
+import clinica.models.PacienteModel;
 
 import java.sql.*;
 
