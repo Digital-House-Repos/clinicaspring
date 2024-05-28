@@ -2,10 +2,10 @@ package com.backend.clinica.models;
 
 public class DomicilioModel {
     private Integer domicilioID;
-    private final String calle;
-    private final Integer numero;
-    private final String localidad;
-    private final String provincia;
+    private String calle;
+    private Integer numero;
+    private String localidad;
+    private String provincia;
 
     public DomicilioModel(String calle, Integer numero, String localidad, String provincia) {
         this.calle = calle;
@@ -20,6 +20,9 @@ public class DomicilioModel {
         this.numero = numero;
         this.localidad = localidad;
         this.provincia = provincia;
+    }
+
+    public DomicilioModel() {
     }
 
     @Override

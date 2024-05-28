@@ -3,9 +3,7 @@ package com.backend.clinica.controller;
 import com.backend.clinica.models.OdontologoModel;
 import com.backend.clinica.service.IService;
 import com.backend.clinica.service.OdontologoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -18,8 +16,18 @@ public class OdontologoController {
         this.odontologoService = new OdontologoService();
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ArrayList<OdontologoModel> getOdontologos() {
         return odontologoService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public OdontologoModel getOdontologo(@PathVariable("id") Integer id) {
+        return odontologoService.findById(id);
+    }
+
+    @PostMapping
+    public OdontologoModel createOdontologo(@RequestBody OdontologoModel odontologoModel) {
+        return odontologoService.create(odontologoModel);
     }
 }

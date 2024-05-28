@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 public class PacienteModel {
     private Integer pacienteID;
-    private final String nombre;
-    private final String apellido;
-    private final String dni;
-    private final LocalDate fechaIngreso;
-    private final DomicilioModel domicilioID;
+    private String nombre;
+    private String apellido;
+    private String dni;
+    private LocalDate fechaIngreso;
+    private DomicilioModel domicilioID;
 
     public PacienteModel(String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilioID) {
         this.nombre = nombre;
@@ -25,6 +25,9 @@ public class PacienteModel {
         this.fechaIngreso = fechaIngreso;
         this.domicilioID = domicilioID;
         this.pacienteID = pacienteID;
+    }
+
+    public PacienteModel() {
     }
 
     @Override

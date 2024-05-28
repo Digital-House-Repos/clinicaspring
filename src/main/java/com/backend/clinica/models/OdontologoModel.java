@@ -2,9 +2,9 @@ package com.backend.clinica.models;
 
 public class OdontologoModel {
     private Integer odontologoID;
-    private final String numeroMatricula;
-    private final String nombre;
-    private final String apellido;
+    private String numeroMatricula;
+    private String nombre;
+    private String apellido;
 
     public OdontologoModel(Integer odontologoID, String numeroMatricula, String nombre, String apellido) {
         this.odontologoID = odontologoID;
@@ -17,6 +17,9 @@ public class OdontologoModel {
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
         this.apellido = apellido;
+    }
+
+    public OdontologoModel() {
     }
 
     @Override
