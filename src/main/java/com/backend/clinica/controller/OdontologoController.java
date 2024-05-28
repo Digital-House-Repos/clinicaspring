@@ -35,4 +35,9 @@ public class OdontologoController {
     public OdontologoModel updateOdontologo(@RequestBody OdontologoModel odontologoModel, @PathVariable("id") Integer id) {
         return odontologoService.update(odontologoModel, id);
     }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteOdontologo(@PathVariable("id") Integer id) {
+        return odontologoService.delete(id);
+    }
 }
