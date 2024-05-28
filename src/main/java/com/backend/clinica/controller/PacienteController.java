@@ -3,10 +3,7 @@ package com.backend.clinica.controller;
 import com.backend.clinica.models.PacienteModel;
 import com.backend.clinica.service.IService;
 import com.backend.clinica.service.PacienteService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -27,5 +24,10 @@ public class PacienteController {
     @GetMapping("/{id}")
     public PacienteModel getPaciente(@PathVariable("id") Integer id) {
         return pacienteService.findById(id);
+    }
+
+    @PostMapping
+    public PacienteModel createPaciente(@RequestBody PacienteModel pacienteModel) {
+        return pacienteService.create(pacienteModel);
     }
 }

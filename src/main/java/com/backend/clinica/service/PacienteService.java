@@ -32,9 +32,9 @@ public class PacienteService implements IService<PacienteModel> {
         PacienteModel p4 = new PacienteModel("Marge", "Simpson", "87651234", date, d4);
 
         this.interfaceDAO = new PacienteDAO();
+        DBInitializer.deleteTablePaciente();
         DBInitializer.deleteTableDomicilio();
         DBInitializer.createTableDomicilio();
-        DBInitializer.deleteTablePaciente();
         DBInitializer.createTablePaciente();
         DBInitializer.insertDataPaciente(d1, p1);
         DBInitializer.insertDataPaciente(d2, p2);

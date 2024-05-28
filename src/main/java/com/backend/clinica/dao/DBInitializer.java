@@ -63,7 +63,7 @@ public class DBInitializer {
     public static String deleteTableOdontologo() {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
-        String query = "DROP TABLE IF EXISTS ODONTOLOGO";
+        String query = "DROP TABLE IF EXISTS ODONTOLOGO;";
 
         try {
             int result = connection.createStatement().executeUpdate(query);
