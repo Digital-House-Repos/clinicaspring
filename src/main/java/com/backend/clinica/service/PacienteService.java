@@ -1,10 +1,10 @@
-package clinica.service;
+package com.backend.clinica.service;
 
-import clinica.dao.DBInitializer;
-import clinica.dao.IDAO;
-import clinica.dao.PacienteDAO;
-import clinica.models.DomicilioModel;
-import clinica.models.PacienteModel;
+import com.backend.clinica.dao.DBInitializer;
+import com.backend.clinica.dao.IDAO;
+import com.backend.clinica.dao.PacienteDAO;
+import com.backend.clinica.models.DomicilioModel;
+import com.backend.clinica.models.PacienteModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -1,4 +1,4 @@
-package clinica.dao;
+package com.backend.clinica.dao;
 
 import java.util.ArrayList;
 

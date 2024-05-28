@@ -1,9 +1,9 @@
-package clinica.dao;
+package com.backend.clinica.dao;
 
 import org.apache.log4j.Logger;
-import clinica.models.DomicilioModel;
-import clinica.models.OdontologoModel;
-import clinica.models.PacienteModel;
+import com.backend.clinica.models.DomicilioModel;
+import com.backend.clinica.models.OdontologoModel;
+import com.backend.clinica.models.PacienteModel;
 
 import java.sql.*;
 

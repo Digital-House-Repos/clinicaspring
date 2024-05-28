@@ -1,8 +1,8 @@
-package clinica;
+package com.backend.clinica;
 
 import org.junit.Assert;
 import org.junit.Test;
-import clinica.dao.DBInitializer;
+import com.backend.clinica.dao.DBInitializer;
 
 public class DeleteTableTest {
     @Test

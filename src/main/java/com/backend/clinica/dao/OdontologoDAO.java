@@ -1,7 +1,7 @@
-package clinica.dao;
+package com.backend.clinica.dao;
 
 import org.apache.log4j.Logger;
-import clinica.models.OdontologoModel;
+import com.backend.clinica.models.OdontologoModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

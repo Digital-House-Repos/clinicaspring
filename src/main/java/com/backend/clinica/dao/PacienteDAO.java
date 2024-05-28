@@ -1,7 +1,7 @@
-package clinica.dao;
+package com.backend.clinica.dao;
 
-import clinica.models.DomicilioModel;
-import clinica.models.PacienteModel;
+import com.backend.clinica.models.DomicilioModel;
+import com.backend.clinica.models.PacienteModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

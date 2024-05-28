@@ -1,9 +1,9 @@
-package clinica.dao;
+package com.backend.clinica.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
-import clinica.models.DomicilioModel;
-import clinica.models.PacienteModel;
+import com.backend.clinica.models.DomicilioModel;
+import com.backend.clinica.models.PacienteModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

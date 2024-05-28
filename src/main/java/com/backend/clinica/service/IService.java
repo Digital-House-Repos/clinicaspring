@@ -1,4 +1,4 @@
-package clinica.service;
+package com.backend.clinica.service;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,9 @@
-package clinica.service;
+package com.backend.clinica.service;
 
-import clinica.dao.DBInitializer;
-import clinica.dao.IDAO;
-import clinica.dao.OdontologoDAO;
-import clinica.models.OdontologoModel;
+import com.backend.clinica.dao.DBInitializer;
+import com.backend.clinica.dao.IDAO;
+import com.backend.clinica.dao.OdontologoDAO;
+import com.backend.clinica.models.OdontologoModel;
 
 import java.util.ArrayList;
 
