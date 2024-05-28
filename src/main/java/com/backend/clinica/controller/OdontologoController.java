@@ -30,4 +30,9 @@ public class OdontologoController {
     public OdontologoModel createOdontologo(@RequestBody OdontologoModel odontologoModel) {
         return odontologoService.create(odontologoModel);
     }
+
+    @PutMapping("/{id}")
+    public OdontologoModel updateOdontologo(@RequestBody OdontologoModel odontologoModel, @PathVariable("id") Integer id) {
+        return odontologoService.update(odontologoModel, id);
+    }
 }
