@@ -21,7 +21,7 @@ public class PacienteDAO implements IDAO<PacienteModel> {
 
         try {
             DomicilioDAO domicilioDAO = new DomicilioDAO();
-            DomicilioModel domicilioModel = domicilioDAO.create(pacienteModel.getDomicilioID());
+            DomicilioModel domicilioModel = domicilioDAO.create(pacienteModel.getDomicilio());
 
             PreparedStatement psPaciente = connection.prepareStatement(queryPaciente, PreparedStatement.RETURN_GENERATED_KEYS);
             psPaciente.setString(1, pacienteModel.getNombre());
@@ -113,10 +113,10 @@ public class PacienteDAO implements IDAO<PacienteModel> {
             logger.error("El paciente con id " + id + " no existe");
             return null;
         }
-        Integer domicilioID = pacienteDB.getDomicilioID().getDomicilioID();
+        Integer domicilioID = pacienteDB.getDomicilio().getDomicilioID();
 
         DomicilioDAO domicilioDAO = new DomicilioDAO();
-        DomicilioModel domicilioDB = domicilioDAO.update(pacienteModel.getDomicilioID(), domicilioID);
+        DomicilioModel domicilioDB = domicilioDAO.update(pacienteModel.getDomicilio(), domicilioID);
         if (domicilioDB == null) {
             logger.error("No se ha podido actualizar el domicilio del paciente");
             return null;
@@ -135,7 +135,7 @@ public class PacienteDAO implements IDAO<PacienteModel> {
             if (rows > 0) {
                 logger.info("Paciente actualizado correctamente");
                 pacienteModel.setPacienteID(id);
-                pacienteModel.setDomicilioID(domicilioDB);
+                pacienteModel.setDomicilio(domicilioDB);
                 return pacienteModel;
             }
             logger.error("No se ha podido actualizar el paciente");
@@ -156,7 +156,7 @@ public class PacienteDAO implements IDAO<PacienteModel> {
             logger.error("El paciente con id " + id + " no existe");
             return false;
         }
-        Integer domicilioID = pacienteDB.getDomicilioID().getDomicilioID();
+        Integer domicilioID = pacienteDB.getDomicilio().getDomicilioID();
 
         String query = "DELETE FROM PACIENTE WHERE PACIENTEID = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

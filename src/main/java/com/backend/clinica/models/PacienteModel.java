@@ -8,22 +8,22 @@ public class PacienteModel {
     private String apellido;
     private String dni;
     private LocalDate fechaIngreso;
-    private DomicilioModel domicilioID;
+    private DomicilioModel domicilio;
 
-    public PacienteModel(String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilioID) {
+    public PacienteModel(String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilio) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
-        this.domicilioID = domicilioID;
+        this.domicilio = domicilio;
     }
 
-    public PacienteModel(Integer pacienteID, String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilioID) {
+    public PacienteModel(Integer pacienteID, String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilio) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.fechaIngreso = fechaIngreso;
-        this.domicilioID = domicilioID;
+        this.domicilio = domicilio;
         this.pacienteID = pacienteID;
     }
 
@@ -38,7 +38,7 @@ public class PacienteModel {
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +
                 ", fechaIngreso='" + fechaIngreso + '\'' +
-                ", domicilioID=" + domicilioID +
+                ", domicilio=" + domicilio +
                 ']';
     }
 
@@ -46,8 +46,8 @@ public class PacienteModel {
         this.pacienteID = pacienteID;
     }
 
-    public void setDomicilioID(DomicilioModel domicilioID) {
-        this.domicilioID = domicilioID;
+    public void setDomicilio(DomicilioModel domicilio) {
+        this.domicilio = domicilio;
     }
 
     public Integer getPacienteID() {
@@ -70,7 +70,7 @@ public class PacienteModel {
         return fechaIngreso;
     }
 
-    public DomicilioModel getDomicilioID() {
-        return domicilioID;
+    public DomicilioModel getDomicilio() {
+        return domicilio;
     }
 }
