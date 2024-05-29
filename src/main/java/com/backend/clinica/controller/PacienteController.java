@@ -30,4 +30,14 @@ public class PacienteController {
     public PacienteModel createPaciente(@RequestBody PacienteModel pacienteModel) {
         return pacienteService.create(pacienteModel);
     }
+
+    @PutMapping("/{id}")
+    public PacienteModel updatePaciente(@RequestBody PacienteModel pacienteModel, @PathVariable("id") Integer id) {
+        return pacienteService.update(pacienteModel, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deletePaciente(@PathVariable("id") Integer id) {
+        return pacienteService.delete(id);
+    }
 }

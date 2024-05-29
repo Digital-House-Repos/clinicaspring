@@ -95,6 +95,13 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
     public OdontologoModel update(OdontologoModel odontologoModel, Integer id) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
+
+        OdontologoModel odontologo = findById(id);
+        if (odontologo == null) {
+            logger.error("PUT - ODONTOLOGO con ID " + id + " no encontrado");
+            return null;
+        }
+
         String query = "UPDATE ODONTOLOGO SET NUMEROMATRICULA = ?, NOMBRE = ?, APELLIDO = ? WHERE ODONTOLOGOID = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -122,8 +129,14 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
     public boolean delete(int id) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
-        String query = "DELETE FROM ODONTOLOGO WHERE ODONTOLOGOID = ?";
 
+        OdontologoModel odontologo = findById(id);
+        if (odontologo == null) {
+            logger.error("DELETE - ODONTOLOGO con ID " + id + " no encontrado");
+            return false;
+        }
+
+        String query = "DELETE FROM ODONTOLOGO WHERE ODONTOLOGOID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             int rowsDeleted = preparedStatement.executeUpdate();

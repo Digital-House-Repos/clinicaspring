@@ -105,11 +105,74 @@ public class PacienteDAO implements IDAO<PacienteModel> {
 
     @Override
     public PacienteModel update(PacienteModel pacienteModel, Integer id) {
-        return null;
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+
+        PacienteModel pacienteDB = findById(id);
+        if (pacienteDB == null) {
+            logger.error("El paciente con id " + id + " no existe");
+            return null;
+        }
+        Integer domicilioID = pacienteDB.getDomicilioID().getDomicilioID();
+
+        DomicilioDAO domicilioDAO = new DomicilioDAO();
+        DomicilioModel domicilioDB = domicilioDAO.update(pacienteModel.getDomicilioID(), domicilioID);
+        if (domicilioDB == null) {
+            logger.error("No se ha podido actualizar el domicilio del paciente");
+            return null;
+        }
+
+        String query = "UPDATE PACIENTE SET NOMBRE = ?, APELLIDO = ?, DNI = ?, FECHAINGRESO = ?, DOMICILIOID = ? WHERE PACIENTEID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, pacienteModel.getNombre());
+            statement.setString(2, pacienteModel.getApellido());
+            statement.setString(3, pacienteModel.getDni());
+            statement.setDate(4, java.sql.Date.valueOf(pacienteModel.getFechaIngreso()));
+            statement.setInt(5, domicilioID);
+            statement.setInt(6, id);
+
+            int rows = statement.executeUpdate();
+            if (rows > 0) {
+                logger.info("Paciente actualizado correctamente");
+                pacienteModel.setPacienteID(id);
+                pacienteModel.setDomicilioID(domicilioDB);
+                return pacienteModel;
+            }
+            logger.error("No se ha podido actualizar el paciente");
+            return null;
+        } catch (SQLException e) {
+            logger.error("PUT - Error al actualizar el paciente " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
+
+        PacienteModel pacienteDB = findById(id);
+        if (pacienteDB == null) {
+            logger.error("El paciente con id " + id + " no existe");
+            return false;
+        }
+        Integer domicilioID = pacienteDB.getDomicilioID().getDomicilioID();
+
+        String query = "DELETE FROM PACIENTE WHERE PACIENTEID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            int rows = statement.executeUpdate();
+            if (rows > 0) {
+                logger.info("Paciente eliminado correctamente");
+                DomicilioDAO domicilioDAO = new DomicilioDAO();
+                domicilioDAO.delete(domicilioID);
+                return true;
+            }
+            logger.error("No se ha podido eliminar el paciente");
+            return false;
+        } catch (SQLException e) {
+            logger.error("DELETE - Error al eliminar el paciente " + e.getMessage());
+            return false;
+        }
     }
 }

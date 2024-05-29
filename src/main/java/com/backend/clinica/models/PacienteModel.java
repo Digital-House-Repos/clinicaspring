@@ -46,6 +46,10 @@ public class PacienteModel {
         this.pacienteID = pacienteID;
     }
 
+    public void setDomicilioID(DomicilioModel domicilioID) {
+        this.domicilioID = domicilioID;
+    }
+
     public Integer getPacienteID() {
         return pacienteID;
     }

@@ -97,8 +97,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
     public DomicilioModel update(DomicilioModel domicilioModel, Integer id) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
-        DomicilioModel result = this.findById(id);
 
+        DomicilioModel result = this.findById(id);
         if (result == null) {
             logger.error("PUT - Domicilio con ID " + id + " no encontrado");
             return null;
@@ -130,8 +130,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
     public boolean delete(int id) {
         DBConnector connector = DBConnector.getInstance();
         Connection connection = connector.getConnection();
-        DomicilioModel result = this.findById(id);
 
+        DomicilioModel result = this.findById(id);
         if (result == null) {
             logger.error("DELETE - Domicilio con ID " + id + " no encontrado");
             return false;
