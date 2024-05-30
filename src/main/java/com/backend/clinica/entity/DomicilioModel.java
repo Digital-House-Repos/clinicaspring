@@ -1,4 +1,4 @@
-package com.backend.clinica.models;
+package com.backend.clinica.entity;
 
 public class DomicilioModel {
     private Integer domicilioID;

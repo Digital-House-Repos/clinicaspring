@@ -2,7 +2,7 @@ package com.backend.clinica;
 
 import org.junit.Assert;
 import org.junit.Test;
-import com.backend.clinica.dao.DBInitializer;
+import com.backend.clinica.repository.DBInitializer;
 
 public class CreateTableTest {
     @Test

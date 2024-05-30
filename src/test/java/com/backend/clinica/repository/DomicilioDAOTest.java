@@ -1,8 +1,8 @@
-package com.backend.clinica.dao;
+package com.backend.clinica.repository;
 
 import org.junit.Assert;
 import org.junit.Test;
-import com.backend.clinica.models.DomicilioModel;
+import com.backend.clinica.entity.DomicilioModel;
 
 import java.util.ArrayList;
 

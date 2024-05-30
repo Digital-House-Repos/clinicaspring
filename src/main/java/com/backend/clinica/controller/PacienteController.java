@@ -1,6 +1,6 @@
 package com.backend.clinica.controller;
 
-import com.backend.clinica.models.PacienteModel;
+import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.service.IService;
 import com.backend.clinica.service.PacienteService;
 import org.springframework.web.bind.annotation.*;

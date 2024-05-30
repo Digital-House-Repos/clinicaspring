@@ -2,9 +2,9 @@ package com.backend.clinica;
 
 import org.junit.Assert;
 import org.junit.Test;
-import com.backend.clinica.dao.DBInitializer;
-import com.backend.clinica.models.DomicilioModel;
-import com.backend.clinica.models.PacienteModel;
+import com.backend.clinica.repository.DBInitializer;
+import com.backend.clinica.entity.DomicilioModel;
+import com.backend.clinica.entity.PacienteModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

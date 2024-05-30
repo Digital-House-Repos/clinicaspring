@@ -1,7 +1,7 @@
-package com.backend.clinica.dao;
+package com.backend.clinica.repository;
 
 import org.apache.log4j.Logger;
-import com.backend.clinica.models.DomicilioModel;
+import com.backend.clinica.entity.DomicilioModel;
 
 import java.sql.*;
 

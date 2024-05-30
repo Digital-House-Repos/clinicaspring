@@ -1,4 +1,4 @@
-package com.backend.clinica.dao;
+package com.backend.clinica.repository;
 
 import org.apache.log4j.Logger;
 
