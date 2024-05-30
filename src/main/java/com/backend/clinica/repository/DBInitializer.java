@@ -87,9 +87,9 @@ public class DBInitializer {
         Connection connection = connector.getConnection();
         String query = "CREATE TABLE IF NOT EXISTS ODONTOLOGO (" +
                 "    ODONTOLOGOID INT PRIMARY KEY AUTO_INCREMENT," +
-                "    NUMEROMATRICULA VARCHAR(255) UNIQUE," +
-                "    NOMBRE VARCHAR(255)," +
-                "    APELLIDO VARCHAR(255)" +
+                "    NUMEROMATRICULA VARCHAR(255) UNIQUE NOT NULL," +
+                "    NOMBRE VARCHAR(255) NOT NULL," +
+                "    APELLIDO VARCHAR(255) NOT NULL" +
                 ");";
 
         try {
