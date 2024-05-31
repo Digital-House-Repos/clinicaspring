@@ -38,6 +38,8 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
         } catch (SQLException e) {
             logger.error("POST - Error al crear el ODONTOLOGO: " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -64,6 +66,8 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener el ODONTOLOGO con ID " + id + ": " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -88,19 +92,21 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los ODONTOLOGO " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
     @Override
     public OdontologoModel update(OdontologoModel odontologoModel, Integer id) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-
         OdontologoModel odontologo = findById(id);
         if (odontologo == null) {
             logger.error("PUT - ODONTOLOGO con ID " + id + " no encontrado");
             return null;
         }
+
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
 
         String query = "UPDATE ODONTOLOGO SET NUMEROMATRICULA = ?, NOMBRE = ?, APELLIDO = ? WHERE ODONTOLOGOID = ?";
 
@@ -122,19 +128,21 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
         } catch (SQLException e) {
             logger.error("PUT - Error al actualizar el ODONTOLOGO con ID " + id + ": " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
     @Override
     public boolean delete(int id) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-
         OdontologoModel odontologo = findById(id);
         if (odontologo == null) {
             logger.error("DELETE - ODONTOLOGO con ID " + id + " no encontrado");
             return false;
         }
+
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
 
         String query = "DELETE FROM ODONTOLOGO WHERE ODONTOLOGOID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -150,6 +158,8 @@ public class OdontologoDAO implements IDAO<OdontologoModel> {
         } catch (SQLException e) {
             logger.error("DELETE - Error al eliminar el ODONTOLOGO con ID " + id + ": " + e.getMessage());
             return false;
+        } finally {
+            connector.closeConnection();
         }
     }
 }
