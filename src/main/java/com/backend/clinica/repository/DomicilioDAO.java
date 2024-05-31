@@ -36,6 +36,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("POST - Error al crear el domicilio: " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -90,19 +92,21 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los domicilios " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
     @Override
     public DomicilioModel update(DomicilioModel domicilioModel, Integer id) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-
         DomicilioModel result = this.findById(id);
         if (result == null) {
             logger.error("PUT - Domicilio con ID " + id + " no encontrado");
             return null;
         }
+
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
 
         String query = "UPDATE DOMICILIO SET CALLE = ?, NUMERO = ?, LOCALIDAD = ?, PROVINCIA = ? WHERE DOMICILIOID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -128,14 +132,14 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
 
     @Override
     public boolean delete(int id) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-
         DomicilioModel result = this.findById(id);
         if (result == null) {
             logger.error("DELETE - Domicilio con ID " + id + " no encontrado");
             return false;
         }
+
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
 
         String query = "DELETE FROM DOMICILIO WHERE DOMICILIOID = ? LIMIT 1;";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -177,6 +181,8 @@ public class DomicilioDAO implements IDAO<DomicilioModel> {
             }
         } catch (SQLException e) {
             logger.error("POST - Error al crear el domicilio: " + e.getMessage());
+        } finally {
+            connector.closeConnection();
         }
     }
 }

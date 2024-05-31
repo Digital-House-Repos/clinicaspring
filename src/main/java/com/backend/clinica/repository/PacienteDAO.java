@@ -16,12 +16,12 @@ public class PacienteDAO implements IDAO<PacienteModel> {
     @Override
     public PacienteModel create(PacienteModel pacienteModel) {
         DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
         String queryPaciente = "INSERT INTO PACIENTE (NOMBRE, APELLIDO, DNI, FECHAINGRESO, DOMICILIOID) VALUES (?, ?, ?, ?, ?)";
 
         try {
             DomicilioDAO domicilioDAO = new DomicilioDAO();
             DomicilioModel domicilioModel = domicilioDAO.create(pacienteModel.getDomicilio());
+            Connection connection = connector.getConnection();
 
             PreparedStatement psPaciente = connection.prepareStatement(queryPaciente, PreparedStatement.RETURN_GENERATED_KEYS);
             psPaciente.setString(1, pacienteModel.getNombre());
@@ -44,6 +44,8 @@ public class PacienteDAO implements IDAO<PacienteModel> {
         } catch (SQLException e) {
             logger.error("POST - ERROR " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -71,6 +73,8 @@ public class PacienteDAO implements IDAO<PacienteModel> {
         } catch (SQLException e) {
             System.out.println("GET error: " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
@@ -84,30 +88,29 @@ public class PacienteDAO implements IDAO<PacienteModel> {
         try {
             ResultSet result = connection.createStatement().executeQuery(query);
             while (result.next()) {
-                DomicilioDAO domicilioDAO = new DomicilioDAO();
-                DomicilioModel domicilioModel = domicilioDAO.findById(result.getInt("DOMICILIOID"));
+                DomicilioModel domicilioPaciente = new DomicilioDAO().findById(result.getInt("DOMICILIOID"));
                 listDB.add(new PacienteModel(
                         result.getInt("PACIENTEID"),
                         result.getString("NOMBRE"),
                         result.getString("APELLIDO"),
                         result.getString("DNI"),
                         result.getDate("FECHAINGRESO").toLocalDate(),
-                        domicilioModel
+                        domicilioPaciente
                 ));
             }
+
             logger.info("GET - Pacientes obtenidos correctamente");
             return listDB;
         } catch (SQLException e) {
             logger.error("GET - Error al obtener los pacientes " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
     @Override
     public PacienteModel update(PacienteModel pacienteModel, Integer id) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-
         PacienteModel pacienteDB = findById(id);
         if (pacienteDB == null) {
             logger.error("El paciente con id " + id + " no existe");
@@ -122,7 +125,10 @@ public class PacienteDAO implements IDAO<PacienteModel> {
             return null;
         }
 
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
         String query = "UPDATE PACIENTE SET NOMBRE = ?, APELLIDO = ?, DNI = ?, FECHAINGRESO = ?, DOMICILIOID = ? WHERE PACIENTEID = ?";
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, pacienteModel.getNombre());
             statement.setString(2, pacienteModel.getApellido());
@@ -143,20 +149,22 @@ public class PacienteDAO implements IDAO<PacienteModel> {
         } catch (SQLException e) {
             logger.error("PUT - Error al actualizar el paciente " + e.getMessage());
             return null;
+        } finally {
+            connector.closeConnection();
         }
     }
 
     @Override
     public boolean delete(int id) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-
         PacienteModel pacienteDB = findById(id);
         if (pacienteDB == null) {
             logger.error("El paciente con id " + id + " no existe");
             return false;
         }
         Integer domicilioID = pacienteDB.getDomicilio().getDomicilioID();
+
+        DBConnector connector = DBConnector.getInstance();
+        Connection connection = connector.getConnection();
 
         String query = "DELETE FROM PACIENTE WHERE PACIENTEID = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {

@@ -16,7 +16,7 @@ public class TurnoDAO implements IDAO<TurnoModel> {
     @Override
     public TurnoModel create(TurnoModel turnoModel) {
         turnoModel.setTurnoID(++turnoID);
-        PacienteModel paciente = new PacienteService().findById(turnoModel.getPaciente().getPacienteID());
+        PacienteModel paciente = new PacienteDAO().findById(turnoModel.getPaciente().getPacienteID());
         OdontologoModel odontologo = new OdontologoDAO().findById(turnoModel.getOdontologo().getOdontologoID());
 
         if (paciente != null && odontologo != null) {
