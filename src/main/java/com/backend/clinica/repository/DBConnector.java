@@ -25,7 +25,7 @@ public class DBConnector {
         Class.forName("org.h2.Driver");
         String databaseURL = "jdbc:h2:tcp://localhost/~/test";
         String databaseUser = "sa";
-        String databasePassword = "";
+        String databasePassword = "sa";
 
         connection = DriverManager.getConnection(databaseURL, databaseUser, databasePassword);
 
