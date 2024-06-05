@@ -1,9 +1,8 @@
 package com.backend.clinica.service;
 
-import com.backend.clinica.repository.DBInitializer;
 import com.backend.clinica.repository.IDAO;
-import com.backend.clinica.repository.OdontologoDAO;
 import com.backend.clinica.entity.OdontologoModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,20 +10,8 @@ import java.util.ArrayList;
 @Service
 public class OdontologoService implements IService<OdontologoModel> {
 
-    private final IDAO<OdontologoModel> interfaceDAO;
-
-    public OdontologoService() {
-        OdontologoModel o1 = new OdontologoModel("12345678", "Homero", "Simpson");
-        OdontologoModel o2 = new OdontologoModel("87654321", "Bart", "Simpson");
-        OdontologoModel o3 = new OdontologoModel("12348765", "Lisa", "Simpson");
-
-        this.interfaceDAO = new OdontologoDAO();
-        DBInitializer.deleteTableOdontologo();
-        DBInitializer.createTableOdontologo();
-        DBInitializer.insertDataOdontologo(o1);
-        DBInitializer.insertDataOdontologo(o2);
-        DBInitializer.insertDataOdontologo(o3);
-    }
+    @Autowired
+    private IDAO<OdontologoModel> interfaceDAO;
 
     @Override
     public OdontologoModel create(OdontologoModel odontologoModel) {

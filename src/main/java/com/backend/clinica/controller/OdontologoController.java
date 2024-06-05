@@ -2,7 +2,7 @@ package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.service.IService;
-import com.backend.clinica.service.OdontologoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +11,8 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
-    private final IService<OdontologoModel> odontologoService;
-
-    public OdontologoController() {
-        this.odontologoService = new OdontologoService();
-    }
+    @Autowired
+    private IService<OdontologoModel> odontologoService;
 
     @GetMapping
     public ResponseEntity<CustomResponse> getOdontologos() {

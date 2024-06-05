@@ -2,7 +2,7 @@ package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.service.IService;
-import com.backend.clinica.service.PacienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +11,8 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/pacientes")
 public class PacienteController {
-    private final IService<PacienteModel> pacienteService;
-
-    public PacienteController() {
-        this.pacienteService = new PacienteService();
-    }
+    @Autowired
+    private IService<PacienteModel> pacienteService;
 
     @GetMapping
     public ResponseEntity<CustomResponse> getPacientes() {

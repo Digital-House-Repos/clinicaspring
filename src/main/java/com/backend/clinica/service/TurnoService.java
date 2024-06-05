@@ -2,18 +2,15 @@ package com.backend.clinica.service;
 
 import com.backend.clinica.entity.TurnoModel;
 import com.backend.clinica.repository.IDAO;
-import com.backend.clinica.repository.TurnoDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
 public class TurnoService implements IService<TurnoModel> {
-    private final IDAO<TurnoModel> interfaceDAO;
-
-    public TurnoService() {
-        this.interfaceDAO = new TurnoDAO();
-    }
+    @Autowired
+    private IDAO<TurnoModel> interfaceDAO;
 
     @Override
     public TurnoModel create(TurnoModel turnoModel) {

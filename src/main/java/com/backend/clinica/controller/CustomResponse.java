@@ -1,7 +1,5 @@
 package com.backend.clinica.controller;
 
-import org.springframework.http.ResponseEntity;
-
 public class CustomResponse {
     private final Boolean ok;
     private final String message;
@@ -23,9 +21,5 @@ public class CustomResponse {
 
     public Object getData() {
         return data;
-    }
-
-    public ResponseEntity<CustomResponse> getResponse(Integer code) {
-        return ResponseEntity.status(code).body(this);
     }
 }

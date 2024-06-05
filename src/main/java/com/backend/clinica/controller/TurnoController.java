@@ -2,7 +2,7 @@ package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.TurnoModel;
 import com.backend.clinica.service.IService;
-import com.backend.clinica.service.TurnoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +11,9 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/turnos")
 public class TurnoController {
-    private final IService<TurnoModel> turnoService;
+    @Autowired
+    private IService<TurnoModel> turnoService;
 
-    public TurnoController() {
-        this.turnoService = new TurnoService();
-    }
 
     @GetMapping
     public ResponseEntity<CustomResponse> getTurnos() {

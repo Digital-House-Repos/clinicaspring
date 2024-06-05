@@ -3,7 +3,6 @@ package com.backend.clinica.repository;
 import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.entity.TurnoModel;
-import com.backend.clinica.service.PacienteService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
@@ -54,7 +53,7 @@ public class TurnoDAO implements IDAO<TurnoModel> {
     public TurnoModel update(TurnoModel turnoModel, Integer id) {
         for (TurnoModel turno : turnosDB) {
             if (turno.getTurnoID().equals(id)) {
-                PacienteModel paciente = new PacienteService().findById(turnoModel.getPaciente().getPacienteID());
+                PacienteModel paciente = new PacienteDAO().findById(turnoModel.getPaciente().getPacienteID());
                 OdontologoModel odontologo = new OdontologoDAO().findById(turnoModel.getOdontologo().getOdontologoID());
                 if (paciente == null || odontologo == null) {
                     logger.error("PUT - Error al actualizar el Turno con ID " + id);
