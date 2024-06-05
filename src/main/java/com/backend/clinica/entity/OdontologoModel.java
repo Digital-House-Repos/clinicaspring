@@ -1,5 +1,8 @@
 package com.backend.clinica.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class OdontologoModel {
     private Integer odontologoID;
     private String numeroMatricula;

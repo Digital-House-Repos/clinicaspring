@@ -47,6 +47,8 @@ ID debe ser autoincremental
 - Tener Service para: Odontologo, Paciente y Turno
 - Tener DAO para: Odontologo, Domicilio, Paciente y Turno
 - Tener Entity para: Odontologo, Domicilio, Paciente y Turno
+- Usar @Component, @Repository y @Service según corresponda
+- @Autowired para inyección de dependencias
 
 ## Tests
 

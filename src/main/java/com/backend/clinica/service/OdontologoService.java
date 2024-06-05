@@ -4,9 +4,11 @@ import com.backend.clinica.repository.DBInitializer;
 import com.backend.clinica.repository.IDAO;
 import com.backend.clinica.repository.OdontologoDAO;
 import com.backend.clinica.entity.OdontologoModel;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class OdontologoService implements IService<OdontologoModel> {
 
     private final IDAO<OdontologoModel> interfaceDAO;

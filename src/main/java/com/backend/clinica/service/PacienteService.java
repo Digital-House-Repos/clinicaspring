@@ -5,11 +5,13 @@ import com.backend.clinica.repository.IDAO;
 import com.backend.clinica.repository.PacienteDAO;
 import com.backend.clinica.entity.DomicilioModel;
 import com.backend.clinica.entity.PacienteModel;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+@Service
 public class PacienteService implements IService<PacienteModel> {
 
     private final IDAO<PacienteModel> interfaceDAO;

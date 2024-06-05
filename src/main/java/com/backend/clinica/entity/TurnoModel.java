@@ -1,7 +1,10 @@
 package com.backend.clinica.entity;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 
+@Component
 public class TurnoModel {
     private Integer turnoID;
     private PacienteModel paciente;

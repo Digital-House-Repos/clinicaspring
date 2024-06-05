@@ -5,9 +5,11 @@ import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.entity.TurnoModel;
 import com.backend.clinica.service.PacienteService;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
+@Repository
 public class TurnoDAO implements IDAO<TurnoModel> {
     private static final Logger logger = Logger.getLogger(TurnoDAO.class);
     private final ArrayList<TurnoModel> turnosDB = new ArrayList<>();

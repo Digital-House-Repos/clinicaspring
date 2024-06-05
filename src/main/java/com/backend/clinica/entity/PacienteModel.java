@@ -1,7 +1,10 @@
 package com.backend.clinica.entity;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 
+@Component
 public class PacienteModel {
     private Integer pacienteID;
     private String nombre;

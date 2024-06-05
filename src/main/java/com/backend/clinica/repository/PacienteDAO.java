@@ -2,6 +2,7 @@ package com.backend.clinica.repository;
 
 import com.backend.clinica.entity.DomicilioModel;
 import com.backend.clinica.entity.PacienteModel;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
 
+@Repository
 public class PacienteDAO implements IDAO<PacienteModel> {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PacienteDAO.class);
 

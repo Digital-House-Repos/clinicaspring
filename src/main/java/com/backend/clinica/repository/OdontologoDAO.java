@@ -2,6 +2,7 @@ package com.backend.clinica.repository;
 
 import org.apache.log4j.Logger;
 import com.backend.clinica.entity.OdontologoModel;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
 
+@Repository
 public class OdontologoDAO implements IDAO<OdontologoModel> {
     private static final Logger logger = Logger.getLogger(OdontologoDAO.class);
 

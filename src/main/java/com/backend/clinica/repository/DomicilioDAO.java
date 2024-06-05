@@ -2,11 +2,13 @@ package com.backend.clinica.repository;
 
 import org.apache.log4j.Logger;
 import com.backend.clinica.entity.DomicilioModel;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
 import java.util.ArrayList;
 
+@Repository
 public class DomicilioDAO implements IDAO<DomicilioModel> {
     private static final Logger logger = Logger.getLogger(DomicilioDAO.class);
 

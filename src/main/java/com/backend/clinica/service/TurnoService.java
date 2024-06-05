@@ -3,9 +3,11 @@ package com.backend.clinica.service;
 import com.backend.clinica.entity.TurnoModel;
 import com.backend.clinica.repository.IDAO;
 import com.backend.clinica.repository.TurnoDAO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class TurnoService implements IService<TurnoModel> {
     private final IDAO<TurnoModel> interfaceDAO;
 
