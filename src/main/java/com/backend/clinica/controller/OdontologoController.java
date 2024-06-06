@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
@@ -59,6 +58,7 @@ public class OdontologoController {
         Optional<OdontologoModel> odontologo = odontologoService.findById(id);
 
         if (odontologo.isPresent()) {
+            odontologoModel.setOdontologoID(id);
             odontologoService.update(odontologoModel);
             CustomResponse cr = new CustomResponse(true, "Odontologo actualizado correctamente", odontologoModel);
             return ResponseEntity.status(200).body(cr);

@@ -1,17 +1,25 @@
 package com.backend.clinica.entity;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Component
+@Entity
+@Table(name = "turno")
 public class TurnoModel {
-    private Integer turnoID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long turnoID;
+    @ManyToOne
+    @JoinColumn(name = "pacienteID", nullable = false)
     private PacienteModel paciente;
+    @ManyToOne
+    @JoinColumn(name = "odontologoID", nullable = false)
     private OdontologoModel odontologo;
+    @Column
     private LocalDateTime fechaHora;
 
-    public TurnoModel(Integer turnoID, PacienteModel paciente, OdontologoModel odontologo, LocalDateTime fechaHora) {
+    public TurnoModel(Long turnoID, PacienteModel paciente, OdontologoModel odontologo, LocalDateTime fechaHora) {
         this.turnoID = turnoID;
         this.paciente = paciente;
         this.odontologo = odontologo;
@@ -45,11 +53,11 @@ public class TurnoModel {
         this.odontologo = odontologo;
     }
 
-    public void setTurnoID(Integer turnoID) {
+    public void setTurnoID(Long turnoID) {
         this.turnoID = turnoID;
     }
 
-    public Integer getTurnoID() {
+    public Long getTurnoID() {
         return turnoID;
     }
 
