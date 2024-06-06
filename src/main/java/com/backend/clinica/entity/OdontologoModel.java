@@ -1,15 +1,21 @@
 package com.backend.clinica.entity;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
-@Component
+@Entity
+@Table(name = "odontologo")
 public class OdontologoModel {
-    private Integer odontologoID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long odontologoID;
+    @Column(unique = true, nullable = false)
     private String numeroMatricula;
+    @Column
     private String nombre;
+    @Column
     private String apellido;
 
-    public OdontologoModel(Integer odontologoID, String numeroMatricula, String nombre, String apellido) {
+    public OdontologoModel(Long odontologoID, String numeroMatricula, String nombre, String apellido) {
         this.odontologoID = odontologoID;
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
@@ -35,11 +41,11 @@ public class OdontologoModel {
                 ']';
     }
 
-    public void setOdontologoID(Integer odontologoID) {
+    public void setOdontologoID(Long odontologoID) {
         this.odontologoID = odontologoID;
     }
 
-    public Integer getOdontologoID() {
+    public Long getOdontologoID() {
         return odontologoID;
     }
 
