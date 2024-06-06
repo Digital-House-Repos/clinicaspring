@@ -3,7 +3,7 @@ package com.backend.clinica;
 import com.backend.clinica.entity.DomicilioModel;
 import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.entity.PacienteModel;
-import com.backend.clinica.repository.DBInitializer;
+import com.backend.clinica.repository.db.DBInitializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,16 +1,26 @@
 package com.backend.clinica.entity;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-@Component
+@Entity
+@Table(name = "paciente")
 public class PacienteModel {
-    private Integer pacienteID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long pacienteID;
+    @Column
     private String nombre;
+    @Column
     private String apellido;
+    @Column(unique = true, nullable = false)
     private String dni;
+    @Column
     private LocalDate fechaIngreso;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "domicilioID", referencedColumnName = "domicilioID")
     private DomicilioModel domicilio;
 
     public PacienteModel(String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilio) {
@@ -21,7 +31,7 @@ public class PacienteModel {
         this.domicilio = domicilio;
     }
 
-    public PacienteModel(Integer pacienteID, String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilio) {
+    public PacienteModel(Long pacienteID, String nombre, String apellido, String dni, LocalDate fechaIngreso, DomicilioModel domicilio) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -45,7 +55,7 @@ public class PacienteModel {
                 ']';
     }
 
-    public void setPacienteID(Integer pacienteID) {
+    public void setPacienteID(Long pacienteID) {
         this.pacienteID = pacienteID;
     }
 
@@ -53,7 +63,7 @@ public class PacienteModel {
         this.domicilio = domicilio;
     }
 
-    public Integer getPacienteID() {
+    public Long getPacienteID() {
         return pacienteID;
     }
 

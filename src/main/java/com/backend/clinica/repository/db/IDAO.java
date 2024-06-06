@@ -1,4 +1,4 @@
-package com.backend.clinica.repository;
+package com.backend.clinica.repository.db;
 
 import java.util.ArrayList;
 

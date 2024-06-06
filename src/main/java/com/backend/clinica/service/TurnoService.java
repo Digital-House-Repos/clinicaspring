@@ -1,7 +1,7 @@
 package com.backend.clinica.service;
 
 import com.backend.clinica.entity.TurnoModel;
-import com.backend.clinica.repository.IDAO;
+import com.backend.clinica.repository.db.IDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

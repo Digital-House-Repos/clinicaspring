@@ -1,5 +1,6 @@
 package com.backend.clinica.repository;
 
+import com.backend.clinica.repository.db.PacienteDAO;
 import org.junit.Assert;
 import org.junit.Test;
 import com.backend.clinica.entity.DomicilioModel;

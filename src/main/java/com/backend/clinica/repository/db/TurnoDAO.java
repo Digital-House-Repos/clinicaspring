@@ -1,4 +1,4 @@
-package com.backend.clinica.repository;
+package com.backend.clinica.repository.db;
 
 import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.entity.PacienteModel;

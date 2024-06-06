@@ -1,4 +1,4 @@
-package com.backend.clinica.repository;
+package com.backend.clinica.repository.db;
 
 import org.apache.log4j.Logger;
 import com.backend.clinica.entity.DomicilioModel;
