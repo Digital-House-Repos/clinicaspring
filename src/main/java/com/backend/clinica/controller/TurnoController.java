@@ -4,8 +4,6 @@ import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.entity.TurnoModel;
 import com.backend.clinica.service.IService;
-import com.backend.clinica.service.OdontologoService;
-import com.backend.clinica.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
