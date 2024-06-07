@@ -1,39 +1,40 @@
 package com.backend.clinica.service;
 
 import com.backend.clinica.entity.TurnoModel;
-import com.backend.clinica.repository.IDAO;
+import com.backend.clinica.repository.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TurnoService implements IService<TurnoModel> {
     @Autowired
-    private IDAO<TurnoModel> interfaceDAO;
+    private TurnoRepository turnoRepository;
+
+    @Override
+    public List<TurnoModel> findAll() {
+        return turnoRepository.findAll();
+    }
+
+    @Override
+    public Optional<TurnoModel> findById(Long id) {
+        return turnoRepository.findById(id);
+    }
 
     @Override
     public TurnoModel create(TurnoModel turnoModel) {
-        return interfaceDAO.create(turnoModel);
+        return turnoRepository.save(turnoModel);
     }
 
     @Override
-    public TurnoModel findById(int id) {
-        return interfaceDAO.findById(id);
+    public void update(TurnoModel turnoModel) {
+        turnoRepository.save(turnoModel);
     }
 
     @Override
-    public ArrayList<TurnoModel> findAll() {
-        return interfaceDAO.findAll();
-    }
-
-    @Override
-    public TurnoModel update(TurnoModel turnoModel, Integer id) {
-        return interfaceDAO.update(turnoModel, id);
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return interfaceDAO.delete(id);
+    public void delete(Long id) {
+        turnoRepository.deleteById(id);
     }
 }

@@ -1,13 +1,20 @@
 package com.backend.clinica.entity;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
-@Component
+@Entity
+@Table(name = "domicilio")
 public class DomicilioModel {
-    private Integer domicilioID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long domicilioID;
+    @Column
     private String calle;
+    @Column
     private Integer numero;
+    @Column
     private String localidad;
+    @Column
     private String provincia;
 
     public DomicilioModel(String calle, Integer numero, String localidad, String provincia) {
@@ -17,7 +24,7 @@ public class DomicilioModel {
         this.provincia = provincia;
     }
 
-    public DomicilioModel(Integer domicilioID, String calle, Integer numero, String localidad, String provincia) {
+    public DomicilioModel(Long domicilioID, String calle, Integer numero, String localidad, String provincia) {
         this.domicilioID = domicilioID;
         this.calle = calle;
         this.numero = numero;
@@ -39,11 +46,11 @@ public class DomicilioModel {
                 ']';
     }
 
-    public void setDomicilioID(Integer domicilioID) {
+    public void setDomicilioID(Long domicilioID) {
         this.domicilioID = domicilioID;
     }
 
-    public Integer getDomicilioID() {
+    public Long getDomicilioID() {
         return domicilioID;
     }
 

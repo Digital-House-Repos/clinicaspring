@@ -1,246 +1,68 @@
 package com.backend.clinica.repository;
 
-import org.apache.log4j.Logger;
-import com.backend.clinica.entity.DomicilioModel;
-import com.backend.clinica.entity.OdontologoModel;
-import com.backend.clinica.entity.PacienteModel;
+import com.backend.clinica.service.OdontologoService;
+import com.backend.clinica.service.PacienteService;
+import com.backend.clinica.service.TurnoService;
+import com.backend.clinica.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+@Component
 public class DBInitializer {
-    private static final Logger logger = Logger.getLogger(DBInitializer.class);
+    @Autowired
+    private OdontologoService odontologoService;
+    @Autowired
+    private PacienteService pacienteService;
+    @Autowired
+    private TurnoService turnoService;
 
-    public static String deleteTableDomicilio() {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "DROP TABLE IF EXISTS DOMICILIO";
+    public void loadDataToOrm() {
+        OdontologoModel o1 = new OdontologoModel("111", "John", "Doe");
+        OdontologoModel o2 = new OdontologoModel("222", "Jane", "Smith");
+        OdontologoModel o3 = new OdontologoModel("333", "Michael", "Jhonson");
 
-        try {
-            int result = connection.createStatement().executeUpdate(query);
-            if (result == 0) {
-                logger.info("Tabla DOMICILIO borrada");
-                return "200";
-            } else {
-                logger.error("No existe la tabla DOMICILIO");
-                return "404";
-            }
-        } catch (Exception e) {
-            logger.error("Error al borrar la tabla DOMICILIO - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
+        DomicilioModel d1 = new DomicilioModel("Av. Revolucion", 123, "Mexico", "Mexico");
+        DomicilioModel d2 = new DomicilioModel("Calle Corrientes", 456, "Buenos Aires", "Buenos Aires");
+        DomicilioModel d3 = new DomicilioModel("Elm Street", 789, "Springwood", "Ohio");
 
-    public static String createTableDomicilio() {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "CREATE TABLE IF NOT EXISTS DOMICILIO (" +
-                "    DOMICILIOID INT PRIMARY KEY AUTO_INCREMENT," +
-                "    CALLE VARCHAR(255)," +
-                "    NUMERO INT," +
-                "    LOCALIDAD VARCHAR(255)," +
-                "    PROVINCIA VARCHAR(255)" +
-                ");";
+        String f1 = "2021-01-01";
+        String f2 = "2022-02-02";
+        String f3 = "2023-03-03";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date1 = LocalDate.parse(f1, formatter);
+        LocalDate date2 = LocalDate.parse(f2, formatter);
+        LocalDate date3 = LocalDate.parse(f3, formatter);
 
-        try {
-            int result = connection.createStatement().executeUpdate(query);
-            if (result == 0) {
-                logger.info("Tabla DOMICILIO creada");
-                return "200";
-            } else {
-                logger.error("Error al crear la tabla DOMICILIO");
-                return "500";
-            }
-        } catch (Exception e) {
-            logger.error("Error al crear la tabla DOMICILIO - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
+        PacienteModel p1 = new PacienteModel("Emily", "Davis", "901234", date1, d1);
+        PacienteModel p2 = new PacienteModel("David", "Wilson", "567890", date2, d2);
+        PacienteModel p3 = new PacienteModel("Sarah", "Taylor", "123457", date3, d3);
 
-    public static String deleteTableOdontologo() {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "DROP TABLE IF EXISTS ODONTOLOGO;";
+        odontologoService.create(o1);
+        odontologoService.create(o2);
+        odontologoService.create(o3);
 
-        try {
-            int result = connection.createStatement().executeUpdate(query);
-            if (result == 0) {
-                logger.info("Tabla ODONTOLOGO borrada");
-                return "200";
-            } else {
-                logger.error("No existe la tabla ODONTOLOGO");
-                return "404";
-            }
-        } catch (Exception e) {
-            logger.error("Error al borrar la tabla ODONTOLOGO - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
+        pacienteService.create(p1);
+        pacienteService.create(p2);
+        pacienteService.create(p3);
 
-    public static String createTableOdontologo() {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "CREATE TABLE IF NOT EXISTS ODONTOLOGO (" +
-                "    ODONTOLOGOID INT PRIMARY KEY AUTO_INCREMENT," +
-                "    NUMEROMATRICULA VARCHAR(255) UNIQUE NOT NULL," +
-                "    NOMBRE VARCHAR(255) NOT NULL," +
-                "    APELLIDO VARCHAR(255) NOT NULL" +
-                ");";
+        String fh1 = "2021-01-01T10:00";
+        String fh2 = "2022-02-02T11:00";
+        String fh3 = "2023-03-03T12:00";
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime dateTime1 = LocalDateTime.parse(fh1, formatter2);
+        LocalDateTime dateTime2 = LocalDateTime.parse(fh2, formatter2);
+        LocalDateTime dateTime3 = LocalDateTime.parse(fh3, formatter2);
 
-        try {
-            int result = connection.createStatement().executeUpdate(query);
-            if (result == 0) {
-                logger.info("Tabla ODONTOLOGO creada");
-                return "200";
-            } else {
-                logger.error("Error al crear la tabla ODONTOLOGO");
-                return "500";
-            }
-        } catch (Exception e) {
-            logger.error("Error al crear la tabla ODONTOLOGO - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
+        TurnoModel t1 = new TurnoModel(p1, o1, dateTime1);
+        TurnoModel t2 = new TurnoModel(p2, o2, dateTime2);
+        TurnoModel t3 = new TurnoModel(p3, o3, dateTime3);
 
-    public static String deleteTablePaciente() {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "DROP TABLE IF EXISTS PACIENTE";
-
-        try {
-            int result = connection.createStatement().executeUpdate(query);
-            if (result == 0) {
-                logger.info("Tabla PACIENTE borrada");
-                return "200";
-            } else {
-                logger.error("No existe la tabla PACIENTE");
-                return "404";
-            }
-        } catch (Exception e) {
-            logger.error("Error al borrar la tabla PACIENTE - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
-
-    public static String createTablePaciente() {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "CREATE TABLE IF NOT EXISTS PACIENTE (" +
-                "    PACIENTEID INT PRIMARY KEY AUTO_INCREMENT," +
-                "    NOMBRE VARCHAR(255)," +
-                "    APELLIDO VARCHAR(255)," +
-                "    DNI VARCHAR(255) UNIQUE," +
-                "    FECHAINGRESO DATE," +
-                "    DOMICILIOID INT NOT NULL," +
-                "    FOREIGN KEY (DOMICILIOID) REFERENCES DOMICILIO(DOMICILIOID) ON UPDATE CASCADE ON DELETE CASCADE" +
-                ");";
-
-        try {
-
-            int result = connection.createStatement().executeUpdate(query);
-            if (result == 0) {
-                logger.info("Tabla PACIENTE creada");
-                return "200";
-            } else {
-                logger.error("Error al crear la tabla PACIENTE");
-                return "500";
-            }
-        } catch (Exception e) {
-            logger.error("Error al crear la tabla PACIENTE - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
-
-    public static String insertDataPaciente(DomicilioModel domicilio, PacienteModel paciente) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String queryDomilicio = "INSERT INTO DOMICILIO (CALLE, NUMERO, LOCALIDAD, PROVINCIA) VALUES (?, ?, ?, ?)";
-        String queryPaciente = "INSERT INTO PACIENTE (NOMBRE, APELLIDO, DNI, FECHAINGRESO, DOMICILIOID) VALUES (?, ?, ?, ?, ?)";
-
-        try {
-            connection.setAutoCommit(false);
-            connection.commit();
-
-            PreparedStatement psDomicilio = connection.prepareStatement(queryDomilicio, Statement.RETURN_GENERATED_KEYS);
-            psDomicilio.setString(1, domicilio.getCalle());
-            psDomicilio.setInt(2, domicilio.getNumero());
-            psDomicilio.setString(3, domicilio.getLocalidad());
-            psDomicilio.setString(4, domicilio.getProvincia());
-
-            int rowsDomicilio = psDomicilio.executeUpdate();
-            if (rowsDomicilio > 0) {
-                ResultSet rs = psDomicilio.getGeneratedKeys();
-                rs.next();
-                domicilio.setDomicilioID(rs.getInt(1));
-                logger.info(rowsDomicilio + " Dato insertados en la tabla DOMICILIO");
-            } else {
-                logger.error("No se ha creado el registro en la tabla DOMICILIO");
-                connection.rollback();
-                return "500";
-            }
-
-            PreparedStatement psPaciente = connection.prepareStatement(queryPaciente);
-            psPaciente.setString(1, paciente.getNombre());
-            psPaciente.setString(2, paciente.getApellido());
-            psPaciente.setString(3, paciente.getDni());
-            psPaciente.setDate(4, Date.valueOf(paciente.getFechaIngreso()));
-            psPaciente.setInt(5, domicilio.getDomicilioID());
-
-            int rowsPaciente = psPaciente.executeUpdate();
-            if (rowsPaciente > 0) {
-                logger.info(rowsPaciente + " Dato insertados en la tabla PACIENTE");
-                connection.setAutoCommit(true);
-                return "200";
-            } else {
-                logger.error("No se ha creado el registro en la tabla PACIENTE");
-                connection.rollback();
-                return "500";
-            }
-        } catch (SQLException e) {
-            logger.error("Error al insertar datos en la tabla PACIENTE - " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
-    }
-
-    public static String insertDataOdontologo(OdontologoModel odontologo) {
-        DBConnector connector = DBConnector.getInstance();
-        Connection connection = connector.getConnection();
-        String query = "INSERT INTO ODONTOLOGO (NUMEROMATRICULA, NOMBRE, APELLIDO) VALUES (?, ?, ?)";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, odontologo.getNumeroMatricula());
-            preparedStatement.setString(2, odontologo.getNombre());
-            preparedStatement.setString(3, odontologo.getApellido());
-
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0) {
-                ResultSet result = preparedStatement.getGeneratedKeys();
-                result.next();
-                logger.info("POST - ODONTOLOGO creado correctamente con ID " + result.getInt(1));
-                return "200";
-            } else {
-                logger.error("POST - Error al crear el ODONTOLOGO");
-                return "500";
-            }
-        } catch (SQLException e) {
-            logger.error("POST - Error al crear el ODONTOLOGO: " + e.getMessage());
-            return "500";
-        } finally {
-            connector.closeConnection();
-        }
+        turnoService.create(t1);
+        turnoService.create(t2);
+        turnoService.create(t3);
     }
 }

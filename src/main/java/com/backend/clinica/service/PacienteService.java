@@ -1,39 +1,40 @@
 package com.backend.clinica.service;
 
-import com.backend.clinica.repository.IDAO;
+import com.backend.clinica.repository.PacienteRepository;
 import com.backend.clinica.entity.PacienteModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PacienteService implements IService<PacienteModel> {
     @Autowired
-    private IDAO<PacienteModel> interfaceDAO;
+    private PacienteRepository pacienteRepository;
+
+    @Override
+    public List<PacienteModel> findAll() {
+        return pacienteRepository.findAll();
+    }
+
+    @Override
+    public Optional<PacienteModel> findById(Long id) {
+        return pacienteRepository.findById(id);
+    }
 
     @Override
     public PacienteModel create(PacienteModel pacienteModel) {
-        return interfaceDAO.create(pacienteModel);
+        return pacienteRepository.save(pacienteModel);
     }
 
     @Override
-    public PacienteModel findById(int id) {
-        return interfaceDAO.findById(id);
+    public void update(PacienteModel pacienteModel) {
+        pacienteRepository.save(pacienteModel);
     }
 
     @Override
-    public ArrayList<PacienteModel> findAll() {
-        return interfaceDAO.findAll();
-    }
-
-    @Override
-    public PacienteModel update(PacienteModel pacienteModel, Integer id) {
-        return interfaceDAO.update(pacienteModel, id);
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return interfaceDAO.delete(id);
+    public void delete(Long id) {
+        pacienteRepository.deleteById(id);
     }
 }

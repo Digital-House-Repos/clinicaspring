@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -16,7 +17,7 @@ public class PacienteController {
 
     @GetMapping
     public ResponseEntity<CustomResponse> getPacientes() {
-        ArrayList<PacienteModel> pacientes = pacienteService.findAll();
+        List<PacienteModel> pacientes = pacienteService.findAll();
         if (pacientes.isEmpty()) {
             CustomResponse cr = new CustomResponse(false, "No hay pacientes en la base de datos", null);
             return ResponseEntity.status(404).body(cr);
@@ -27,15 +28,15 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse> getPaciente(@PathVariable("id") Integer id) {
-        PacienteModel paciente = pacienteService.findById(id);
+    public ResponseEntity<CustomResponse> getPaciente(@PathVariable("id") Long id) {
+        Optional<PacienteModel> paciente = pacienteService.findById(id);
 
-        if (paciente == null) {
+        if (paciente.isPresent()) {
+            CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente.get());
+            return ResponseEntity.status(302).body(cr);
+        } else {
             CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
             return ResponseEntity.status(404).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente);
-            return ResponseEntity.status(302).body(cr);
         }
     }
 
@@ -53,31 +54,32 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomResponse> updatePaciente(@RequestBody PacienteModel pacienteModel, @PathVariable("id") Integer id) {
-        PacienteModel paciente = pacienteService.findById(id);
+    public ResponseEntity<CustomResponse> updatePaciente(@RequestBody PacienteModel pacienteModel, @PathVariable("id") Long id) {
+        Optional<PacienteModel> paciente = pacienteService.findById(id);
 
-        if (paciente == null) {
+        if (paciente.isPresent()) {
+            pacienteModel.setPacienteID(id);
+            pacienteService.update(pacienteModel);
+            CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", pacienteModel);
+            return ResponseEntity.status(200).body(cr);
+        } else {
             CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
             return ResponseEntity.status(404).body(cr);
-        } else {
-            pacienteModel.setPacienteID(id);
-            PacienteModel pacienteUpdated = pacienteService.update(pacienteModel, id);
-            CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", pacienteUpdated);
-            return ResponseEntity.status(200).body(cr);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CustomResponse> deletePaciente(@PathVariable("id") Integer id) {
-        PacienteModel paciente = pacienteService.findById(id);
+    public ResponseEntity<CustomResponse> deletePaciente(@PathVariable("id") Long id) {
+        Optional<PacienteModel> paciente = pacienteService.findById(id);
 
-        if (paciente == null) {
+        if (paciente.isPresent()) {
+            pacienteService.delete(id);
+            CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", "Se eliminó");
+            return ResponseEntity.status(200).body(cr);
+
+        } else {
             CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
             return ResponseEntity.status(404).body(cr);
-        } else {
-            pacienteService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", null);
-            return ResponseEntity.status(200).body(cr);
         }
     }
 }
