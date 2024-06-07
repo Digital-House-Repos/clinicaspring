@@ -16,7 +16,7 @@ public class ClinicaApplication {
     }
 
     @PostConstruct
-    public void init() {
+    public void loadDataToORM() {
         dbInitializer.loadDataToOrm();
     }
 }
