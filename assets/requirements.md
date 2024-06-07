@@ -49,6 +49,8 @@ ID debe ser autoincremental
 - Tener Entity para: Odontologo, Domicilio, Paciente y Turno
 - Usar @Component, @Repository y @Service según corresponda
 - @Autowired para inyección de dependencias
+- Usar Hibernate como ORM
+- Usar JpaRepositories para las consultas a la base de datos
 
 ## Tests
 
