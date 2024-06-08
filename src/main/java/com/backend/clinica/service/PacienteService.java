@@ -37,4 +37,8 @@ public class PacienteService implements IService<PacienteModel> {
     public void delete(Long id) {
         pacienteRepository.deleteById(id);
     }
+
+    public Optional<PacienteModel> findByDni(String dni) {
+        return pacienteRepository.findByDni(dni);
+    }
 }
