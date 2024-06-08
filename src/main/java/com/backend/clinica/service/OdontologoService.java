@@ -37,4 +37,8 @@ public class OdontologoService implements IService<OdontologoModel> {
     public void delete(Long id) {
         odontologoRepository.deleteById(id);
     }
+
+    public Optional<OdontologoModel> findByMatricula(String matricula) {
+        return odontologoRepository.findByNumeroMatricula(matricula);
+    }
 }

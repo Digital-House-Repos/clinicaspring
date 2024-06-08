@@ -1,19 +1,20 @@
 package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.OdontologoModel;
-import com.backend.clinica.service.IService;
+import com.backend.clinica.service.OdontologoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
     @Autowired
-    private IService<OdontologoModel> odontologoService;
+    private OdontologoService odontologoService;
 
     @GetMapping
     public ResponseEntity<CustomResponse> getOdontologos() {
@@ -42,6 +43,12 @@ public class OdontologoController {
 
     @PostMapping
     public ResponseEntity<CustomResponse> createOdontologo(@RequestBody OdontologoModel odontologoModel) {
+        Optional<OdontologoModel> odontologoEqualsByMatricula = odontologoService.findByMatricula(odontologoModel.getNumeroMatricula());
+        if (odontologoEqualsByMatricula.isPresent()) {
+            CustomResponse cr = new CustomResponse(false, "Ya existe un odontologo con esa matricula", null);
+            return ResponseEntity.status(400).body(cr);
+        }
+
         OdontologoModel odontologo = odontologoService.create(odontologoModel);
 
         if (odontologo == null) {
@@ -55,6 +62,12 @@ public class OdontologoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updateOdontologo(@RequestBody OdontologoModel odontologoModel, @PathVariable("id") Long id) {
+        Optional<OdontologoModel> odontologoEqualsByMatricula = odontologoService.findByMatricula(odontologoModel.getNumeroMatricula());
+        if (odontologoEqualsByMatricula.isPresent() && !Objects.equals(odontologoEqualsByMatricula.get().getOdontologoID(), id)) {
+            CustomResponse cr = new CustomResponse(false, "Ya existe un odontologo con esa matricula", null);
+            return ResponseEntity.status(400).body(cr);
+        }
+
         Optional<OdontologoModel> odontologo = odontologoService.findById(id);
 
         if (odontologo.isPresent()) {
@@ -76,6 +89,19 @@ public class OdontologoController {
             odontologoService.delete(id);
             CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", null);
             return ResponseEntity.status(200).body(cr);
+        } else {
+            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);
+            return ResponseEntity.status(404).body(cr);
+        }
+    }
+
+    @GetMapping("/matricula/{matricula}")
+    public ResponseEntity<CustomResponse> getOdontologoByMatricula(@PathVariable("matricula") String matricula) {
+        Optional<OdontologoModel> odontologo = odontologoService.findByMatricula(matricula);
+
+        if (odontologo.isPresent()) {
+            CustomResponse cr = new CustomResponse(true, "Odontologo encontrado", odontologo.get());
+            return ResponseEntity.status(302).body(cr);
         } else {
             CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);
             return ResponseEntity.status(404).body(cr);
