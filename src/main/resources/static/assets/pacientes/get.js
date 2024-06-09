@@ -56,7 +56,7 @@ async function loadPacientes() {
 
 async function deletePaciente(_id) {
   const URLPacientes = `/pacientes/${_id}`;
-  const data = await data(URLPacientes, null, 'DELETE', null);
+  const data = await dataPacientes(URLPacientes, null, 'DELETE', null);
   if (data.ok) {
     window.location.reload();
   }
