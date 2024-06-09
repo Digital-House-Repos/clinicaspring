@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet & icons -->
+    <link rel="stylesheet" href="../../assets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
+    />
+    <link rel="icon" href="../../images/tab.png" type="image/x-icon" />
+
+    <title>Projecto Clinica</title>
+  </head>
+
+  <body>
+    <nav>
+      <div class="logo-name">
+        <div class="logo-image">
+          <img src="../../images/icon.png" alt="bar" />
+        </div>
+
+        <span class="logo_name">Backend Project</span>
+      </div>
+
+      <div class="menu-items">
+        <ul class="nav-links">
+          <li>
+            <a href="../../index.html">
+              <i class="uil uil-estate"></i>
+              <span class="link-name">Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="./list.html">
+              <i class="uil uil-list-ul"></i>
+              <span class="link-name">Listar</span>
+            </a>
+          </li>
+          <li>
+            <a href="./create.html">
+              <i class="uil uil-plus-circle"></i>
+              <span class="link-name">Crear</span>
+            </a>
+          </li>
+          <li>
+            <a href="./search.html">
+              <i class="uil uil-search-alt"></i>
+              <span class="link-name">Buscar</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="logout-mode">
+          <li class="mode">
+            <a href="#">
+              <i class="uil uil-moon"></i>
+              <span class="link-name">Dark Mode</span>
+            </a>
+
+            <div class="mode-toggle">
+              <span class="switch"></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="dashboard">
+      <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <img src="../../images/profile.png" alt="profile" />
+      </div>
+
+      <div class="dash-content">
+        <div class="activity mr">
+          <div class="title">
+            <i class="uil uil-list-ul"></i>
+            <span class="text">Lista de Pacientes</span>
+          </div>
+
+          <div class="activity-data">
+            <div class="data" id="paciente-id">
+              <span class="data-title"><strong>ID</strong></span>
+            </div>
+            <div class="data" id="paciente-nombre">
+              <span class="data-title"><strong>Nombre</strong></span>
+            </div>
+            <div class="data" id="paciente-apellido">
+              <span class="data-title"><strong>Apellido</strong></span>
+            </div>
+            <div class="data" id="paciente-dni">
+              <span class="data-title"><strong>DNI</strong></span>
+            </div>
+            <div class="data" id="paciente-fechaingreso">
+              <span class="data-title"><strong>Ingreso</strong></span>
+            </div>
+            <div class="data" id="paciente-domicilio">
+              <span class="data-title"><strong>Domicilio</strong></span>
+            </div>
+            <div class="data" id="paciente-buttons">
+              <span class="data-title"><strong>Options</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Javascript -->
+    <script src="../../assets/script.js"></script>
+    <script src="../../assets/pacientes/get.js"></script>
+  </body>
+</html>
