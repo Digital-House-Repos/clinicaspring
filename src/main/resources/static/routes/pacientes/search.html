@@ -76,16 +76,16 @@
 
       <div class="dash-content">
         <div class="activity mr">
-          <div class="title" style="margin: 30px 0;">
+          <div class="title" style="margin: 30px 0">
             <i class="uil uil-search-alt"></i>
-            <span class="text">Buscar Odontólogo</span>
-            <form method="POST" id="form-search-odontologo">
+            <span class="text">Buscar Paciente</span>
+            <form method="POST" id="form-search-paciente">
               <div>
                 <input
                   type="text"
-                  name="numeroMatricula"
-                  id="numeroMatricula"
-                  placeholder="Ingresa Número de Matrícula"
+                  name="dni"
+                  id="dni"
+                  placeholder="Ingresa Número de DNI"
                   required
                   class="form-input"
                 />
@@ -95,24 +95,33 @@
           </div>
 
           <div class="activity-data">
-            <div class="data" id="odontologo-id">
+            <div class="data" id="paciente-id">
               <span class="data-title"><strong>ID</strong></span>
             </div>
-            <div class="data" id="odontologo-nombre">
+            <div class="data" id="paciente-nombre">
               <span class="data-title"><strong>Nombre</strong></span>
             </div>
-            <div class="data" id="odontologo-apellido">
+            <div class="data" id="paciente-apellido">
               <span class="data-title"><strong>Apellido</strong></span>
             </div>
-            <div class="data" id="odontologo-matricula">
-              <span class="data-title"><strong>Nº Matricula</strong></span>
+            <div class="data" id="paciente-dni">
+              <span class="data-title"><strong>DNI</strong></span>
             </div>
+            <div class="data" id="paciente-fechaingreso">
+              <span class="data-title"><strong>Ingreso</strong></span>
+            </div>
+            <div class="data" id="paciente-domicilio">
+              <span class="data-title"><strong>Domicilio</strong></span>
+            </div>
+            <!-- <div class="data" id="paciente-buttons">
+              <span class="data-title"><strong>Options</strong></span>
+            </div> -->
           </div>
         </div>
       </div>
     </section>
     <!-- Javascript -->
     <script src="../../assets/script.js"></script>
-    <script src="../../assets/odontologos/search.js"></script>
+    <script src="../../assets/pacientes/search.js"></script>
   </body>
 </html>
