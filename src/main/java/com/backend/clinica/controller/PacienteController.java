@@ -72,7 +72,7 @@ public class PacienteController {
 
         if (paciente.isPresent()) {
             pacienteModel.setPacienteID(id);
-            pacienteModel.setDomicilio(paciente.get().getDomicilio());
+            pacienteModel.getDomicilio().setDomicilioID(paciente.get().getDomicilio().getDomicilioID());
             pacienteService.update(pacienteModel);
             CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", pacienteModel);
             return ResponseEntity.status(200).body(cr);
@@ -88,7 +88,7 @@ public class PacienteController {
 
         if (paciente.isPresent()) {
             pacienteService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", "Se eliminó");
+            CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", paciente.get());
             return ResponseEntity.status(200).body(cr);
 
         } else {

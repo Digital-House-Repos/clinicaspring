@@ -86,7 +86,7 @@ public class OdontologoController {
 
         if (odontologo.isPresent()) {
             odontologoService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", null);
+            CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", odontologo.get());
             return ResponseEntity.status(200).body(cr);
         } else {
             CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);

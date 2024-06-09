@@ -100,7 +100,7 @@ public class TurnoController {
 
         if (turno.isPresent()) {
             turnoService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Turno eliminado correctamente", null);
+            CustomResponse cr = new CustomResponse(true, "Turno eliminado correctamente", turno.get());
             return ResponseEntity.status(200).body(cr);
         } else {
             CustomResponse cr = new CustomResponse(false, "Turno no encontrado", null);
