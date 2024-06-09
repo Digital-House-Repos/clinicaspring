@@ -36,7 +36,7 @@ async function loadOdontologos() {
     const spanButton = `
     <span class="data-list text-button">
           <a href="./update.html?id=${odontologoID}" class="a-update"><i class="uil uil-edit"></i></a>
-          <a href="./delete.html?id=${odontologoID}" class="a-delete"><i class="uil uil-trash-alt"></i></a>
+          <a href="#" onclick="deleteOdontologo(${odontologoID})" class="a-delete"><i class="uil uil-trash-alt"></i></a>
     </span>`
 
     divId.innerHTML += spanId;
@@ -44,6 +44,14 @@ async function loadOdontologos() {
     divLastName.innerHTML += spanLastName;
     divMatricula.innerHTML += spanMatricula;
     divButtons.innerHTML += spanButton;
+  }
+}
+
+async function deleteOdontologo(_id) {
+  const URLOdontologos = `/odontologos/${_id}`;
+  const data = await dataOdontologos(URLOdontologos, null, 'DELETE', null);
+  if (data.ok) {
+    window.location.reload();
   }
 }
 
