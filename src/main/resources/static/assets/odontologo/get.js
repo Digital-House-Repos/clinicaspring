@@ -25,6 +25,7 @@ async function loadOdontologos() {
   const divName = document.getElementById('odontologo-nombre');
   const divLastName = document.getElementById('odontologo-apellido');
   const divMatricula = document.getElementById('odontologo-matricula');
+  const divButtons = document.getElementById('odontologo-buttons');
 
   for (odontologo of data.data) {
     const { odontologoID, nombre, apellido, numeroMatricula } = odontologo;
@@ -32,11 +33,17 @@ async function loadOdontologos() {
     const spanName = `<span class="data-list">${nombre}</span>`;
     const spanLastName = `<span class="data-list">${apellido}</span>`;
     const spanMatricula = `<span class="data-list">${numeroMatricula}</span>`;
+    const spanButton = `
+    <span class="data-list text-button">
+          <a href="/odontologo/${odontologoID}" class="a-update"><i class="uil uil-edit"></i></a>
+          <a href="/odontologo/${odontologoID}" class="a-delete"><i class="uil uil-trash-alt"></i></a>
+    </span>`
 
     divId.innerHTML += spanId;
     divName.innerHTML += spanName;
     divLastName.innerHTML += spanLastName;
     divMatricula.innerHTML += spanMatricula;
+    divButtons.innerHTML += spanButton;
   }
 }
 
