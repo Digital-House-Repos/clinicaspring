@@ -35,8 +35,8 @@ async function loadOdontologos() {
     const spanMatricula = `<span class="data-list">${numeroMatricula}</span>`;
     const spanButton = `
     <span class="data-list text-button">
-          <a href="/odontologo/${odontologoID}" class="a-update"><i class="uil uil-edit"></i></a>
-          <a href="/odontologo/${odontologoID}" class="a-delete"><i class="uil uil-trash-alt"></i></a>
+          <a href="./update.html?id=${odontologoID}" class="a-update"><i class="uil uil-edit"></i></a>
+          <a href="./delete.html?id=${odontologoID}" class="a-delete"><i class="uil uil-trash-alt"></i></a>
     </span>`
 
     divId.innerHTML += spanId;

@@ -63,7 +63,9 @@ public class PacienteController {
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updatePaciente(@RequestBody PacienteModel pacienteModel, @PathVariable("id") Long id) {
         Optional<PacienteModel> pacienteEqualsByDni = pacienteService.findByDni(pacienteModel.getDni());
-        if (pacienteEqualsByDni.isPresent() && pacienteModel.getDni().equals(pacienteEqualsByDni.get().getDni())) {
+        if (pacienteEqualsByDni.isPresent() &&
+                pacienteModel.getDni().equals(pacienteEqualsByDni.get().getDni()) &&
+                pacienteEqualsByDni.get().getPacienteID() != id) {
             CustomResponse cr = new CustomResponse(false, "Ya existe un paciente con ese DNI", null);
             return ResponseEntity.status(400).body(cr);
         }

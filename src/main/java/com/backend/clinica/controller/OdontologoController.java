@@ -62,7 +62,9 @@ public class OdontologoController {
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updateOdontologo(@RequestBody OdontologoModel odontologoModel, @PathVariable("id") Long id) {
         Optional<OdontologoModel> odontologoEqualsByMatricula = odontologoService.findByMatricula(odontologoModel.getNumeroMatricula());
-        if (odontologoEqualsByMatricula.isPresent() && odontologoModel.getNumeroMatricula().equals(odontologoEqualsByMatricula.get().getNumeroMatricula())) {
+        if (odontologoEqualsByMatricula.isPresent() &&
+                odontologoModel.getNumeroMatricula().equals(odontologoEqualsByMatricula.get().getNumeroMatricula()) &&
+                odontologoEqualsByMatricula.get().getOdontologoID() != id) {
             CustomResponse cr = new CustomResponse(false, "Ya existe un odontologo con esa matricula", null);
             return ResponseEntity.status(400).body(cr);
         }
