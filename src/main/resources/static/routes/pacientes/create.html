@@ -86,12 +86,12 @@
         <div class="activity mr">
           <div class="title">
             <i class="uil uil-plus-circle"></i>
-            <span class="text">Crear Odontólogo</span>
+            <span class="text">Registrar Paciente</span>
           </div>
         </div>
 
         <div class="content ml">
-          <form method="POST" id="form-post-odontologo">
+          <form method="POST" id="form-post-paciente">
             <div class="form-columns">
               <div>
                 <span class="details"><strong>Nombre:</strong></span>
@@ -118,12 +118,73 @@
               </div>
 
               <div>
-                <span class="details"><strong>Matricula:</strong></span>
+                <span class="details"><strong>DNI:</strong></span>
                 <input
                   type="text"
-                  name="numeroMatricula"
-                  id="numeroMatricula"
-                  placeholder="Ingresa Matricula"
+                  name="dni"
+                  id="dni"
+                  placeholder="Ingresa DNI"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <span class="details"><strong>Fecha de ingreso:</strong></span>
+                <input
+                  type="date"
+                  name="ingreso"
+                  id="ingreso"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <span class="details"><strong>Calle:</strong></span>
+                <input
+                  type="text"
+                  name="calle"
+                  id="calle"
+                  placeholder="Ingresa calle"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <span class="details"><strong>Número:</strong></span>
+                <input
+                  type="number"
+                  name="numero"
+                  id="numero"
+                  placeholder="Ingresa número"
+                  step="1"
+                  min="1"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <span class="details"><strong>Localidad:</strong></span>
+                <input
+                  type="text"
+                  name="localidad"
+                  id="localidad"
+                  placeholder="Ingresa localidad"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <span class="details"><strong>Provincia:</strong></span>
+                <input
+                  type="text"
+                  name="provincia"
+                  id="provincia"
+                  placeholder="Ingresa provincia"
                   required
                   class="form-input"
                 />
@@ -131,7 +192,7 @@
 
               <div>
                 <button type="submit" class="btn btn-primary btn-large">
-                  Crear Odontologo
+                  Registrar Paciente
                 </button>
               </div>
             </div>
@@ -142,6 +203,6 @@
 
     <!-- Javascript -->
     <script src="../../assets/script.js"></script>
-    <script src="../../assets/odontologos/create.js"></script>
+    <script src="../../assets/pacientes/create.js"></script>
   </body>
 </html>
