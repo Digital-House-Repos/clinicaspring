@@ -13,6 +13,14 @@
     <link rel="icon" href="../../images/tab.png" type="image/x-icon" />
 
     <title>Projecto Clinica</title>
+
+    <style>
+      .form-columns {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    </style>
   </head>
 
   <body>
@@ -68,7 +76,7 @@
       </div>
     </nav>
 
-    <section class="dashboard">
+    <div class="dashboard">
       <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
         <img src="../../images/profile.png" alt="profile" />
@@ -77,33 +85,54 @@
       <div class="dash-content">
         <div class="activity mr">
           <div class="title">
-            <i class="uil uil-list-ul"></i>
-            <span class="text">Lista de Turnos</span>
-          </div>
-
-          <div class="activity-data">
-            <div class="data" id="turno-id">
-              <span class="data-title"><strong>ID</strong></span>
-            </div>
-            <div class="data" id="turno-odontologo">
-              <span class="data-title"><strong>Odontologo</strong></span>
-            </div>
-            <div class="data" id="turno-fechaHora">
-              <span class="data-title"><strong>Horario</strong></span>
-            </div>
-            <div class="data" id="turno-paciente">
-              <span class="data-title"><strong>Paciente</strong></span>
-            </div>
-            <div class="data" id="turno-buttons">
-              <span class="data-title"><strong>Options</strong></span>
-            </div>
+            <i class="uil uil-plus-circle"></i>
+            <span class="text">Registrar Turno</span>
           </div>
         </div>
+
+        <div class="content ml">
+          <form method="POST" id="form-post-turno">
+            <div class="form-columns">
+              <div>
+                <span class="details"><strong>Odontologo:</strong></span
+                ><br /><br />
+                <select name="odontologo" id="odontologo" required>
+                  <option value="">Selecciona un odontologo</option>
+                </select>
+              </div>
+
+              <div>
+                <span class="details"><strong>Paciente:</strong></span
+                ><br /><br />
+                <select name="paciente" id="paciente" required>
+                  <option value="">Selecciona un paciente</option>
+                </select>
+              </div>
+
+              <div>
+                <span class="details"><strong>Fecha y hora:</strong></span>
+                <input
+                  type="datetime-local"
+                  name="fechaHora"
+                  id="fechaHora"
+                  required
+                  class="form-input"
+                />
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-primary btn-large">
+                  Registrar turno
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-    </section>
+    </div>
 
     <!-- Javascript -->
     <script src="../../assets/script.js"></script>
-    <script src="../../assets/turnos/get.js"></script>
+    <script src="../../assets/turnos/create.js"></script>
   </body>
 </html>
