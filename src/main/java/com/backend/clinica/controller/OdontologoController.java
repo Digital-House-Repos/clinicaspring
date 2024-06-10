@@ -41,7 +41,7 @@ public class OdontologoController {
             return ResponseEntity.status(200).body(cr);
 
         } catch (EntityNotFoundException e) {
-            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", "Entity not found");
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
@@ -105,14 +105,17 @@ public class OdontologoController {
 
     @GetMapping("/matricula/{matricula}")
     public ResponseEntity<CustomResponse> getOdontologoByMatricula(@PathVariable("matricula") String matricula) {
-        Optional<OdontologoModel> odontologo = odontologoService.findByMatricula(matricula);
-
-        if (odontologo.isPresent()) {
-            CustomResponse cr = new CustomResponse(true, "Odontologo encontrado", odontologo.get());
+        try {
+            OdontologoModel odontologo = odontologoService.findByMatricula(matricula);
+            CustomResponse cr = new CustomResponse(true, "Odontologo encontrado", odontologo);
             return ResponseEntity.status(302).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);
+
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 }

@@ -45,7 +45,13 @@ public class OdontologoService implements IService<OdontologoModel> {
         odontologoRepository.deleteById(id);
     }
 
-    public Optional<OdontologoModel> findByMatricula(String matricula) {
-        return odontologoRepository.findByNumeroMatricula(matricula);
+    public OdontologoModel findByMatricula(String matricula) throws EntityNotFoundException {
+        Optional<OdontologoModel> odontologo = odontologoRepository.findByNumeroMatricula(matricula);
+
+        if (odontologo.isPresent()) {
+            return odontologo.get();
+        } else {
+            throw new EntityNotFoundException("Odontologo", "matricula", matricula);
+        }
     }
 }
