@@ -4,7 +4,6 @@ import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.entity.TurnoModel;
 import com.backend.clinica.service.IService;
-import com.backend.clinica.service.IService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public class TurnoController {
     @Autowired
     private IService<TurnoModel> turnoService;
     @Autowired
-    private IService2<OdontologoModel> odontologoService;
+    private IService<OdontologoModel> odontologoService;
     @Autowired
     private IService<PacienteModel> pacienteService;
 
@@ -49,7 +48,7 @@ public class TurnoController {
 
     @PostMapping
     public ResponseEntity<CustomResponse> createTurno(@RequestBody TurnoModel turnoModel) {
-        Optional<OdontologoModel> odontologo = Optional.ofNullable(odontologoService.findById(turnoModel.getOdontologo().getOdontologoID()));
+        Optional<OdontologoModel> odontologo = odontologoService.findById(turnoModel.getOdontologo().getOdontologoID());
         Optional<PacienteModel> paciente = pacienteService.findById(turnoModel.getPaciente().getPacienteID());
 
         if (odontologo.isEmpty() || paciente.isEmpty()) {
@@ -73,7 +72,7 @@ public class TurnoController {
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updateTurno(@RequestBody TurnoModel turnoModel, @PathVariable("id") Long id) {
         Optional<PacienteModel> paciente = pacienteService.findById(turnoModel.getPaciente().getPacienteID());
-        Optional<OdontologoModel> odontologo = Optional.ofNullable(odontologoService.findById(turnoModel.getOdontologo().getOdontologoID()));
+        Optional<OdontologoModel> odontologo = odontologoService.findById(turnoModel.getOdontologo().getOdontologoID());
 
         if (paciente.isEmpty() || odontologo.isEmpty()) {
             CustomResponse cr = new CustomResponse(false, "Error al actualizar el turno", null);
