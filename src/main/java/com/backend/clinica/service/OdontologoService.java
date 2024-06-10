@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class OdontologoService implements IService2<OdontologoModel> {
+public class OdontologoService implements IService<OdontologoModel> {
     @Autowired
     private OdontologoRepository odontologoRepository;
 

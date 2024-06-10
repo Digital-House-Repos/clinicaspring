@@ -48,8 +48,8 @@ public class TurnoController {
 
     @PostMapping
     public ResponseEntity<CustomResponse> createTurno(@RequestBody TurnoModel turnoModel) {
-        Optional<OdontologoModel> odontologo = odontologoService.findById(turnoModel.getOdontologo().getOdontologoID());
-        Optional<PacienteModel> paciente = pacienteService.findById(turnoModel.getPaciente().getPacienteID());
+        Optional<OdontologoModel> odontologo = Optional.ofNullable(odontologoService.findById(turnoModel.getOdontologo().getOdontologoID()));
+        Optional<PacienteModel> paciente = Optional.ofNullable(pacienteService.findById(turnoModel.getPaciente().getPacienteID()));
 
         if (odontologo.isEmpty() || paciente.isEmpty()) {
             CustomResponse cr = new CustomResponse(false, "Error al crear el turno", null);
@@ -71,8 +71,8 @@ public class TurnoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updateTurno(@RequestBody TurnoModel turnoModel, @PathVariable("id") Long id) {
-        Optional<PacienteModel> paciente = pacienteService.findById(turnoModel.getPaciente().getPacienteID());
-        Optional<OdontologoModel> odontologo = odontologoService.findById(turnoModel.getOdontologo().getOdontologoID());
+        Optional<PacienteModel> paciente = Optional.ofNullable(pacienteService.findById(turnoModel.getPaciente().getPacienteID()));
+        Optional<OdontologoModel> odontologo = Optional.ofNullable(odontologoService.findById(turnoModel.getOdontologo().getOdontologoID()));
 
         if (paciente.isEmpty() || odontologo.isEmpty()) {
             CustomResponse cr = new CustomResponse(false, "Error al actualizar el turno", null);
