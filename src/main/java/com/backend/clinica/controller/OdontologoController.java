@@ -88,8 +88,8 @@ public class OdontologoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomResponse> deleteOdontologo(@PathVariable("id") Long id) {
         try {
-            odontologoService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", "Entity deleted");
+            OdontologoModel odontologo = odontologoService.delete(id);
+            CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", odontologo);
             return ResponseEntity.status(200).body(cr);
 
         } catch (EntityNotFoundException e) {

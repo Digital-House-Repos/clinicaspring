@@ -2,13 +2,13 @@ package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.service.PacienteService;
+import com.backend.clinica.exception.EntityNotFoundException;
+import com.backend.clinica.exception.EntityAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -18,95 +18,102 @@ public class PacienteController {
 
     @GetMapping
     public ResponseEntity<CustomResponse> getPacientes() {
-        List<PacienteModel> pacientes = pacienteService.findAll();
-        if (pacientes.isEmpty()) {
-            CustomResponse cr = new CustomResponse(false, "No hay pacientes en la base de datos", null);
-            return ResponseEntity.status(404).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(true, "Pacientes encontrados", pacientes);
-            return ResponseEntity.status(200).body(cr);
+        try {
+            List<PacienteModel> pacientes = pacienteService.findAll();
+            if (pacientes.isEmpty()) {
+                CustomResponse cr = new CustomResponse(true, "No se encontraron pacientes", "Empty list");
+                return ResponseEntity.status(404).body(cr);
+            } else {
+                CustomResponse cr = new CustomResponse(true, "Pacientes encontrados", pacientes);
+                return ResponseEntity.status(200).body(cr);
+            }
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse> getPaciente(@PathVariable("id") Long id) {
-        Optional<PacienteModel> paciente = pacienteService.findById(id);
+        try {
+            PacienteModel paciente = pacienteService.findById(id);
+            CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente);
+            return ResponseEntity.status(200).body(cr);
 
-        if (paciente.isPresent()) {
-            CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente.get());
-            return ResponseEntity.status(302).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @PostMapping
     public ResponseEntity<CustomResponse> createPaciente(@RequestBody PacienteModel pacienteModel) {
-        Optional<PacienteModel> pacienteEqualsByDni = pacienteService.findByDni(pacienteModel.getDni());
-        if (pacienteEqualsByDni.isPresent()) {
-            CustomResponse cr = new CustomResponse(false, "Ya existe un paciente con ese DNI", null);
-            return ResponseEntity.status(400).body(cr);
-        }
+        try {
+            PacienteModel paciente = pacienteService.create(pacienteModel);
+            CustomResponse cr = new CustomResponse(true, "Paciente creado", paciente);
+            return ResponseEntity.status(200).body(cr);
 
-        PacienteModel paciente = pacienteService.create(pacienteModel);
-
-        if (paciente == null) {
-            CustomResponse cr = new CustomResponse(false, "Error al crear el paciente", null);
+        } catch (EntityAlreadyExistsException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
             return ResponseEntity.status(400).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(true, "Paciente creado correctamente", paciente);
-            return ResponseEntity.status(201).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updatePaciente(@RequestBody PacienteModel pacienteModel, @PathVariable("id") Long id) {
-        Optional<PacienteModel> pacienteEqualsByDni = pacienteService.findByDni(pacienteModel.getDni());
-        if (pacienteEqualsByDni.isPresent() && pacienteModel.getDni().equals(pacienteEqualsByDni.get().getDni())) {
-            CustomResponse cr = new CustomResponse(false, "Ya existe un paciente con ese DNI", null);
-            return ResponseEntity.status(400).body(cr);
-        }
-
-        Optional<PacienteModel> paciente = pacienteService.findById(id);
-
-        if (paciente.isPresent()) {
+        try {
             pacienteModel.setPacienteID(id);
-            pacienteModel.getDomicilio().setDomicilioID(paciente.get().getDomicilio().getDomicilioID());
             pacienteService.update(pacienteModel);
             CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", pacienteModel);
             return ResponseEntity.status(200).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
+
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (EntityAlreadyExistsException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            return ResponseEntity.status(400).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomResponse> deletePaciente(@PathVariable("id") Long id) {
-        Optional<PacienteModel> paciente = pacienteService.findById(id);
-
-        if (paciente.isPresent()) {
-            pacienteService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", paciente.get());
+        try {
+            PacienteModel paciente = pacienteService.delete(id);
+            CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", paciente);
             return ResponseEntity.status(200).body(cr);
 
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @GetMapping("/dni/{dni}")
     public ResponseEntity<CustomResponse> getPacienteByDni(@PathVariable("dni") String dni) {
-        Optional<PacienteModel> paciente = pacienteService.findByDni(dni);
+        try {
+            PacienteModel paciente = pacienteService.findByDni(dni);
+            CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente);
+            return ResponseEntity.status(200).body(cr);
 
-        if (paciente.isPresent()) {
-            CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente.get());
-            return ResponseEntity.status(302).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Paciente no encontrado", null);
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 }
