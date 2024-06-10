@@ -1,6 +1,7 @@
 package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.OdontologoModel;
+import com.backend.clinica.exception.EntityNotFoundException;
 import com.backend.clinica.service.OdontologoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,26 +18,34 @@ public class OdontologoController {
 
     @GetMapping
     public ResponseEntity<CustomResponse> getOdontologos() {
-        List<OdontologoModel> odontologos = odontologoService.findAll();
-        if (odontologos.isEmpty()) {
-            CustomResponse cr = new CustomResponse(false, "No hay odontologos en la base de datos", null);
-            return ResponseEntity.status(404).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(true, "Odontologos encontrados", odontologos);
-            return ResponseEntity.status(200).body(cr);
+        try {
+            List<OdontologoModel> odontologos = odontologoService.findAll();
+            if (odontologos.isEmpty()) {
+                CustomResponse cr = new CustomResponse(true, "No se encontraron odontólogos", "Empty list");
+                return ResponseEntity.status(404).body(cr);
+            } else {
+                CustomResponse cr = new CustomResponse(true, "Odontólogos encontrados", odontologos);
+                return ResponseEntity.status(200).body(cr);
+            }
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse> getOdontologo(@PathVariable("id") Long id) {
-        Optional<OdontologoModel> odontologo = odontologoService.findById(id);
+        try {
+            OdontologoModel odontologo = odontologoService.findById(id);
+            CustomResponse cr = new CustomResponse(true, "Odontologo encontrado", odontologo);
+            return ResponseEntity.status(200).body(cr);
 
-        if (odontologo.isPresent()) {
-            CustomResponse cr = new CustomResponse(true, "Odontologo encontrado", odontologo.get());
-            return ResponseEntity.status(302).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 

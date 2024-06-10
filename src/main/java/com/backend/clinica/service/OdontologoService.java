@@ -1,6 +1,7 @@
 package com.backend.clinica.service;
 
 import com.backend.clinica.entity.OdontologoModel;
+import com.backend.clinica.exception.EntityNotFoundException;
 import com.backend.clinica.repository.OdontologoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,14 @@ public class OdontologoService implements IService<OdontologoModel> {
     }
 
     @Override
-    public Optional<OdontologoModel> findById(Long id) {
-        return odontologoRepository.findById(id);
+    public OdontologoModel findById(Long id) throws EntityNotFoundException {
+        Optional<OdontologoModel> odontologo = odontologoRepository.findById(id);
+
+        if (odontologo.isPresent()) {
+            return odontologo.get();
+        } else {
+            throw new EntityNotFoundException("Odontologo", "id", id);
+        }
     }
 
     @Override
