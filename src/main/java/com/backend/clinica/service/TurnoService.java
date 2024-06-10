@@ -1,6 +1,12 @@
 package com.backend.clinica.service;
 
+import com.backend.clinica.entity.OdontologoModel;
+import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.entity.TurnoModel;
+import com.backend.clinica.exception.EntityAlreadyExistsException;
+import com.backend.clinica.exception.EntityNotFoundException;
+import com.backend.clinica.repository.OdontologoRepository;
+import com.backend.clinica.repository.PacienteRepository;
 import com.backend.clinica.repository.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +18,10 @@ import java.util.Optional;
 public class TurnoService implements IService<TurnoModel> {
     @Autowired
     private TurnoRepository turnoRepository;
+    @Autowired
+    private PacienteRepository pacienteRepository;
+    @Autowired
+    private OdontologoRepository odontologoRepository;
 
     @Override
     public List<TurnoModel> findAll() {
@@ -19,22 +29,59 @@ public class TurnoService implements IService<TurnoModel> {
     }
 
     @Override
-    public Optional<TurnoModel> findById(Long id) {
-        return turnoRepository.findById(id);
+    public TurnoModel findById(Long id) throws EntityNotFoundException {
+        Optional<TurnoModel> turno = turnoRepository.findById(id);
+
+        if (turno.isPresent()) {
+            return turno.get();
+        } else {
+            throw new EntityNotFoundException("Turno", "id", id);
+        }
     }
 
     @Override
-    public TurnoModel create(TurnoModel turnoModel) {
+    public TurnoModel create(TurnoModel turnoModel) throws EntityNotFoundException, EntityAlreadyExistsException {
+        Optional<PacienteModel> paciente = pacienteRepository.findById(turnoModel.getPaciente().getPacienteID());
+        if (paciente.isEmpty()) {
+            throw new EntityNotFoundException("Paciente", "id", turnoModel.getPaciente().getPacienteID());
+        }
+
+        Optional<OdontologoModel> odontologo = odontologoRepository.findById(turnoModel.getOdontologo().getOdontologoID());
+        if (odontologo.isEmpty()) {
+            throw new EntityNotFoundException("Odontologo", "id", turnoModel.getOdontologo().getOdontologoID());
+        }
+
+        turnoModel.setOdontologo(odontologo.get());
+        turnoModel.setPaciente(paciente.get());
         return turnoRepository.save(turnoModel);
     }
 
     @Override
-    public void update(TurnoModel turnoModel) {
-        turnoRepository.save(turnoModel);
+    public TurnoModel update(TurnoModel turnoModel) throws EntityNotFoundException, EntityAlreadyExistsException {
+        Optional<PacienteModel> paciente = pacienteRepository.findById(turnoModel.getPaciente().getPacienteID());
+        if (paciente.isEmpty()) {
+            throw new EntityNotFoundException("Paciente", "id", turnoModel.getPaciente().getPacienteID());
+        }
+
+        Optional<OdontologoModel> odontologo = odontologoRepository.findById(turnoModel.getOdontologo().getOdontologoID());
+        if (odontologo.isEmpty()) {
+            throw new EntityNotFoundException("Odontologo", "id", turnoModel.getOdontologo().getOdontologoID());
+        }
+
+        turnoModel.setOdontologo(odontologo.get());
+        turnoModel.setPaciente(paciente.get());
+        return turnoRepository.save(turnoModel);
     }
 
     @Override
-    public void delete(Long id) {
-        turnoRepository.deleteById(id);
+    public TurnoModel delete(Long id) throws EntityNotFoundException {
+        Optional<TurnoModel> turno = turnoRepository.findById(id);
+
+        if (turno.isPresent()) {
+            turnoRepository.deleteById(id);
+            return turno.get();
+        } else {
+            throw new EntityNotFoundException("Turno", "id", id);
+        }
     }
 }

@@ -69,8 +69,8 @@ public class PacienteController {
     public ResponseEntity<CustomResponse> updatePaciente(@RequestBody PacienteModel pacienteModel, @PathVariable("id") Long id) {
         try {
             pacienteModel.setPacienteID(id);
-            pacienteService.update(pacienteModel);
-            CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", pacienteModel);
+            PacienteModel paciente = pacienteService.update(pacienteModel);
+            CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", paciente);
             return ResponseEntity.status(200).body(cr);
 
         } catch (EntityNotFoundException e) {
