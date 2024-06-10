@@ -1,6 +1,7 @@
 package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.OdontologoModel;
+import com.backend.clinica.exception.EntityAlreadyExistsException;
 import com.backend.clinica.exception.EntityNotFoundException;
 import com.backend.clinica.service.OdontologoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/odontologos")
@@ -51,41 +51,37 @@ public class OdontologoController {
 
     @PostMapping
     public ResponseEntity<CustomResponse> createOdontologo(@RequestBody OdontologoModel odontologoModel) {
-        Optional<OdontologoModel> odontologoEqualsByMatricula = odontologoService.findByMatricula(odontologoModel.getNumeroMatricula());
-        if (odontologoEqualsByMatricula.isPresent()) {
-            CustomResponse cr = new CustomResponse(false, "Ya existe un odontologo con esa matricula", null);
-            return ResponseEntity.status(400).body(cr);
-        }
-
-        OdontologoModel odontologo = odontologoService.create(odontologoModel);
-
-        if (odontologo == null) {
-            CustomResponse cr = new CustomResponse(false, "Error al crear el odontologo", null);
-            return ResponseEntity.status(400).body(cr);
-        } else {
+        try {
+            OdontologoModel odontologo = odontologoService.create(odontologoModel);
             CustomResponse cr = new CustomResponse(true, "Odontologo creado correctamente", odontologo);
             return ResponseEntity.status(201).body(cr);
+
+        } catch (EntityAlreadyExistsException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            return ResponseEntity.status(400).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse> updateOdontologo(@RequestBody OdontologoModel odontologoModel, @PathVariable("id") Long id) {
-        Optional<OdontologoModel> odontologoEqualsByMatricula = odontologoService.findByMatricula(odontologoModel.getNumeroMatricula());
-        if (odontologoEqualsByMatricula.isPresent() && odontologoModel.getNumeroMatricula().equals(odontologoEqualsByMatricula.get().getNumeroMatricula())) {
-            CustomResponse cr = new CustomResponse(false, "Ya existe un odontologo con esa matricula", null);
-            return ResponseEntity.status(400).body(cr);
-        }
-
-        Optional<OdontologoModel> odontologo = odontologoService.findById(id);
-
-        if (odontologo.isPresent()) {
+        try {
             odontologoModel.setOdontologoID(id);
-            odontologoService.update(odontologoModel);
-            CustomResponse cr = new CustomResponse(true, "Odontologo actualizado correctamente", odontologoModel);
+            OdontologoModel odontologo = odontologoService.update(odontologoModel);
+            CustomResponse cr = new CustomResponse(true, "Odontologo actualizado correctamente", odontologo);
             return ResponseEntity.status(200).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);
+
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (EntityAlreadyExistsException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            return ResponseEntity.status(400).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 
