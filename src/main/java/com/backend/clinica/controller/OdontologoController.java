@@ -91,15 +91,17 @@ public class OdontologoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomResponse> deleteOdontologo(@PathVariable("id") Long id) {
-        Optional<OdontologoModel> odontologo = odontologoService.findById(id);
-
-        if (odontologo.isPresent()) {
+        try {
             odontologoService.delete(id);
-            CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", odontologo.get());
+            CustomResponse cr = new CustomResponse(true, "Odontologo eliminado correctamente", "Entity deleted");
             return ResponseEntity.status(200).body(cr);
-        } else {
-            CustomResponse cr = new CustomResponse(false, "Odontologo no encontrado", null);
+
+        } catch (EntityNotFoundException e) {
+            CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
         }
     }
 

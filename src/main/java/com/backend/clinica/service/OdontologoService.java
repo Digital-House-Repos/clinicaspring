@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OdontologoService implements IService<OdontologoModel> {
+public class OdontologoService implements IService2<OdontologoModel> {
     @Autowired
     private OdontologoRepository odontologoRepository;
 
@@ -41,8 +41,15 @@ public class OdontologoService implements IService<OdontologoModel> {
     }
 
     @Override
-    public void delete(Long id) {
-        odontologoRepository.deleteById(id);
+    public OdontologoModel delete(Long id) throws EntityNotFoundException {
+        Optional<OdontologoModel> odontologo = odontologoRepository.findById(id);
+
+        if (odontologo.isEmpty()) {
+            throw new EntityNotFoundException("Odontologo", "id", id);
+        } else {
+            odontologoRepository.deleteById(id);
+            return odontologo.get();
+        }
     }
 
     public OdontologoModel findByMatricula(String matricula) throws EntityNotFoundException {
