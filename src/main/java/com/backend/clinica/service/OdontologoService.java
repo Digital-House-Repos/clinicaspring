@@ -84,4 +84,8 @@ public class OdontologoService implements IService<OdontologoModel> {
     public Long countAll() {
         return odontologoRepository.countOdontologos();
     }
+
+    public List<OdontologoModel> findByNameRegEx(String nombre) {
+        return odontologoRepository.findByNameRegEx(nombre);
+    }
 }

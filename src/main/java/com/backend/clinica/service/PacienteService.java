@@ -84,4 +84,8 @@ public class PacienteService implements IService<PacienteModel> {
     public Long countAll() {
         return pacienteRepository.countPacientes();
     }
+
+    public List<PacienteModel> findByNameRegEx(String name) {
+        return pacienteRepository.findByNameRegEx(name);
+    }
 }

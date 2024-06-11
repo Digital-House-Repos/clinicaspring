@@ -128,4 +128,21 @@ public class OdontologoController {
             return ResponseEntity.status(500).body(cr);
         }
     }
+
+    @GetMapping("/busqueda/{nombre}")
+    public ResponseEntity<CustomResponse> getOdontologoByName(@PathVariable("nombre") String nombre) {
+        try {
+            List<OdontologoModel> lista = odontologoService.findByNameRegEx(nombre);
+            if (lista.isEmpty()) {
+                CustomResponse cr = new CustomResponse(true, "No se encontraron odontólogos", "Empty list");
+                return ResponseEntity.status(404).body(cr);
+            } else {
+                CustomResponse cr = new CustomResponse(true, "Odontólogos encontrados por nombre", lista);
+                return ResponseEntity.status(200).body(cr);
+            }
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
+        }
+    }
 }

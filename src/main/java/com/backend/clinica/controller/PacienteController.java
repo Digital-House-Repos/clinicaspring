@@ -128,4 +128,21 @@ public class PacienteController {
             return ResponseEntity.status(500).body(cr);
         }
     }
+
+    @GetMapping("/busqueda/{nombre}")
+    public ResponseEntity<CustomResponse> getByName(@PathVariable("nombre") String nombre) {
+        try {
+            List<PacienteModel> lista = pacienteService.findByNameRegEx(nombre);
+            if (lista.isEmpty()) {
+                CustomResponse cr = new CustomResponse(true, "No se encontraron pacientes", "Empty list");
+                return ResponseEntity.status(404).body(cr);
+            } else {
+                CustomResponse cr = new CustomResponse(true, "Pacientes encontrados por nombre", lista);
+                return ResponseEntity.status(200).body(cr);
+            }
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
+        }
+    }
 }
