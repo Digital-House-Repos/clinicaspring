@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Stylesheet & icons -->
-    <link rel="stylesheet" href="../../assets/style.css" />
+    <link rel="stylesheet" href="../../style.css" />
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
@@ -45,12 +45,6 @@
               <span class="link-name">Crear</span>
             </a>
           </li>
-          <li>
-            <a href="./search.html">
-              <i class="uil uil-search-alt"></i>
-              <span class="link-name">Buscar</span>
-            </a>
-          </li>
         </ul>
 
         <ul class="logout-mode">
@@ -79,6 +73,14 @@
           <div class="title">
             <i class="uil uil-list-ul"></i>
             <span class="text">Lista de Pacientes</span>
+            <input
+              type="text"
+              name="nombreapellido"
+              id="nombreapellido"
+              placeholder="Búsqueda"
+              required
+              class="form-input"
+            />
           </div>
 
           <div class="activity-data">
@@ -109,7 +111,7 @@
     </section>
 
     <!-- Javascript -->
-    <script src="../../assets/script.js"></script>
-    <script src="../../assets/pacientes/get.js"></script>
+    <script src="../../app.js"></script>
+    <script src="../../js/pacientes/get.js"></script>
   </body>
 </html>

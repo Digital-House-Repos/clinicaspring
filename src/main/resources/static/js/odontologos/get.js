@@ -1,10 +1,10 @@
-async function dataOdontologos(_url, _token = null, _method = 'GET', _body = null) {
+const URLOdontologos = '/odontologos';
 
+async function fetchOdontologos(_url, _token = null, _method = 'GET', _body = null) {
   const options = {
     method: _method,
     headers: { "Content-Type": "application/json" }
   };
-
   if (_token) { options.headers["Authorization"] = "Bearer " + _token; }
   if (_body) { options.body = JSON.stringify(_body); }
 
@@ -19,27 +19,47 @@ async function dataOdontologos(_url, _token = null, _method = 'GET', _body = nul
 
 async function searchOdontologo() {
   const busqueda = document.getElementById('nombreapellido').value;
+  const data = await fetchOdontologos(URLOdontologos + `/busqueda/${busqueda}`);
+  loadHTML(data);
+}
 
-  const URLOdontologos = `/odontologos/busqueda/${busqueda}`;
-  const data = await dataOdontologos(URLOdontologos, null, 'GET', null);
+async function loadOdontologos() {
+  const data = await fetchOdontologos(URLOdontologos);
+  loadHTML(data);
+}
 
+async function deleteOdontologo(id) {
+  const data = await fetchOdontologos(URLOdontologos + `/${id}`, null, 'DELETE', null);
+  if (data.ok) {
+    window.location.reload();
+  }
+}
+
+const inputSearch = document.getElementById('nombreapellido');
+inputSearch.addEventListener('keyup', async (e) => {
+  if (inputSearch.value.length == 0) {
+    loadOdontologos();
+  } else {
+    searchOdontologo();
+  }
+});
+
+window.onload = async () => {
+  loadOdontologos();
+}
+
+function loadHTML(data) {
   const divId = document.getElementById('odontologo-id');
   const divName = document.getElementById('odontologo-nombre');
   const divLastName = document.getElementById('odontologo-apellido');
   const divMatricula = document.getElementById('odontologo-matricula');
   const divButtons = document.getElementById('odontologo-buttons');
 
-  divId.innerHTML = '';
-  divName.innerHTML = '';
-  divLastName.innerHTML = '';
-  divMatricula.innerHTML = '';
-  divButtons.innerHTML = '';
-
-  divId.innerHTML += `<span class="data-list title"><strong>ID</strong></span>`;
-  divName.innerHTML += `<span class="data-list title"><strong>Nombre</strong></span>`;
-  divLastName.innerHTML += `<span class="data-list title"><strong>Apellido</strong></span>`;
-  divMatricula.innerHTML += `<span class="data-list title"><strong>Matricula</strong></span>`;
-  divButtons.innerHTML += `<span class="data-list title"><strong>Acciones</strong></span>`;
+  divId.innerHTML = `<span class="data-title"><strong>ID</strong></span>`;
+  divName.innerHTML = `<span class="data-title"><strong>Nombre</strong></span>`;
+  divLastName.innerHTML = `<span class="data-title"><strong>Apellido</strong></span>`;
+  divMatricula.innerHTML = `<span class="data-title"><strong>Matricula</strong></span>`;
+  divButtons.innerHTML = `<span class="data-title"><strong>Acciones</strong></span>`;
 
   if (data.data != "Empty list") {
     for (odontologo of data.data) {
@@ -62,8 +82,3 @@ async function searchOdontologo() {
     }
   }
 }
-
-const inputSearch = document.getElementById('nombreapellido');
-inputSearch.addEventListener('keyup', async (e) => {
-  searchOdontologo();
-});
