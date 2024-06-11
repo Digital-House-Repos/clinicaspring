@@ -84,4 +84,9 @@ public class TurnoService implements IService<TurnoModel> {
             throw new EntityNotFoundException("Turno", "id", id);
         }
     }
+
+    @Override
+    public Long countAll() {
+        return turnoRepository.countTurnos();
+    }
 }

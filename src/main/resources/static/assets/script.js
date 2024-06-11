@@ -30,19 +30,3 @@ sidebarToggle.addEventListener("click", () => {
         localStorage.setItem("status", "open");
     }
 })
-
-const dateElement = document.getElementById("spn-date");
-const timeElement = document.getElementById("spn-time");
-
-function updateDateTime() {
-    const currentDate = new Date();
-
-    const formattedDate = currentDate.toLocaleDateString();
-    const formattedTime = currentDate.toLocaleTimeString();
-
-    dateElement.textContent = formattedDate;
-    timeElement.textContent = formattedTime;
-}
-
-updateDateTime();
-setInterval(updateDateTime, 1000);

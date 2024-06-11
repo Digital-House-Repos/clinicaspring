@@ -116,4 +116,16 @@ public class PacienteController {
             return ResponseEntity.status(500).body(cr);
         }
     }
+
+    @GetMapping("/cantidad")
+    public ResponseEntity<CustomResponse> getCountPacientes() {
+        try {
+            Long count = pacienteService.countAll();
+            CustomResponse cr = new CustomResponse(true, "Cantidad de Pacientes", count);
+            return ResponseEntity.status(200).body(cr);
+        } catch (Exception e) {
+            CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            return ResponseEntity.status(500).body(cr);
+        }
+    }
 }

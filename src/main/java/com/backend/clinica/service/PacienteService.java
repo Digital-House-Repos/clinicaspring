@@ -79,4 +79,9 @@ public class PacienteService implements IService<PacienteModel> {
             throw new EntityNotFoundException("Paciente", "dni", dni);
         }
     }
+
+    @Override
+    public Long countAll() {
+        return pacienteRepository.countPacientes();
+    }
 }

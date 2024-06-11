@@ -12,4 +12,6 @@ public interface IService<T> {
     T update(T t);
 
     T delete(Long id);
+
+    Long countAll();
 }

@@ -79,4 +79,9 @@ public class OdontologoService implements IService<OdontologoModel> {
             throw new EntityNotFoundException("Odontologo", "matricula", matricula);
         }
     }
+
+    @Override
+    public Long countAll() {
+        return odontologoRepository.countOdontologos();
+    }
 }
