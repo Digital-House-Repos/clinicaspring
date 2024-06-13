@@ -2,7 +2,7 @@ package com.backend.clinica.service;
 
 import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.exception.EntityAlreadyExistsException;
-import com.backend.clinica.exception.EntityNotFoundException;
+import com.backend.clinica.exception.ResourceNotFoundException;
 import com.backend.clinica.repository.OdontologoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ public class OdontologoService implements IService<OdontologoModel> {
     }
 
     @Override
-    public OdontologoModel findById(Long id) throws EntityNotFoundException {
+    public OdontologoModel findById(Long id) throws ResourceNotFoundException {
         Optional<OdontologoModel> odontologo = odontologoRepository.findById(id);
 
         if (odontologo.isPresent()) {
             return odontologo.get();
         } else {
-            throw new EntityNotFoundException("Odontologo", "id", id);
+            throw new ResourceNotFoundException("Odontologo", "id", id);
         }
     }
 
@@ -44,10 +44,10 @@ public class OdontologoService implements IService<OdontologoModel> {
     }
 
     @Override
-    public OdontologoModel update(OdontologoModel odontologoModel) throws EntityNotFoundException, EntityAlreadyExistsException {
+    public OdontologoModel update(OdontologoModel odontologoModel) throws ResourceNotFoundException, EntityAlreadyExistsException {
         Optional<OdontologoModel> odontologo = odontologoRepository.findById(odontologoModel.getOdontologoID());
         if (odontologo.isEmpty()) {
-            throw new EntityNotFoundException("Odontologo", "id", odontologoModel.getOdontologoID());
+            throw new ResourceNotFoundException("Odontologo", "id", odontologoModel.getOdontologoID());
         }
 
         Optional<OdontologoModel> odontologoEqualsByMatricula = odontologoRepository.findByNumeroMatricula(odontologoModel.getNumeroMatricula());
@@ -59,24 +59,24 @@ public class OdontologoService implements IService<OdontologoModel> {
     }
 
     @Override
-    public OdontologoModel delete(Long id) throws EntityNotFoundException {
+    public OdontologoModel delete(Long id) throws ResourceNotFoundException {
         Optional<OdontologoModel> odontologo = odontologoRepository.findById(id);
 
         if (odontologo.isEmpty()) {
-            throw new EntityNotFoundException("Odontologo", "id", id);
+            throw new ResourceNotFoundException("Odontologo", "id", id);
         } else {
             odontologoRepository.deleteById(id);
             return odontologo.get();
         }
     }
 
-    public OdontologoModel findByMatricula(String matricula) throws EntityNotFoundException {
+    public OdontologoModel findByMatricula(String matricula) throws ResourceNotFoundException {
         Optional<OdontologoModel> odontologo = odontologoRepository.findByNumeroMatricula(matricula);
 
         if (odontologo.isPresent()) {
             return odontologo.get();
         } else {
-            throw new EntityNotFoundException("Odontologo", "matricula", matricula);
+            throw new ResourceNotFoundException("Odontologo", "matricula", matricula);
         }
     }
 

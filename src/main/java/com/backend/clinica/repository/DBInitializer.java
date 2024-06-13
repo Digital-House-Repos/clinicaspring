@@ -1,5 +1,7 @@
 package com.backend.clinica.repository;
 
+import com.backend.clinica.exception.BadRequestException;
+import com.backend.clinica.exception.EntityAlreadyExistsException;
 import com.backend.clinica.service.OdontologoService;
 import com.backend.clinica.service.PacienteService;
 import com.backend.clinica.service.TurnoService;
@@ -20,7 +22,7 @@ public class DBInitializer {
     @Autowired
     private TurnoService turnoService;
 
-    public void loadDataToOrm() {
+    public void loadDataToOrm() throws EntityAlreadyExistsException, BadRequestException {
         OdontologoModel o1 = new OdontologoModel("111", "John", "Doe");
         OdontologoModel o2 = new OdontologoModel("222", "Jane", "Smith");
         OdontologoModel o3 = new OdontologoModel("333", "Michael", "Jhonson");

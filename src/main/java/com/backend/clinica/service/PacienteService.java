@@ -2,7 +2,7 @@ package com.backend.clinica.service;
 
 import com.backend.clinica.repository.PacienteRepository;
 import com.backend.clinica.exception.EntityAlreadyExistsException;
-import com.backend.clinica.exception.EntityNotFoundException;
+import com.backend.clinica.exception.ResourceNotFoundException;
 import com.backend.clinica.entity.PacienteModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ public class PacienteService implements IService<PacienteModel> {
     }
 
     @Override
-    public PacienteModel findById(Long id) throws EntityNotFoundException {
+    public PacienteModel findById(Long id) throws ResourceNotFoundException {
         Optional<PacienteModel> paciente = pacienteRepository.findById(id);
 
         if (paciente.isPresent()) {
             return paciente.get();
         } else {
-            throw new EntityNotFoundException("Paciente", "id", id);
+            throw new ResourceNotFoundException("Paciente", "id", id);
         }
     }
 
@@ -44,10 +44,10 @@ public class PacienteService implements IService<PacienteModel> {
     }
 
     @Override
-    public PacienteModel update(PacienteModel pacienteModel) throws EntityNotFoundException, EntityAlreadyExistsException {
+    public PacienteModel update(PacienteModel pacienteModel) throws ResourceNotFoundException, EntityAlreadyExistsException {
         Optional<PacienteModel> pacienteFindById = pacienteRepository.findById(pacienteModel.getPacienteID());
         if (pacienteFindById.isEmpty()) {
-            throw new EntityNotFoundException("Paciente", "id", pacienteModel.getPacienteID());
+            throw new ResourceNotFoundException("Paciente", "id", pacienteModel.getPacienteID());
         }
 
         Optional<PacienteModel> pacienteEqualsByDni = pacienteRepository.findByDni(pacienteModel.getDni());
@@ -59,24 +59,24 @@ public class PacienteService implements IService<PacienteModel> {
     }
 
     @Override
-    public PacienteModel delete(Long id) throws EntityNotFoundException {
+    public PacienteModel delete(Long id) throws ResourceNotFoundException {
         Optional<PacienteModel> paciente = pacienteRepository.findById(id);
 
         if (paciente.isPresent()) {
             pacienteRepository.deleteById(id);
             return paciente.get();
         } else {
-            throw new EntityNotFoundException("Paciente", "id", id);
+            throw new ResourceNotFoundException("Paciente", "id", id);
         }
     }
 
-    public PacienteModel findByDni(String dni) throws EntityNotFoundException {
+    public PacienteModel findByDni(String dni) throws ResourceNotFoundException {
         Optional<PacienteModel> paciente = pacienteRepository.findByDni(dni);
 
         if (paciente.isPresent()) {
             return paciente.get();
         } else {
-            throw new EntityNotFoundException("Paciente", "dni", dni);
+            throw new ResourceNotFoundException("Paciente", "dni", dni);
         }
     }
 

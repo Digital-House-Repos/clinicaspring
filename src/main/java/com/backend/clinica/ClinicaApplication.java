@@ -1,5 +1,7 @@
 package com.backend.clinica;
 
+import com.backend.clinica.exception.BadRequestException;
+import com.backend.clinica.exception.EntityAlreadyExistsException;
 import com.backend.clinica.repository.DBInitializer;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class ClinicaApplication {
     }
 
     @PostConstruct
-    public void loadDataToORM() {
+    public void loadDataToORM() throws BadRequestException, EntityAlreadyExistsException {
         dbInitializer.loadDataToOrm();
     }
 }

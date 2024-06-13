@@ -2,7 +2,7 @@ package com.backend.clinica.controller;
 
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.service.PacienteService;
-import com.backend.clinica.exception.EntityNotFoundException;
+import com.backend.clinica.exception.ResourceNotFoundException;
 import com.backend.clinica.exception.EntityAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +40,7 @@ public class PacienteController {
             CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente);
             return ResponseEntity.status(200).body(cr);
 
-        } catch (EntityNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class PacienteController {
             CustomResponse cr = new CustomResponse(true, "Paciente actualizado correctamente", paciente);
             return ResponseEntity.status(200).body(cr);
 
-        } catch (EntityNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
         } catch (EntityAlreadyExistsException e) {
@@ -92,7 +92,7 @@ public class PacienteController {
             CustomResponse cr = new CustomResponse(true, "Paciente eliminado correctamente", paciente);
             return ResponseEntity.status(200).body(cr);
 
-        } catch (EntityNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
@@ -108,7 +108,7 @@ public class PacienteController {
             CustomResponse cr = new CustomResponse(true, "Paciente encontrado", paciente);
             return ResponseEntity.status(200).body(cr);
 
-        } catch (EntityNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
