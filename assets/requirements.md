@@ -51,6 +51,7 @@ ID debe ser autoincremental
 - @Autowired para inyección de dependencias
 - Usar Hibernate como ORM
 - Usar JpaRepositories para las consultas a la base de datos
+- Manejar excepciones con Global Exception Handler
 
 ## Tests
 
