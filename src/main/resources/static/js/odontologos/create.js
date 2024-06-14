@@ -30,10 +30,19 @@ async function createOdontologo() {
   });
 
   if (data.ok) {
-    alert('Odontólogo creado correctamente');
-    window.location.href = '../../routes/odontologos/list.html';
+    Swal.fire({
+      icon: "success",
+      title: "¡Operación exitosa!",
+      text: "Odontólogo creado exitosamente"
+    }).then((result) => {
+      window.location.href = '../../routes/turnos/list.html';
+    });
   } else {
-    alert('Error al crear odontólogo' + (data ? data.message : 'Unknown error'));
+    Swal.fire({
+      icon: "error",
+      title: "Error...",
+      text: data ? data.message : "Unknown error"
+    });
   }
 }
 

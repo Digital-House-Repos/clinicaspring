@@ -41,10 +41,19 @@ async function createPaciente() {
   const data = await dataPacientes(URLPacientes, null, 'POST', body);
 
   if (data.ok) {
-    alert('Paciente creado correctamente');
-    window.location.href = '../../routes/pacientes/list.html';
+    Swal.fire({
+      icon: 'success',
+      title: '¡Operación exitosa!',
+      text: 'Paciente creado exitosamente'
+    }).then((result) => {
+      window.location.href = '../../routes/turnos/list.html';
+    });
   } else {
-    alert('Error al crear paciente' + (data ? data.message : 'Unknown error'));
+    Swal.fire({
+      icon: 'error',
+      title: 'Error...',
+      text: data ? data.message : 'Unknown error'
+    });
   }
 }
 

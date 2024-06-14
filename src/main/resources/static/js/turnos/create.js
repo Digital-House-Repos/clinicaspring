@@ -54,7 +54,17 @@ window.addEventListener('load', async () => {
   comprobar2 = await loadOdontologos();
 
   if (!comprobar || !comprobar2) {
-    alert('No hay pacientes u odontólogos cargados en el sistema');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Info...',
+      text: 'No hay pacientes u odontólogos en la DB',
+      confirmButtonText: "Go to dashboard",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "../../index.html";
+      }
+    }
+    );
   }
 });
 
@@ -73,10 +83,19 @@ async function createTurno() {
   const data = await dataTurno(URLTurnos, null, 'POST', body);
 
   if (data.ok) {
-    alert('Turno creado correctamente');
-    window.location.href = '../../routes/turnos/list.html';
+    Swal.fire({
+      icon: 'success',
+      title: '¡Operación exitosa!',
+      text: 'Turno creado exitosamente'
+    }).then((result) => {
+      window.location.href = '../../routes/turnos/list.html';
+    });
   } else {
-    alert('Error al crear turno' + (data ? data.message : 'Unknown error'));
+    Swal.fire({
+      icon: 'error',
+      title: 'Error...',
+      text: data ? data.message : 'Unknown error'
+    });
   }
 }
 
