@@ -29,12 +29,38 @@ async function loadPacientes() {
 }
 
 async function deletePaciente(id) {
-  const data = await fetchPacientes(URLPacientes + `/${id}`, null, 'DELETE', null);
-  if (data.ok) {
-    window.location.reload();
-  } else {
-    alert('Error al eliminar paciente: ' + (data ? data.message : 'Unknown error'));
-  }
+  Swal.fire({
+    title: "¿Está seguro?",
+    text: "No podrá recuperar este registro.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, elimínalo!",
+
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+
+      const data = await fetchPacientes(URLPacientes + `/${id}`, null, 'DELETE', null);
+
+      if (data.ok) {
+        Swal.fire({
+          title: "Eliminado!",
+          text: "El registro ha sido eliminado.",
+          icon: "success"
+        }).then((result) => {
+          window.location.reload();
+        });
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error...',
+          text: data ? data.message : 'Unknown error'
+        });
+      }
+    }
+  });
 }
 
 const inputSearch = document.getElementById('nombreapellido');

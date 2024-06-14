@@ -50,13 +50,39 @@ async function loadTurnos() {
 }
 
 async function deleteTurno(_id) {
-  const URLTurnos = `/turnos/${_id}`;
-  const data = await dataTurno(URLTurnos, null, 'DELETE', null);
-  if (data.ok) {
-    window.location.reload();
-  } else {
-    alert('Error al eliminar turno: ' + (data ? data.message : 'Unknown error'));
-  }
+  Swal.fire({
+    title: "¿Está seguro?",
+    text: "No podrá recuperar este registro.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, elimínalo!",
+
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+
+      const URLTurnos = `/turnos/${_id}`;
+      const data = await dataTurno(URLTurnos, null, 'DELETE', null);
+
+      if (data.ok) {
+        Swal.fire({
+          title: "Eliminado!",
+          text: "El registro ha sido eliminado.",
+          icon: "success"
+        }).then((result) => {
+          window.location.reload();
+        });
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error...',
+          text: data ? data.message : 'Unknown error'
+        });
+      }
+    }
+  });
 }
 
 window.onload = async () => {
