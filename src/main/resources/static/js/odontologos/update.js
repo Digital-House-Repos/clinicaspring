@@ -16,14 +16,13 @@ async function dataOdontologos(_url, _token = null, _method = 'GET', _body = nul
     console.log(error);
   }
 }
+
 async function loadDataOdontologo() {
   const odontologoID = window.location.search.split('=')[1];
   const URLOdontologos = `/odontologos/${odontologoID}`;
   const data = await dataOdontologos(URLOdontologos);
 
-  console.log(data);
-
-  if (data.ok) {
+  if (data.ok && data.data != 'Empty list') {
     document.getElementById('nombre').value = data.data.nombre;
     document.getElementById('apellido').value = data.data.apellido;
     document.getElementById('numeroMatricula').value = data.data.numeroMatricula;
@@ -31,9 +30,6 @@ async function loadDataOdontologo() {
     alert('Error al cargar los datos del odontólogo');
   }
 }
-
-window.addEventListener('load', loadDataOdontologo);
-
 
 async function updateOdontologo() {
   const odontologoID = window.location.search.split('=')[1];
@@ -48,12 +44,15 @@ async function updateOdontologo() {
     numeroMatricula
   });
 
-  if (data && data.ok) {
+  if (data.ok) {
     alert('Odontólogo actualizado correctamente');
+    window.location.href = '../../routes/odontologos/list.html';
   } else {
     alert('Error al actualizar el odontólogo: ' + (data ? data.message : 'Unknown error'));
   }
 }
+
+window.addEventListener('load', loadDataOdontologo);
 
 const formupdate = document.getElementById('form-update-odontologo');
 formupdate.addEventListener('submit', async (e) => {

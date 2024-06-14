@@ -21,9 +21,7 @@ async function loadDataPaciente() {
   const URLPacientes = `/pacientes/${pacienteID}`;
   const data = await dataPacientes(URLPacientes);
 
-  console.log(data);
-
-  if (data.ok) {
+  if (data.ok && data.data != 'Empty list') {
     document.getElementById('nombre').value = data.data.nombre;
     document.getElementById('apellido').value = data.data.apellido;
     document.getElementById('dni').value = data.data.dni;
@@ -36,9 +34,6 @@ async function loadDataPaciente() {
     alert('Error al cargar los datos del paciente');
   }
 }
-
-window.addEventListener('load', loadDataPaciente);
-
 
 async function updatePaciente() {
   const pacienteID = window.location.search.split('=')[1];
@@ -62,12 +57,15 @@ async function updatePaciente() {
     domicilio
   });
 
-  if (data && data.ok) {
+  if (data.ok) {
     alert('Paciente actualizado correctamente');
+    window.location.href = '../../routes/pacientes/list.html';
   } else {
     alert('Error al actualizar el paciente: ' + (data ? data.message : 'Unknown error'));
   }
 }
+
+window.addEventListener('load', loadDataPaciente);
 
 const formupdate = document.getElementById('form-update-paciente');
 formupdate.addEventListener('submit', async (e) => {

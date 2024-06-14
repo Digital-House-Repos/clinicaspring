@@ -31,8 +31,9 @@ async function createOdontologo() {
 
   if (data.ok) {
     alert('Odontólogo creado correctamente');
+    window.location.href = '../../routes/odontologos/list.html';
   } else {
-    alert('Error al crear odontólogo' + data.message);
+    alert('Error al crear odontólogo' + (data ? data.message : 'Unknown error'));
   }
 }
 

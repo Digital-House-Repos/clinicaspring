@@ -32,6 +32,8 @@ async function deleteOdontologo(id) {
   const data = await fetchOdontologos(URLOdontologos + `/${id}`, null, 'DELETE', null);
   if (data.ok) {
     window.location.reload();
+  } else {
+    alert('Error al eliminar odontólogo: ' + (data ? data.message : 'Unknown error'));
   }
 }
 
@@ -61,7 +63,7 @@ function loadHTML(data) {
   divMatricula.innerHTML = `<span class="data-title"><strong>Matricula</strong></span>`;
   divButtons.innerHTML = `<span class="data-title"><strong>Acciones</strong></span>`;
 
-  if (data.data != "Empty list") {
+  if (data.ok && data.data != "Empty list") {
     for (odontologo of data.data) {
       const { odontologoID, nombre, apellido, numeroMatricula } = odontologo;
       const spanId = `<span class="data-list">${odontologoID}</span>`;

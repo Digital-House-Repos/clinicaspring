@@ -22,12 +22,14 @@ async function loadPacientes() {
   const data = await dataTurno(URLPacientes, null, 'GET', null);
 
   const selectPaciente = document.getElementById('paciente');
-
-  for (paciente of data.data) {
-    const { pacienteID, nombre, apellido } = paciente;
-    const option = `<option value="${pacienteID}">${nombre} ${apellido}</option>`;
-
-    selectPaciente.innerHTML += option;
+  if (data.ok && data.data != 'Empty list') {
+    for (paciente of data.data) {
+      const { pacienteID, nombre, apellido } = paciente;
+      const option = `<option value="${pacienteID}">${nombre} ${apellido}</option>`;
+      selectPaciente.innerHTML += option;
+    }
+  } else {
+    return false;
   }
 }
 
@@ -36,18 +38,24 @@ async function loadOdontologos() {
   const data = await dataTurno(URLOdontologo, null, 'GET', null);
 
   const selectOdontologo = document.getElementById('odontologo');
-
-  for (odontologo of data.data) {
-    const { odontologoID, nombre, apellido } = odontologo;
-    const option = `<option value="${odontologoID}">${nombre} ${apellido}</option>`;
-
-    selectOdontologo.innerHTML += option;
+  if (data.ok && data.data != "Empty list") {
+    for (odontologo of data.data) {
+      const { odontologoID, nombre, apellido } = odontologo;
+      const option = `<option value="${odontologoID}">${nombre} ${apellido}</option>`;
+      selectOdontologo.innerHTML += option;
+    }
+  } else {
+    return false;
   }
 }
 
 window.addEventListener('load', async () => {
-  await loadPacientes();
-  await loadOdontologos();
+  comprobar = await loadPacientes();
+  comprobar2 = await loadOdontologos();
+
+  if (!comprobar || !comprobar2) {
+    alert('No hay pacientes u odontólogos cargados en el sistema');
+  }
 });
 
 async function createTurno() {
@@ -66,8 +74,9 @@ async function createTurno() {
 
   if (data.ok) {
     alert('Turno creado correctamente');
+    window.location.href = '../../routes/turnos/list.html';
   } else {
-    alert('Error al crear turno' + data.message);
+    alert('Error al crear turno' + (data ? data.message : 'Unknown error'));
   }
 }
 

@@ -27,23 +27,25 @@ async function loadTurnos() {
   const divOdontologo = document.getElementById('turno-odontologo');
   const divButtons = document.getElementById('turno-buttons');
 
-  for (turno of data.data) {
-    const { turnoID, paciente, odontologo, fechaHora } = turno;
-    const spanId = `<span class="data-list">${turnoID}</span>`;
-    const spanPaciente = `<span class="data-list">${paciente.apellido} - ${paciente.dni}</span>`;
-    const spanFechaHora = `<span class="data-list">${fechaHora}</span>`;
-    const spanOdontologo = `<span class="data-list">${odontologo.apellido} - ${odontologo.numeroMatricula}</span>`;
-    const spanButton = `
+  if (data.ok && data.data != 'Empty list') {
+    for (turno of data.data) {
+      const { turnoID, paciente, odontologo, fechaHora } = turno;
+      const spanId = `<span class="data-list">${turnoID}</span>`;
+      const spanPaciente = `<span class="data-list">${paciente.apellido} - ${paciente.dni}</span>`;
+      const spanFechaHora = `<span class="data-list">${fechaHora}</span>`;
+      const spanOdontologo = `<span class="data-list">${odontologo.apellido} - ${odontologo.numeroMatricula}</span>`;
+      const spanButton = `
           <span class="data-list text-button">
                 <a href="./update.html?id=${turnoID}" class="a-update"><i class="uil uil-edit"></i></a>
                 <a href="#" onclick="deleteTurno(${turnoID})" class="a-delete"><i class="uil uil-trash-alt"></i></a>
           </span>`
 
-    divId.innerHTML += spanId;
-    divPaciente.innerHTML += spanPaciente;
-    divFechaHora.innerHTML += spanFechaHora;
-    divOdontologo.innerHTML += spanOdontologo;
-    divButtons.innerHTML += spanButton;
+      divId.innerHTML += spanId;
+      divPaciente.innerHTML += spanPaciente;
+      divFechaHora.innerHTML += spanFechaHora;
+      divOdontologo.innerHTML += spanOdontologo;
+      divButtons.innerHTML += spanButton;
+    }
   }
 }
 
@@ -52,7 +54,11 @@ async function deleteTurno(_id) {
   const data = await dataTurno(URLTurnos, null, 'DELETE', null);
   if (data.ok) {
     window.location.reload();
+  } else {
+    alert('Error al eliminar turno: ' + (data ? data.message : 'Unknown error'));
   }
 }
 
-loadTurnos();
+window.onload = async () => {
+  loadTurnos();
+}

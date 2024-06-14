@@ -32,6 +32,8 @@ async function deletePaciente(id) {
   const data = await fetchPacientes(URLPacientes + `/${id}`, null, 'DELETE', null);
   if (data.ok) {
     window.location.reload();
+  } else {
+    alert('Error al eliminar paciente: ' + (data ? data.message : 'Unknown error'));
   }
 }
 
@@ -65,7 +67,7 @@ function loadHTML(data) {
   divDomilicio.innerHTML = `<span class="data-title"><strong>Domicilio</strong></span>`;
   divButtons.innerHTML = `<span class="data-title"><strong>Acciones</strong></span>`;
 
-  if (data.data != "Empty list") {
+  if (data.ok && data.data != "Empty list") {
     for (paciente of data.data) {
       const { pacienteID, nombre, apellido, dni, fechaIngreso, domicilio } = paciente;
       const spanId = `<span class="data-list">${pacienteID}</span>`;

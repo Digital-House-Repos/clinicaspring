@@ -37,17 +37,14 @@ async function createPaciente() {
     domicilio
   };
 
-  console.log(body);
-
   const URLPacientes = '/pacientes';
   const data = await dataPacientes(URLPacientes, null, 'POST', body);
 
-  console.log(data);
-
   if (data.ok) {
     alert('Paciente creado correctamente');
+    window.location.href = '../../routes/pacientes/list.html';
   } else {
-    alert('Error al crear paciente' + data.message);
+    alert('Error al crear paciente' + (data ? data.message : 'Unknown error'));
   }
 }
 
