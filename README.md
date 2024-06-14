@@ -11,7 +11,7 @@ ID debe ser autoincremental
 - dni
 - fechaIngreso
 - domicilio
-- 
+
 ### Domicilio
 - domicilioId
 - calle
@@ -31,7 +31,7 @@ ID debe ser autoincremental
 - odontologo
 - fechaHora
 
-##Requerimientos
+## Requerimientos
 - Usar H2 como base de datos
 - Testear con JUnit
 - Tener View para: Odontologo, Paciente y Turno
@@ -57,7 +57,7 @@ ID debe ser autoincremental
 ### Instalación
 1. Clonar el repositorio:
    sh
-   git clone https://github.com/tu_usuario/proyecto-clinica-dental.git
+   git clone [https://github.com/tu_usuario/proyecto-clinica-dental.git](https://github.com/Digital-House-Repos/clinicaspring)
 
 2. Navegar al directorio del proyecto:
   sh
