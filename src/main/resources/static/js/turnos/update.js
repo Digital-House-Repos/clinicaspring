@@ -77,15 +77,38 @@ async function updateTurno() {
     fechaHora: fechaHora
   };
 
-  const URLTurnos = `/turnos/${turnoID}`;
-  const data = await dataTurno(URLTurnos, null, 'PUT', body);
+  Swal.fire({
+    title: "¿Quiere actualizar la información?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Actualizar",
+    denyButtonText: `No actualizar`,
+    cancelButtonText: `Cancelar`,
 
-  if (data.ok) {
-    alert('Turno actualizado correctamente');
-    window.location.href = '../../routes/turnos/list.html';
-  } else {
-    alert('Error al crear turno' + (data ? data.message : 'Unknown error'));
-  }
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const URLTurnos = `/turnos/${turnoID}`;
+      const data = await dataTurno(URLTurnos, null, 'PUT', body);
+
+      if (data.ok) {
+        Swal.fire("Actualizado!", "", "success").then(() => {
+          window.location.href = '../../routes/turnos/list.html';
+        });
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error...',
+          text: data ? data.message : 'Unknown error'
+        })
+      }
+
+    } else if (result.isDenied) {
+      Swal.fire("La información no se actualizó", "", "info").then(() => {
+        window.location.href = '../../routes/turnos/list.html';
+      });
+    }
+  });
 }
 
 const formcreate = document.getElementById('form-update-turno');
