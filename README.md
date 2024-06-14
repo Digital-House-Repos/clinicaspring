@@ -57,7 +57,7 @@ ID debe ser autoincremental
 ### Instalación
 1. Clonar el repositorio:
    sh
-   git clone [https://github.com/tu_usuario/proyecto-clinica-dental.git](https://github.com/Digital-House-Repos/clinicaspring)
+   git clone [https://github.com/Digital-House-Repos/clinicaspring](https://github.com/Digital-House-Repos/clinicaspring).
 
 2. Navegar al directorio del proyecto:
   sh
