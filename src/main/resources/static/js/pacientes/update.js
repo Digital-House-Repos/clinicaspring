@@ -31,7 +31,11 @@ async function loadDataPaciente() {
     document.getElementById('localidad').value = data.data.domicilio.localidad;
     document.getElementById('provincia').value = data.data.domicilio.provincia;
   } else {
-    alert('Error al cargar los datos del paciente');
+    Swal.fire({
+      icon: 'error',
+      title: 'Error...',
+      text: data ? data.message : 'Unknown error'
+    })
   }
 }
 
@@ -48,21 +52,46 @@ async function updatePaciente() {
     provincia: document.getElementById('provincia').value
   };
 
-  const URLPacientes = `/pacientes/${pacienteID}`;
-  const data = await dataPacientes(URLPacientes, null, 'PUT', {
+  const body = {
     nombre,
     apellido,
     dni,
     fechaIngreso,
     domicilio
-  });
+  };
 
-  if (data.ok) {
-    alert('Paciente actualizado correctamente');
-    window.location.href = '../../routes/pacientes/list.html';
-  } else {
-    alert('Error al actualizar el paciente: ' + (data ? data.message : 'Unknown error'));
-  }
+  Swal.fire({
+    title: "¿Quiere actualizar la información?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Actualizar",
+    denyButtonText: `No actualizar`,
+    cancelButtonText: `Cancelar`,
+
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const URLPacientes = `/pacientes/${pacienteID}`;
+      const data = await dataPacientes(URLPacientes, null, 'PUT', body);
+
+      if (data.ok) {
+        Swal.fire("Actualizado!", "", "success").then(() => {
+          window.location.href = '../../routes/pacientes/list.html';
+        });
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error...',
+          text: data ? data.message : 'Unknown error'
+        })
+      }
+
+    } else if (result.isDenied) {
+      Swal.fire("La información no se actualizó", "", "info").then(() => {
+        window.location.href = '../../routes/pacientes/list.html';
+      });
+    }
+  });
 }
 
 window.addEventListener('load', loadDataPaciente);

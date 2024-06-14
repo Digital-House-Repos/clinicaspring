@@ -27,7 +27,11 @@ async function loadDataOdontologo() {
     document.getElementById('apellido').value = data.data.apellido;
     document.getElementById('numeroMatricula').value = data.data.numeroMatricula;
   } else {
-    alert('Error al cargar los datos del odontólogo');
+    Swal.fire({
+      icon: 'error',
+      title: 'Error...',
+      text: data ? data.message : 'Unknown error'
+    });
   }
 }
 
@@ -37,19 +41,44 @@ async function updateOdontologo() {
   const apellido = document.getElementById('apellido').value;
   const numeroMatricula = document.getElementById('numeroMatricula').value;
 
-  const URLOdontologos = `/odontologos/${odontologoID}`;
-  const data = await dataOdontologos(URLOdontologos, null, 'PUT', {
+  const body = {
     nombre,
     apellido,
     numeroMatricula
-  });
+  };
 
-  if (data.ok) {
-    alert('Odontólogo actualizado correctamente');
-    window.location.href = '../../routes/odontologos/list.html';
-  } else {
-    alert('Error al actualizar el odontólogo: ' + (data ? data.message : 'Unknown error'));
-  }
+  Swal.fire({
+    title: "¿Quiere actualizar la información?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Actualizar",
+    denyButtonText: `No actualizar`,
+    cancelButtonText: `Cancelar`,
+
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const URLOdontologos = `/odontologos/${odontologoID}`;
+      const data = await dataOdontologos(URLOdontologos, null, 'PUT', body);
+
+      if (data.ok) {
+        Swal.fire("Actualizado!", "", "success").then(() => {
+          window.location.href = '../../routes/odontologos/list.html';
+        });
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error...',
+          text: data ? data.message : 'Unknown error'
+        })
+      }
+
+    } else if (result.isDenied) {
+      Swal.fire("La información no se actualizó", "", "info").then(() => {
+        window.location.href = '../../routes/odontologos/list.html';
+      });
+    }
+  });
 }
 
 window.addEventListener('load', loadDataOdontologo);
