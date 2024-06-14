@@ -54,7 +54,7 @@ ID debe ser autoincremental
 1. Ejecutar el archivo run de Java.
 2. Abrir la dirección `localhost:8080` en un navegador web.
 
-### Instalación
+## Instalación
 1. Clonar el repositorio:
    sh
    git clone [https://github.com/Digital-House-Repos/clinicaspring](https://github.com/Digital-House-Repos/clinicaspring).
