@@ -32,11 +32,11 @@ public class ConfigWebSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeRequests) -> authorizeRequests
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/routes/odontologos/**").hasRole("ADMIN")
                 .requestMatchers("/routes/pacientes/**").hasRole("ADMIN")
                 .requestMatchers("/routes/turnos/list.html").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/routes/turnos/**").hasRole("ADMIN")
-                .requestMatchers("/").permitAll()
                 .requestMatchers(("/h2-console/**")).hasRole("ADMIN")
                 .anyRequest().authenticated()
         ).formLogin(Customizer.withDefaults()).logout(Customizer.withDefaults());
