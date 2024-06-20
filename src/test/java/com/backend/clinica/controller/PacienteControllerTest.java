@@ -1,6 +1,5 @@
 package com.backend.clinica.controller;
 
-import com.backend.clinica.entity.DomicilioModel;
 import com.backend.clinica.entity.PacienteModel;
 import com.backend.clinica.exception.EntityAlreadyExistsException;
 import com.backend.clinica.exception.ResourceNotFoundException;
@@ -12,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
