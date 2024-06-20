@@ -13,7 +13,7 @@ public class OdontologoControllerTest {
 
     @Test
     public void testGetOdontologos() {
-        String expectedMessage = "Odontologos encontrados";
+        String expectedMessage = "Odontólogos encontrados";
         String actualMessage = odontologoController.getOdontologos().getBody().getMessage();
         Assert.assertEquals(expectedMessage, actualMessage);
     }

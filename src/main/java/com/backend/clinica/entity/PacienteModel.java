@@ -1,9 +1,13 @@
 package com.backend.clinica.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "paciente")
 public class PacienteModel {
@@ -55,35 +59,4 @@ public class PacienteModel {
                 ']';
     }
 
-    public void setPacienteID(Long pacienteID) {
-        this.pacienteID = pacienteID;
-    }
-
-    public void setDomicilio(DomicilioModel domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public Long getPacienteID() {
-        return pacienteID;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public LocalDate getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public DomicilioModel getDomicilio() {
-        return domicilio;
-    }
 }
