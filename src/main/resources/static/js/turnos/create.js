@@ -52,20 +52,6 @@ async function loadOdontologos() {
 window.addEventListener('load', async () => {
   comprobar = await loadPacientes();
   comprobar2 = await loadOdontologos();
-
-  if (!comprobar || !comprobar2) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Info...',
-      text: 'No hay pacientes u odontólogos en la DB',
-      confirmButtonText: "Go to dashboard",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "../../index.html";
-      }
-    }
-    );
-  }
 });
 
 async function createTurno() {
