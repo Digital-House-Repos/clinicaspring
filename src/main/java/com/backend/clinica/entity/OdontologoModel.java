@@ -1,7 +1,11 @@
 package com.backend.clinica.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "odontologo")
 public class OdontologoModel {
@@ -45,19 +49,4 @@ public class OdontologoModel {
         this.odontologoID = odontologoID;
     }
 
-    public Long getOdontologoID() {
-        return odontologoID;
-    }
-
-    public String getNumeroMatricula() {
-        return numeroMatricula;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
 }
