@@ -67,6 +67,8 @@ ID debe ser autoincremental
 
 1. Ejecutar el archivo run de Java.
 2. Abrir la dirección `localhost:8080` en un navegador web.
+3. Login para admin: Username: `admin` y Contraseña: `admin`.
+4. Login para user: Username: `user` y Contraseña: `admin`.
 
 ## Instalación
 
@@ -86,4 +88,5 @@ ID debe ser autoincremental
 
 ## Uso
 
-Accede a las vistas correspondientes para gestionar Odontólogos, Pacientes y Turnos desde `localhost:8080`.
+- Accede a las vistas correspondientes para gestionar Odontólogos, Pacientes y Turnos desde `localhost:8080`.
+- Inicia sesión con el usuario `admin` y contraseña `admin` para acceder a todas las funcionalidades.
