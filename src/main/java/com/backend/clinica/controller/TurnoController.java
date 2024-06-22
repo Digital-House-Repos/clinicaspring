@@ -5,6 +5,7 @@ import com.backend.clinica.exception.BadRequestException;
 import com.backend.clinica.exception.ResourceNotFoundException;
 import com.backend.clinica.exception.EntityAlreadyExistsException;
 import com.backend.clinica.service.TurnoService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/turnos")
 public class TurnoController {
+    private static final Logger logger = Logger.getLogger(TurnoController.class);
+
     @Autowired
     private TurnoService turnoService;
 
@@ -30,6 +33,7 @@ public class TurnoController {
             }
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en la DB: " + e.getMessage(), null);
+            logger.error("Error en la DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -43,9 +47,11 @@ public class TurnoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -59,12 +65,15 @@ public class TurnoController {
 
         } catch (BadRequestException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Bad request");
+            logger.error("Bad request: " + e.getMessage());
             return ResponseEntity.status(400).body(cr);
         } catch (EntityAlreadyExistsException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            logger.error("Entity already exists: " + e.getMessage());
             return ResponseEntity.status(400).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(true, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -79,12 +88,15 @@ public class TurnoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (EntityAlreadyExistsException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            logger.error("Entity already exists: " + e.getMessage());
             return ResponseEntity.status(400).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -98,9 +110,11 @@ public class TurnoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -113,6 +127,7 @@ public class TurnoController {
             return ResponseEntity.status(200).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }

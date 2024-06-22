@@ -4,6 +4,7 @@ import com.backend.clinica.entity.OdontologoModel;
 import com.backend.clinica.exception.EntityAlreadyExistsException;
 import com.backend.clinica.exception.ResourceNotFoundException;
 import com.backend.clinica.service.OdontologoService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
+    private static final Logger logger = Logger.getLogger(OdontologoController.class);
+
     @Autowired
     private OdontologoService odontologoService;
 
@@ -29,6 +32,7 @@ public class OdontologoController {
             }
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -42,9 +46,11 @@ public class OdontologoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -58,9 +64,11 @@ public class OdontologoController {
 
         } catch (EntityAlreadyExistsException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            logger.error("Entity already exists: " + e.getMessage());
             return ResponseEntity.status(400).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -75,12 +83,15 @@ public class OdontologoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (EntityAlreadyExistsException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity already exists");
+            logger.error("Entity already exists: " + e.getMessage());
             return ResponseEntity.status(400).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -94,9 +105,11 @@ public class OdontologoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -110,9 +123,11 @@ public class OdontologoController {
 
         } catch (ResourceNotFoundException e) {
             CustomResponse cr = new CustomResponse(false, e.getMessage(), "Entity not found");
+            logger.error("Entity not found: " + e.getMessage());
             return ResponseEntity.status(404).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -125,6 +140,7 @@ public class OdontologoController {
             return ResponseEntity.status(200).body(cr);
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
@@ -142,6 +158,7 @@ public class OdontologoController {
             }
         } catch (Exception e) {
             CustomResponse cr = new CustomResponse(false, "Error en DB: " + e.getMessage(), null);
+            logger.error("Error en DB: " + e.getMessage());
             return ResponseEntity.status(500).body(cr);
         }
     }
