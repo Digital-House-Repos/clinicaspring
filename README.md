@@ -3,6 +3,11 @@
 Una clínica dental necesita informatizar su operatoria. Por lo cual, se solicita un sistema para la gestión de sus
 pacientes, donde puedan darlos de alta, buscarlos y listarlos.
 
+## Integrantes
+
+- Jean Franco Tineo
+- Claudia Heredia
+
 ## Modelos
 
 ID debe ser autoincremental
