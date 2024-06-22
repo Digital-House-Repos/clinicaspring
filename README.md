@@ -55,10 +55,8 @@ ID debe ser autoincremental
 
 ## Tests
 
-1. Agregar un paciente con domicilio y buscarlo en la base de datos por ID.
-2. Eliminar el paciente anteriormente creado y luego buscarlo, debe tener también el domicilio.
-3. Buscar e imprimir en consola todos los pacientes con sus domicilios, serán los pacientes que agregamos antes de
-   ejecutar el primer test.
+- Tests integradores con Mock en `test/service`
+- Tests unitarios en `test/controller`
 
 ## Ejecución del Programa
 
