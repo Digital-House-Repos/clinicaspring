@@ -1,0 +1,9 @@
+services:
+    clinica-backend:
+        image: clinica-backend-image
+        container_name: backend-container
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"

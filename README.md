@@ -14,28 +14,12 @@ gestionar los siguientes elementos:
 - **Turnos**: Gestión de turnos, asignación de odontólogos a pacientes en fechas y horas específicas.
 - **Domicilios**: Cada paciente tiene un domicilio relacionado, con su respectiva dirección.
 
-## Estructura de Datos
+## Requisitos Previos
 
-El sistema utiliza una base de datos en memoria H2 para almacenar la información de los pacientes, odontólogos,
-domicilios y turnos. Los modelos de datos incluyen:
+- **Docker**: Asegúrate de tener Docker instalado en tu máquina.
+- **Docker Compose**: Necesitarás Docker Compose para facilitar la administración de los contenedores.
 
-- **Paciente**: Cada paciente tiene un ID único, apellido, nombre, DNI, fecha de ingreso y un domicilio asociado.
-- **Domicilio**: Un domicilio tiene su propio ID, dirección, número, localidad y provincia.
-- **Odontólogo**: Cada odontólogo tiene un ID único, matrícula, nombre y apellido.
-- **Turno**: Un turno está asociado a un paciente y un odontólogo, y tiene una fecha y hora.
-
-## Requerimientos
-
-El sistema está desarrollado con las siguientes tecnologías y requisitos:
-
-- **Base de datos**: H2 (base de datos en memoria).
-- **ORM**: Hibernate para el mapeo objeto-relacional.
-- **Spring Boot**: Framework principal utilizado para el desarrollo.
-- **Spring Data JPA**: Utilizado para interactuar con la base de datos.
-- **Gestión de excepciones**: Manejo centralizado de excepciones mediante un Global Exception Handler.
-- **Inyección de dependencias**: Usando `@Autowired` para la inyección de dependencias.
-
-## Instalación y Ejecución
+## Ejecución del proyecto en Docker
 
 Para instalar y ejecutar el proyecto en tu máquina local, sigue los siguientes pasos:
 
@@ -49,19 +33,24 @@ Para instalar y ejecutar el proyecto en tu máquina local, sigue los siguientes 
    cd proyecto-clinica-dental
    ```
 
-3. Construye el proyecto y ejecuta la aplicación con Maven:
+3. Construye y ejecuta el contenedor Docker:
    ```bash
-   mvn clean install
-   mvn spring-boot:run
+    docker-compose up --build -d # windows
+    docker compose up --build -d # linux
    ```
 
-4. Una vez ejecutado, abre un navegador y ve a [http://localhost:8080](http://localhost:8080) para acceder a la
-   aplicación.
+4. Accede a la aplicación en tu navegador web en el puerto 8080:
+    - [http://localhost:8080](http://localhost:8080)
 
-5. Si deseas acceder a la consola H2 para ver los datos almacenados puedes hacerlo
-   en [http://localhost:8080/h2-console](http://localhost:8080/h2-console). Con los siguientes datos de conexión:
-    - JDBC URL: `jdbc:h2:mem:clinica`
-    - User Name: `sa`
+5. Si deseas acceder a la base de datos H2:
+    - [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+
+    - Configuración de conexión:
+        - JDBC URL: `jdbc:h2:mem:clinica`
+        - User Name: `sa`
+        - Password: (dejar en blanco)
+
+   > **Nota**: Si el puerto 8080 ya está en uso, puedes cambiarlo en el archivo `docker-compose.yml`.
 
 ## Acceso y Funcionalidades
 
