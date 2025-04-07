@@ -1,92 +1,84 @@
 # Proyecto Clínica Dental
 
-Una clínica dental necesita informatizar su operatoria. Por lo cual, se solicita un sistema para la gestión de sus
-pacientes, donde puedan darlos de alta, buscarlos y listarlos.
+Este proyecto tiene como objetivo informatizar la operación de una clínica dental. Se ha desarrollado un sistema para la
+gestión de los pacientes, odontólogos, domicilios y turnos. Los usuarios podrán dar de alta, buscar y listar a los
+pacientes, así como gestionar los turnos con los odontólogos disponibles.
 
-## Integrantes
+## Descripción
 
-- Jean Franco Tineo
-- Claudia Heredia
+El sistema está diseñado para permitir la administración de la clínica de manera eficiente, con funcionalidades para
+gestionar los siguientes elementos:
 
-## Modelos
+- **Pacientes**: Alta de nuevos pacientes, búsqueda y listado de los mismos.
+- **Odontólogos**: Alta de odontólogos, asignación de turnos y consultas.
+- **Turnos**: Gestión de turnos, asignación de odontólogos a pacientes en fechas y horas específicas.
+- **Domicilios**: Cada paciente tiene un domicilio relacionado, con su respectiva dirección.
 
-ID debe ser autoincremental
+## Estructura de Datos
 
-### Paciente
+El sistema utiliza una base de datos en memoria H2 para almacenar la información de los pacientes, odontólogos,
+domicilios y turnos. Los modelos de datos incluyen:
 
-- pacienteId
-- apellido
-- nombre
-- dni
-- fechaIngreso
-- domicilio
-
-### Domicilio
-
-- domicilioId
-- calle
-- numero
-- localidad
-- provincia
-
-### Odontologo
-
-- odontologoId
-- matricula
-- nombre
-- apellido
-
-### Turno
-
-- turnoId
-- paciente
-- odontologo
-- fechaHora
+- **Paciente**: Cada paciente tiene un ID único, apellido, nombre, DNI, fecha de ingreso y un domicilio asociado.
+- **Domicilio**: Un domicilio tiene su propio ID, dirección, número, localidad y provincia.
+- **Odontólogo**: Cada odontólogo tiene un ID único, matrícula, nombre y apellido.
+- **Turno**: Un turno está asociado a un paciente y un odontólogo, y tiene una fecha y hora.
 
 ## Requerimientos
 
-- Usar H2 como base de datos
-- Testear con JUnit
-- Tener View para: Odontologo, Paciente y Turno
-- Tener Controller para: Odontologo, Paciente y Turno
-- Tener Service para: Odontologo, Paciente y Turno
-- Tener DAO para: Odontologo, Domicilio, Paciente y Turno
-- Tener Entity para: Odontologo, Domicilio, Paciente y Turno
-- Usar @Component, @Repository y @Service según corresponda
-- @Autowired para inyección de dependencias
-- Usar Hibernate como ORM
-- Usar JpaRepositories para las consultas a la base de datos
-- Manejar excepciones con Global Exception Handler
+El sistema está desarrollado con las siguientes tecnologías y requisitos:
 
-## Tests
+- **Base de datos**: H2 (base de datos en memoria).
+- **ORM**: Hibernate para el mapeo objeto-relacional.
+- **Spring Boot**: Framework principal utilizado para el desarrollo.
+- **Spring Data JPA**: Utilizado para interactuar con la base de datos.
+- **Gestión de excepciones**: Manejo centralizado de excepciones mediante un Global Exception Handler.
+- **Inyección de dependencias**: Usando `@Autowired` para la inyección de dependencias.
 
-- Tests integradores con Mock en `test/service`
-- Tests unitarios en `test/controller`
+## Instalación y Ejecución
 
-## Ejecución del Programa
+Para instalar y ejecutar el proyecto en tu máquina local, sigue los siguientes pasos:
 
-1. Ejecutar el archivo run de Java.
-2. Abrir la dirección `localhost:8080` en un navegador web.
-3. Login para admin: Username: `admin` y Contraseña: `admin`.
-4. Login para user: Username: `user` y Contraseña: `admin`.
+1. Clona el repositorio desde GitHub:
+   ```bash
+   git clone https://github.com/Digital-House-Repos/clinicaspring
+   ```
 
-## Instalación
-
-1. Clonar el repositorio:
-   sh
-   git
-   clone [https://github.com/Digital-House-Repos/clinicaspring](https://github.com/Digital-House-Repos/clinicaspring).
-
-2. Navegar al directorio del proyecto:
-   sh
+2. Navega al directorio del proyecto:
+   ```bash
    cd proyecto-clinica-dental
+   ```
 
-3. Construir y ejecutar la aplicación:
-   sh
+3. Construye el proyecto y ejecuta la aplicación con Maven:
+   ```bash
    mvn clean install
    mvn spring-boot:run
+   ```
 
-## Uso
+4. Una vez ejecutado, abre un navegador y ve a [http://localhost:8080](http://localhost:8080) para acceder a la
+   aplicación.
 
-- Accede a las vistas correspondientes para gestionar Odontólogos, Pacientes y Turnos desde `localhost:8080`.
-- Inicia sesión con el usuario `admin` y contraseña `admin` para acceder a todas las funcionalidades.
+5. Si deseas acceder a la consola H2 para ver los datos almacenados puedes hacerlo
+   en [http://localhost:8080/h2-console](http://localhost:8080/h2-console). Con los siguientes datos de conexión:
+    - JDBC URL: `jdbc:h2:mem:clinica`
+    - User Name: `sa`
+
+## Acceso y Funcionalidades
+
+El sistema tiene un login para dos tipos de usuarios:
+
+- Admin: Acceso completo para gestionar pacientes, odontólogos y turnos.
+
+    - Usuario: **admin**
+    - Contraseña: **admin**
+
+- User: Acceso limitado para ver la información.
+    - Usuario: **user**
+    - Contraseña: **admin**
+
+## Contribuciones
+
+Este proyecto fue desarrollado por:
+
+- Jean Franco Tineo
+- Claudia Heredia
