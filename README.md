@@ -52,6 +52,16 @@ Para instalar y ejecutar el proyecto en tu máquina local, sigue los siguientes 
 
    > **Nota**: Si el puerto 8080 ya está en uso, puedes cambiarlo en el archivo `docker-compose.yml`.
 
+6. Para detener el contenedor, ejecuta:
+   ```bash
+   docker-compose down
+   ```
+
+7. Para eliminar el contenedor y la imagen, ejecuta:
+   ```bash
+   docker-compose down --rmi all
+   ```
+
 ## Acceso y Funcionalidades
 
 El sistema tiene un login para dos tipos de usuarios:
